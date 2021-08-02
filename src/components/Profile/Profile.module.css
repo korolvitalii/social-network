@@ -1,0 +1,8 @@
+.content {
+  grid-area: content;
+  color: #008060;
+}
+.homelogo {
+  width: 940px;
+  height: 260px;
+}
