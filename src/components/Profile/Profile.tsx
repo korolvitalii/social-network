@@ -1,17 +1,19 @@
 import React from 'react';
 import classes from './ProfileInfo.module.css';
-
-import profilelogo from '../../assets/images/profile-logo.jpg';
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo';
+import { PostType } from '../../AppLoader';
 
-type Props = {};
+type PropsType = {
+  posts: Array<PostType>;
+};
 
-const Profile: React.FC = (props: Props) => {
+const Profile: React.FC<PropsType> = (props) => {
+  const { posts } = props;
   return (
     <div>
       <ProfileInfo />
-      <MyPosts />
+      <MyPosts posts={posts} />
     </div>
   );
 };

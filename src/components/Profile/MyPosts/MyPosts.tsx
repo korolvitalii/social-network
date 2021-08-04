@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { Props } from 'react';
 import Post from './Post/Post';
 import classes from './MyPosts.module.css';
+import { PostType } from '../../../AppLoader';
 
-type Props = {};
+type PropsType = {
+  posts: Array<PostType>;
+};
 
-const MyPosts: React.FC = (props: Props) => {
-  const postsData = [
-    { id: 1, message: 'Hi, how are you?', likeCount: 12 },
-    { id: 1, message: "It's my post!", likeCount: 10 },
-    { id: 1, message: 'Some news', likeCount: 1 },
-    { id: 1, message: 'SomePost', likeCount: 5 },
-  ];
-
-  const postsElements = postsData.map(({ id, message, likeCount }) => (
+const MyPosts: React.FC<PropsType> = (props) => {
+  const { posts } = props;
+  const postsElements = posts.map(({ id, message, likeCount }) => (
     <Post id={id} message={message} likeCount={likeCount} />
   ));
   return (
