@@ -5,18 +5,28 @@ import classes from './MyPosts.module.css';
 type Props = {};
 
 const MyPosts: React.FC = (props: Props) => {
+  const postsData = [
+    { id: 1, message: 'Hi, how are you?', likeCount: 12 },
+    { id: 1, message: "It's my post!", likeCount: 10 },
+    { id: 1, message: 'Some news', likeCount: 1 },
+    { id: 1, message: 'SomePost', likeCount: 5 },
+  ];
+
+  const postsElements = postsData.map(({ id, message, likeCount }) => (
+    <Post id={id} message={message} likeCount={likeCount} />
+  ));
   return (
-    <div>
+    <div className={classes.posts}>
       My posts
       <div>
-        <textarea></textarea>
-        <button>Add Post</button>
+        <div>
+          <textarea></textarea>
+        </div>
+        <div className={classes.buttonPost}>
+          <button>Add Post</button>
+        </div>
       </div>
-      <div>
-        <Post message='Hello' />
-        <Post message='Hello John' />
-        <Post message='Hello Good Bye' />
-      </div>
+      <div>{postsElements}</div>
     </div>
   );
 };

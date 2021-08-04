@@ -2,9 +2,14 @@
   grid-area: nav;
   color: #008060;
   font-size: 24px;
-  margin: 20px 20px;
+  padding: 20px;
 }
 
-.active {
-  color: #001a13;
+.item a {
+  color: #008060;
+  text-decoration: none;
+}
+
+.item a.activeLink {
+  color: #044837;
 }
