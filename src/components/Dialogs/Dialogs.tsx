@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { DialogType, MessageType } from '../../AppLoader';
+import { DialogType, MessageType } from '../../redux/state';
 import Dialog from './Dialog';
 import classes from './Dialogs.module.css';
 import Message from './Message';

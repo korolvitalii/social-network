@@ -5,16 +5,20 @@ import Profile from './components/Profile/Profile';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Dialogs from './components/Dialogs/Dialogs';
-import { DialogType, MessageType, PostType } from './AppLoader';
+import { StateType, MessageType, MessagesPageType } from './redux/state';
 
 type PropsType = {
-  dialogs: Array<DialogType>;
-  messages: Array<MessageType>;
-  posts: Array<PostType>;
+  state: StateType;
 };
 
 const App: React.FC<PropsType> = (props) => {
-  const { dialogs, messages, posts } = props;
+  const {
+    messagesPage: { dialogs, messages },
+  }: any = props;
+  const {
+    profilePage: { posts },
+  }: any = props;
+  debugger;
   return (
     <BrowserRouter>
       <div className='app-wrapper'>
