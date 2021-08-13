@@ -1,4 +1,4 @@
-import React, { Props } from 'react';
+import React, { useState } from 'react';
 import Post from './Post/Post';
 import classes from './MyPosts.module.css';
 import { PostType } from '../../../redux/state';

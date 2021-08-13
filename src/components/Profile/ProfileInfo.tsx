@@ -2,8 +2,6 @@ import React from 'react';
 import classes from './ProfileInfo.module.css';
 import homelogo from '../../assets/images/home-logo1.jpg';
 
-type PropsType = {};
-
 const ProfileInfo: React.FC = (props) => {
   return (
     <div className={classes.profileInfo}>

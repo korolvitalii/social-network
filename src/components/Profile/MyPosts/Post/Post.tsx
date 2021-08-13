@@ -8,7 +8,7 @@ type Props = {
 };
 
 const Post: React.FC<Props> = (props) => {
-  const { id, message, likeCount } = props;
+  const { message, likeCount } = props;
   return (
     <div className={classes.item}>
       <img
