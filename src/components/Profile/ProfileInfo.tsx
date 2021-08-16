@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './ProfileInfo.module.css';
+
 import homelogo from '../../assets/images/home-logo1.jpg';
 
 const ProfileInfo: React.FC = (props) => {

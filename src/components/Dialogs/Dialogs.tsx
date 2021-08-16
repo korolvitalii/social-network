@@ -14,8 +14,8 @@ const Dialogs: React.FC<PropsType> = (props) => {
 
   const { dialogs, message } = props;
 
-  const dialogsElements = dialogs.map(({ name, id }) => <Dialog name={name} id={id} />);
-  const messageElements = message.map(({ text, id }) => <Message text={text} id={id} />);
+  const dialogsElements = dialogs.map(({ name, id }) => <Dialog name={name} id={id} key={id} />);
+  const messageElements = message.map(({ text, id }) => <Message text={text} id={id} key={id} />);
 
   const onClickButton = (): void => {
     console.log(messageRef.current?.value);
@@ -29,7 +29,7 @@ const Dialogs: React.FC<PropsType> = (props) => {
       </div>
       <div>
         <textarea ref={messageRef}></textarea>
-        <button onClick={onClickButton}>Send</button>
+        <button onClick={onClickButtonz}>Send</button>
       </div>
     </div>
   );

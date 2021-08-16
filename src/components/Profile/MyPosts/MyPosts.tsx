@@ -1,26 +1,40 @@
-import React, { useState } from 'react';
-import Post from './Post/Post';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import classes from './MyPosts.module.css';
-import { PostType } from '../../../redux/state';
 
-type PropsType = {
-  posts: Array<PostType>;
-};
+import { PostType, RootStateType } from '../../../types/types';
+import Post from './Post/Post';
+import { addNewPost, updateNewPostText } from '../../../redux/actions/ProfilePage';
 
-const MyPosts: React.FC<PropsType> = (props) => {
-  const { posts } = props;
-  const postsElements = posts.map(({ id, message, likeCount }) => (
-    <Post id={id} message={message} likeCount={likeCount} />
-  ));
+const MyPosts: React.FC = () => {
+  const dispatch = useDispatch();
+  const { posts, newPostText } = useSelector((state: RootStateType) => state.profilePage);
+
+  const onAddPostClick = (): void => {
+    const newPost = { id: 1, message: newPostText, likeCount: 0 };
+    dispatch(addNewPost(newPost));
+    dispatch(updateNewPostText(''));
+  };
+
+  const onNewPostTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    const text = e.target.value;
+    dispatch(updateNewPostText(text));
+  };
+
+  const postsElements = posts.map((post: PostType) => {
+    const { id, message, likeCount } = post;
+    return <Post key={`${id}__${likeCount}`} id={id} message={message} likeCount={likeCount} />;
+  });
+
   return (
     <div className={classes.posts}>
       My posts
       <div>
         <div>
-          <textarea></textarea>
+          <textarea value={newPostText} onChange={onNewPostTextChange}></textarea>
         </div>
         <div className={classes.buttonPost}>
-          <button>Add Post</button>
+          <button onClick={onAddPostClick}>Add Post</button>
         </div>
       </div>
       <div>{postsElements}</div>

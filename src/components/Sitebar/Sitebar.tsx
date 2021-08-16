@@ -1,20 +1,10 @@
 import React from 'react';
 import classes from './Sitebar.module.css';
 
-type PropsType = {
-  sitebar: {
-    friends: Array<string>;
-  };
-};
-
-const Sitebar: React.FC<PropsType> = (props) => {
-  const {
-    sitebar: { friends },
-  } = props;
-
+const Sitebar: React.FC = (props) => {
   const friendElements = friends.map((friend) => {
     return (
-      <div className='sitebarFriend'>
+      <div className='sitebarFriend' key={friend}>
         <img
           className={classes.imgFriend}
           src='https://www.pngitem.com/pimgs/m/80-800194_transparent-users-icon-png-flat-user-icon-png.png'
