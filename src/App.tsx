@@ -4,11 +4,12 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 
 import './App.css';
-import Profile from './components/Profile/Profile';
+import Profile from './pages/Profile';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Dialogs from './components/Dialogs/Dialogs';
+import Messages from './pages/Messages';
 import Sitebar from './components/Sitebar/Sitebar';
+import Users from './pages/Users';
 
 const App: React.FC = () => {
   return (
@@ -20,7 +21,8 @@ const App: React.FC = () => {
           <Sitebar />
           <div className='app-wrapper-content'>
             <Route path='/profile' render={() => <Profile />} />
-            <Route path='/dialogs' render={() => <Dialogs />} />
+            <Route path='/dialogs' render={() => <Messages />} />
+            <Route path='/users' render={() => <Users />} />
           </div>
         </div>
       </Provider>

@@ -1,4 +1,7 @@
-import { ActionsType, DialogType, MessageType, UPDATE_TEXT_NEW_MESSAGE } from '../../types/types';
+import { ActionsType, DialogType, MessageType } from '../../types/types';
+
+const UPDATE_TEXT_NEW_MESSAGE = 'UPDATE_TEXT_NEW_MESSAGE';
+const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE';
 
 const initialState = {
   messages: [
@@ -19,11 +22,11 @@ const initialState = {
 
 export const messages = (state = initialState, action: ActionsType): typeof initialState => {
   switch (action.type) {
-    // case ADD_NEW_POST: {
-    //   // debugger;
-    //   const posts = [...state.posts, action.payload.newPost];
-    //   return { ...state, posts };
-    // }
+    case ADD_NEW_MESSAGE: {
+      // debugger;
+      const messages = [...state.messages, action.payload.newMessage];
+      return { ...state, messages };
+    }
     case UPDATE_TEXT_NEW_MESSAGE: {
       return { ...state, ...action.payload };
     }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import Sitebar from '../Sitebar/Sitebar';
 import classes from './Navbar.module.css';
 
 type PropsType = {};
@@ -15,6 +16,11 @@ const Navbar: React.FC<PropsType> = (props) => {
       <div className={classes.item}>
         <NavLink to='/dialogs' activeClassName={classes.activeLink}>
           Messages
+        </NavLink>
+      </div>
+      <div className={classes.item}>
+        <NavLink to='/users' activeClassName={classes.activeLink}>
+          Users
         </NavLink>
       </div>
       <div className={classes.item}>

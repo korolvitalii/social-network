@@ -2,9 +2,9 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classes from './MyPosts.module.css';
 
-import { PostType, RootStateType } from '../../../types/types';
+import { PostType, RootStateType } from '../../types/types';
 import Post from './Post/Post';
-import { addNewPost, updateNewPostText } from '../../../redux/actions/ProfilePage';
+import { addNewPost, updateNewPostText } from '../../redux/actions/ProfileActions';
 
 const MyPosts: React.FC = () => {
   const dispatch = useDispatch();
