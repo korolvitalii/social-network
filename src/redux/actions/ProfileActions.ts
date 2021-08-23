@@ -1,10 +1,4 @@
-import {
-  PostType,
-  AddNewPostType,
-  UpdateNewPostTextType,
-  UserType,
-  ActionsType,
-} from '../../types/types';
+import { PostType, ActionsType, UserProfileType } from '../../types/types';
 
 const ADD_NEW_POST = 'ADD_NEW_POST';
 const UPDATE_TEXT_NEW_POST = 'UPDATE_TEXT_NEW_POST';
@@ -24,7 +18,7 @@ export const updateNewPostText = (text: string): ActionsType => ({
   },
 });
 
-export const setUserProfile = (user: UserType): ActionsType => ({
+export const setUserProfile = (user: UserProfileType): ActionsType => ({
   type: SET_USER_PROFILE,
   payload: {
     user,

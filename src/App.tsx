@@ -5,7 +5,7 @@ import store from './redux/store';
 
 import './App.css';
 import Profile from './pages/Profile';
-import Header from './components/Header/Header';
+import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import Messages from './pages/Messages';
 import Sitebar from './components/Sitebar/Sitebar';
@@ -16,7 +16,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Provider store={store}>
         <div className='app-wrapper'>
-          <Header />
+          <HeaderContainer />
           <Navbar />
           <Sitebar />
           <div className='app-wrapper-content'>

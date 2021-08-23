@@ -2,3 +2,8 @@
   width: 940px;
   height: 260px;
 }
+.profileContainer {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}

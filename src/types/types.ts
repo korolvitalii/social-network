@@ -8,6 +8,7 @@ const GET_TOTAL_COUNT = 'GET_TOTAL_COUNT';
 const SET_PAGES_COUNT = 'SET_PAGES_COUNT';
 const TOGGLE_IS_FETCH_DATA = 'TOGGLE_IS_FETCH_DATA';
 const SET_USER_PROFILE = ' SET_USER_PROFILE';
+const SET_USER_DATA = 'SET_USER_DATA';
 
 export type PostType = {
   id: number;
@@ -110,7 +111,18 @@ export type ToggleIsFetchData = {
 export type SetUserProfileType = {
   type: typeof SET_USER_PROFILE;
   payload: {
-    user: UserType;
+    user: UserProfileType;
+  };
+};
+
+export type SetUserDataType = {
+  type: typeof SET_USER_DATA;
+  payload: {
+    userData: {
+      id: number;
+      email: string;
+      login: string;
+    };
   };
 };
 
@@ -124,14 +136,15 @@ export type ActionsType =
   | GetTotalCountType
   | SetPagesCountType
   | ToggleIsFetchData
-  | SetUserProfileType;
+  | SetUserProfileType
+  | SetUserDataType;
 
 export type RootStateType = {
   profilePage: {
     posts: Array<PostType>;
     newPostText: string;
     friends: Array<string>;
-    currentUser: null | UserType;
+    currentUser: UserProfileType;
   };
   messagesPage: {
     dialogs: Array<DialogType>;
@@ -144,5 +157,33 @@ export type RootStateType = {
     pageSize: number;
     pagesCount: number;
     isFetched: boolean;
+  };
+  auth: {
+    id: number;
+    login: string;
+    email: string;
+    isAuth: boolean;
+  };
+};
+
+export type UserProfileType = {
+  aboutMe: string | null;
+  contacts: {
+    facebook: string | null;
+    website: string | null;
+    vk: string | null;
+    twitter: string | null;
+    instagram: string | null;
+    youtube: string | null;
+    github: string | null;
+    mainLink: string | null;
+  };
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string | null;
+  fullName: string | null;
+  userId: number;
+  photos: {
+    small: string;
+    large: string;
   };
 };

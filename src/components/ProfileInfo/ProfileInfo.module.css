@@ -3,10 +3,19 @@
   height: 260px;
 }
 .description {
+  display: flex;
+  flex-direction: row;
   padding: 10px;
 }
 
 .avatarPhoto {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
+}
+
+.profileDescription {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 import { RootStateType, UserType, ServerData } from '../types/types';
 import {
   getTotalCount,
@@ -14,7 +14,6 @@ import userIcon from '../assets/images/User-Icon.jpg';
 import Preloader from '../components/common/Preloader/Preloader';
 import ReactPaginate from 'react-paginate';
 import { NavLink } from 'react-router-dom';
-import { setUserProfile } from '../redux/actions/ProfileActions';
 
 const Users = () => {
   const dispath = useDispatch();
@@ -55,14 +54,10 @@ const Users = () => {
     dispath(toggleFollowUnfollow(id));
   };
 
-  const onClickUser = (user: UserType) => {
-    dispath(setUserProfile(user));
-  };
-
   const usersElements = users.map((user: UserType) => {
     const {
       id,
-      fullName,
+      name,
       followed,
       status,
       photos: { small },
@@ -73,12 +68,7 @@ const Users = () => {
         <div className={classes.photoAndButton}>
           <div>
             <NavLink to={path}>
-              <img
-                className={classes.userPhoto}
-                src={small ? small : userIcon}
-                alt=''
-                onClick={() => onClickUser(user)}
-              />
+              <img className={classes.userPhoto} src={small ? small : userIcon} alt='' />
             </NavLink>
           </div>
           <div>
@@ -86,7 +76,7 @@ const Users = () => {
           </div>
         </div>
         <div className={classes.userInfo}>
-          <div>{fullName}</div>
+          <div>{name}</div>
           <div>{status}</div>
         </div>
       </div>

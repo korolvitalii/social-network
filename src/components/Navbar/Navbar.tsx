@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import Sitebar from '../Sitebar/Sitebar';
 import classes from './Navbar.module.css';
 
 type PropsType = {};

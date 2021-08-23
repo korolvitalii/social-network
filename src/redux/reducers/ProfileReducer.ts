@@ -1,4 +1,4 @@
-import { ActionsType, PostType, UserType } from '../../types/types';
+import { ActionsType, PostType, UserProfileType } from '../../types/types';
 
 const ADD_NEW_POST = 'ADD_NEW_POST';
 const UPDATE_TEXT_NEW_POST = 'UPDATE_TEXT_NEW_POST';
@@ -12,7 +12,7 @@ const initialState = {
     { id: 1, message: 'SomePost', likeCount: 5 },
   ] as Array<PostType>,
   newPostText: '' as string,
-  currentUser: null as null | UserType,
+  currentUser: null as UserProfileType | null,
   friends: ['John', 'Jack', 'Stasy'] as Array<string>,
 };
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Dialog from '../components/Dialogs/Dialog';
 import classes from './Dialogs.module.css';
 import Message from '../components/Message/Message';
-import { MessageType, RootStateType } from '../types/types';
+import { RootStateType } from '../types/types';
 import { addNewMessage, updateNewMessageText } from '../redux/actions/MessagesActions';
 
 const Messages: React.FC = () => {
