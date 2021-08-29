@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import loading from '../../../assets/images/loading-buffering.gif';
 
 const Preloader: React.FC = () => {

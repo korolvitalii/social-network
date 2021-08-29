@@ -1,10 +1,12 @@
-import { ActionsType, UserType } from '../../types/types';
+import { UserType } from '../../types/types';
+import { ActionsType } from '../actions/UsersActions';
 
 const CHANGE_FLAG = 'CHANGE_FLAG';
 const SET_USERS = 'SET_USERS';
 const GET_TOTAL_COUNT = 'GET_TOTAL_COUNT';
 const SET_PAGES_COUNT = 'SET_PAGES_COUNT';
 const TOGGLE_IS_FETCH_DATA = 'TOGGLE_IS_FETCH_DATA';
+const TOGGLE_FOLLOWING_PROGRESS = 'TOGGLE_FOLLOWING_PROGRESS';
 
 const initialState = {
   users: [] as Array<UserType>,
@@ -12,6 +14,7 @@ const initialState = {
   pageSize: 10 as number,
   pagesCount: 10 as number,
   isFetch: true as boolean,
+  isFollowingProgress: false as boolean,
 };
 
 export const users = (state = initialState, action: ActionsType) => {
@@ -21,7 +24,6 @@ export const users = (state = initialState, action: ActionsType) => {
       return { ...state, users: newUsers };
     }
     case CHANGE_FLAG: {
-      // debugger;
       const updateUsers = state.users.map((user) => {
         if (user.id === action.payload.userId) {
           user.followed = !user.followed;
@@ -43,7 +45,12 @@ export const users = (state = initialState, action: ActionsType) => {
     case TOGGLE_IS_FETCH_DATA: {
       return { ...state, isFetch: action.payload.isFetch };
     }
+    case TOGGLE_FOLLOWING_PROGRESS: {
+      return { ...state, isFollowingProgress: action.payload.isFollowingProgress };
+    }
     default:
       return state;
   }
 };
+
+export type initialStateType = typeof initialState;

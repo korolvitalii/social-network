@@ -1,4 +1,5 @@
-import { ActionsType, DialogType, MessageType } from '../../types/types';
+import { DialogType, MessageType } from '../../types/types';
+import { ActionsType } from '../actions/MessagesActions';
 
 const UPDATE_TEXT_NEW_MESSAGE = 'UPDATE_TEXT_NEW_MESSAGE';
 const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE';
@@ -18,12 +19,12 @@ const initialState = {
     { id: 1, name: 'rich' },
     { id: 1, name: 'unknown' },
   ] as Array<DialogType>,
+  newMessageText: '' as string,
 };
 
 export const messages = (state = initialState, action: ActionsType): typeof initialState => {
   switch (action.type) {
     case ADD_NEW_MESSAGE: {
-      // debugger;
       const messages = [...state.messages, action.payload.newMessage];
       return { ...state, messages };
     }
@@ -34,3 +35,5 @@ export const messages = (state = initialState, action: ActionsType): typeof init
       return state;
   }
 };
+
+export type InitialStateType = typeof initialState;

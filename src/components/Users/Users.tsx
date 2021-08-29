@@ -1,57 +1,53 @@
-import React, { useState } from 'react';
-import { RootStateType, UserType, ServerData } from '../types/types';
-import {
-  getTotalCount,
-  setUsers,
-  toggleFollowUnfollow,
-  setPagesCount,
-} from '../redux/actions/UsersActions';
-import { useDispatch, useSelector } from 'react-redux';
-import classes from './Users.module.css';
-import axios from 'axios';
-import { useEffect } from 'react';
-import userIcon from '../assets/images/User-Icon.jpg';
-import Preloader from '../components/common/Preloader/Preloader';
-import ReactPaginate from 'react-paginate';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import ReactPaginate from 'react-paginate';
 
-const Users = () => {
-  const dispath = useDispatch();
-  const { users, pageSize, pagesCount } = useSelector((state: RootStateType) => state.usersPage);
+import classes from './Users.module.css';
+import userIcon from '../../assets/images/User-Icon.jpg';
+import Preloader from '../common/Preloader/Preloader';
+import { RootStateType, UserType } from '../../types/types';
+import { followUserAction, getUsers, unfollowUserAction } from '../../redux/actions/UsersActions';
+import { initialStateType } from '../../redux/reducers/UsersReducers';
 
-  const [activePage, setActivePage] = useState<number>(1);
-  const [isFetch, setIsFetch] = useState<boolean>(true);
+type PropsType = {
+  toggleFollowingProgress: any;
+  usersPage: initialStateType;
+  isFollowingProgress: boolean;
+  isFetch: boolean;
+};
+
+const Users: React.FC<PropsType> = (props) => {
+  const dispatch = useDispatch();
+  debugger;
+  const {
+    toggleFollowingProgress,
+    usersPage: { pageSize, pagesCount, users },
+    isFollowingProgress,
+    isFetch,
+  } = props;
+
+  const { isAuth } = useSelector((state: RootStateType) => state.auth);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
-    setIsFetch(true);
-    axios
-      .get<ServerData>(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${activePage}`,
-      )
-      .then((response) => {
-        setIsFetch(false);
-        dispath(setUsers(response.data.items));
-        dispath(getTotalCount(response.data.totalCount));
-        dispath(setPagesCount(response.data.totalCount, pageSize));
-      });
+    dispatch(getUsers(currentPage, pageSize));
   }, []);
 
   const onChangePageClick = ({ selected }: number | any) => {
-    setActivePage(selected);
-    setIsFetch(true);
-    axios
-      .get<ServerData>(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${selected + 1}`,
-      )
-      .then((response) => {
-        // debugger;
-        setIsFetch(false);
-        dispath(setUsers(response.data.items));
-      });
+    setCurrentPage(selected);
+    dispatch(getUsers(selected + 1, pageSize));
   };
 
-  const onClickButton = (id: number): void => {
-    dispath(toggleFollowUnfollow(id));
+  const follow = (id: number) => {
+    dispatch(toggleFollowingProgress(true));
+    dispatch(followUserAction(id));
+  };
+
+  const unfollow = (id: number) => {
+    dispatch(toggleFollowingProgress(true));
+    dispatch(unfollowUserAction(id));
   };
 
   const usersElements = users.map((user: UserType) => {
@@ -72,7 +68,15 @@ const Users = () => {
             </NavLink>
           </div>
           <div>
-            <button onClick={() => onClickButton(id)}>{followed ? 'Follow' : 'Unfollow'}</button>
+            {followed ? (
+              <button disabled={isFollowingProgress} onClick={() => unfollow(id)}>
+                UNFOLLOW
+              </button>
+            ) : (
+              <button disabled={isFollowingProgress} onClick={() => follow(id)}>
+                FOLLOW
+              </button>
+            )}
           </div>
         </div>
         <div className={classes.userInfo}>

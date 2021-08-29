@@ -44,101 +44,6 @@ export type ServerData = {
   error: null | string;
 };
 
-export type AddNewPostType = {
-  type: typeof ADD_NEW_POST;
-  payload: {
-    newPost: PostType;
-  };
-};
-
-export type UpdateNewPostTextType = {
-  type: typeof UPDATE_TEXT_NEW_POST;
-  payload: {
-    newPostText: string;
-  };
-};
-
-export type AddNewMessageType = {
-  type: typeof ADD_NEW_MESSAGE;
-  payload: {
-    newMessage: MessageType;
-  };
-};
-
-export type UpdateNewMessageTextType = {
-  type: typeof UPDATE_TEXT_NEW_MESSAGE;
-  payload: {
-    newMessageText: string;
-  };
-};
-
-export type ToggleFollowUnfollowType = {
-  type: typeof CHANGE_FLAG;
-  payload: {
-    userId: number;
-  };
-};
-
-export type SetUsersType = {
-  type: typeof SET_USERS;
-  payload: {
-    items: Array<UserType>;
-  };
-};
-
-export type GetTotalCountType = {
-  type: typeof GET_TOTAL_COUNT;
-  payload: {
-    totalCount: number;
-  };
-};
-
-export type SetPagesCountType = {
-  type: typeof SET_PAGES_COUNT;
-  payload: {
-    totalCount: number;
-    pageSize: number;
-  };
-};
-
-export type ToggleIsFetchData = {
-  type: typeof TOGGLE_IS_FETCH_DATA;
-  payload: {
-    isFetch: boolean;
-  };
-};
-
-export type SetUserProfileType = {
-  type: typeof SET_USER_PROFILE;
-  payload: {
-    user: UserProfileType;
-  };
-};
-
-export type SetUserDataType = {
-  type: typeof SET_USER_DATA;
-  payload: {
-    userData: {
-      id: number;
-      email: string;
-      login: string;
-    };
-  };
-};
-
-export type ActionsType =
-  | AddNewPostType
-  | UpdateNewPostTextType
-  | AddNewMessageType
-  | UpdateNewMessageTextType
-  | ToggleFollowUnfollowType
-  | SetUsersType
-  | GetTotalCountType
-  | SetPagesCountType
-  | ToggleIsFetchData
-  | SetUserProfileType
-  | SetUserDataType;
-
 export type RootStateType = {
   profilePage: {
     posts: Array<PostType>;
@@ -156,7 +61,8 @@ export type RootStateType = {
     totalCount: number;
     pageSize: number;
     pagesCount: number;
-    isFetched: boolean;
+    isFetch: boolean;
+    isFollowingProgress: boolean;
   };
   auth: {
     id: number;

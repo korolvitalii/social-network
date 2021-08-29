@@ -1,15 +1,20 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Dialog from '../components/Dialogs/Dialog';
+import { useDispatch } from 'react-redux';
+import Dialog from './Dialog';
 import classes from './Dialogs.module.css';
-import Message from '../components/Message/Message';
-import { RootStateType } from '../types/types';
-import { addNewMessage, updateNewMessageText } from '../redux/actions/MessagesActions';
+import Message from './Message/Message';
+import { addNewMessage, updateNewMessageText } from '../../redux/actions/MessagesActions';
+import { InitialStateType } from '../../redux/reducers/MessagesReducer';
 
-const Messages: React.FC = () => {
-  const { dialogs, messages, newMessageText } = useSelector(
-    (state: RootStateType) => state.messagesPage,
-  );
+type PropsType = {
+  messagePage: InitialStateType;
+  sendMessage: (messageText: string) => void;
+};
+
+const Dialogs: React.FC<PropsType> = (props) => {
+  const {
+    messagePage: { dialogs, messages, newMessageText },
+  } = props;
   const dispatch = useDispatch();
   const dialogsElements = dialogs.map(({ name, id }) => <Dialog name={name} id={id} key={id} />);
   const messageElements = messages.map(({ text, id }) => <Message text={text} id={id} key={id} />);
@@ -37,4 +42,4 @@ const Messages: React.FC = () => {
   );
 };
 
-export default Messages;
+export default Dialogs;

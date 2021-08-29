@@ -11,7 +11,7 @@ type PropsType = {
 };
 
 const Header: React.FC<PropsType> = (props) => {
-  const { id, email, login, isAuth } = props;
+  const { isAuth } = props;
   return (
     <header className={classes.header}>
       <img src={logo} alt='' />

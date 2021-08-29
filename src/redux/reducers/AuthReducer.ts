@@ -1,5 +1,4 @@
-import { ActionsType } from '../../types/types';
-
+import { ActionsType } from '../actions/AuthActions';
 const SET_USER_DATA = 'SET_USER_DATA';
 
 const initialState = {

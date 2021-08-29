@@ -1,4 +1,5 @@
-import { ActionsType, PostType, UserProfileType } from '../../types/types';
+import { PostType, UserProfileType } from '../../types/types';
+import { ActionsType } from '../actions/ProfileActions';
 
 const ADD_NEW_POST = 'ADD_NEW_POST';
 const UPDATE_TEXT_NEW_POST = 'UPDATE_TEXT_NEW_POST';
@@ -12,14 +13,13 @@ const initialState = {
     { id: 1, message: 'SomePost', likeCount: 5 },
   ] as Array<PostType>,
   newPostText: '' as string,
-  currentUser: null as UserProfileType | null,
+  currentUser: 19229 as UserProfileType | number,
   friends: ['John', 'Jack', 'Stasy'] as Array<string>,
 };
 
 export const posts = (state = initialState, action: ActionsType): typeof initialState => {
   switch (action.type) {
     case ADD_NEW_POST: {
-      // debugger;
       const posts = [...state.posts, action.payload.newPost];
       return { ...state, posts };
     }

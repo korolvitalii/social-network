@@ -1,5 +1,17 @@
-import { ActionsType } from '../../types/types';
+import { authApi } from '../../api/api';
 
+export type SetUserDataType = {
+  type: typeof SET_USER_DATA;
+  payload: {
+    userData: {
+      id: number;
+      email: string;
+      login: string;
+    };
+  };
+};
+
+export type ActionsType = SetUserDataType;
 const SET_USER_DATA = 'SET_USER_DATA';
 
 export const setUserData = (id: number, email: string, login: string): ActionsType => ({
@@ -12,3 +24,12 @@ export const setUserData = (id: number, email: string, login: string): ActionsTy
     },
   },
 });
+
+export const authMeAction = () => (dispatch: any) => {
+  authApi.authMe().then((response: any) => {
+    const { email, id, login } = response.data.data;
+    if (response.data.resultCode === 0) {
+      dispatch(setUserData(id, email, login));
+    }
+  });
+};

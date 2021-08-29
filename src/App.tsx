@@ -4,12 +4,14 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 
 import './App.css';
-import Profile from './pages/Profile';
+import Profile from './components/Profile/Profile';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
-import Messages from './pages/Messages';
 import Sitebar from './components/Sitebar/Sitebar';
-import Users from './pages/Users';
+import Users from './components/Users/Users';
+import Login from './components/Login/Login';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
+import UsersContainer from './components/Users/UsersContainer';
 
 const App: React.FC = () => {
   return (
@@ -21,8 +23,9 @@ const App: React.FC = () => {
           <Sitebar />
           <div className='app-wrapper-content'>
             <Route path='/profile' render={() => <Profile />} />
-            <Route path='/dialogs' render={() => <Messages />} />
-            <Route path='/users' render={() => <Users />} />
+            <Route path='/dialogs' render={() => <DialogsContainer />} />
+            <Route path='/users' render={() => <UsersContainer />} />
+            <Route path='/login' render={() => <Login />} />
           </div>
         </div>
       </Provider>
