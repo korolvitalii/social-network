@@ -1,9 +1,10 @@
 import { PostType, UserProfileType } from '../../types/types';
-import { ActionsType } from '../actions/ProfileActions';
+import { actions, ActionsType } from '../actions/ProfileActions';
 
 const ADD_NEW_POST = 'ADD_NEW_POST';
 const UPDATE_TEXT_NEW_POST = 'UPDATE_TEXT_NEW_POST';
-const SET_USER_PROFILE = ' SET_USER_PROFILE';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_USER_STATUS = ' SET_USER_STATUS';
 
 const initialState = {
   posts: [
@@ -15,6 +16,7 @@ const initialState = {
   newPostText: '' as string,
   currentUser: 19229 as UserProfileType | number,
   friends: ['John', 'Jack', 'Stasy'] as Array<string>,
+  status: '----',
 };
 
 export const posts = (state = initialState, action: ActionsType): typeof initialState => {
@@ -29,7 +31,9 @@ export const posts = (state = initialState, action: ActionsType): typeof initial
     case SET_USER_PROFILE: {
       return { ...state, currentUser: action.payload.user };
     }
-
+    case SET_USER_STATUS: {
+      return { ...state, status: action.payload.status };
+    }
     default:
       return state;
   }

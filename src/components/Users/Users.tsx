@@ -19,9 +19,8 @@ type PropsType = {
 
 const Users: React.FC<PropsType> = (props) => {
   const dispatch = useDispatch();
-  debugger;
+  // debugger;
   const {
-    //dweads
     toggleFollowingProgress,
     usersPage: { pageSize, pagesCount, users },
     isFollowingProgress,

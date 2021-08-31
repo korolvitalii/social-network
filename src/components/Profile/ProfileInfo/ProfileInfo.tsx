@@ -1,16 +1,16 @@
 import React from 'react';
 import classes from './ProfileInfo.module.css';
 
-import homelogo from '../../../assets/images/home-logo1.jpg';
 import { UserProfileType } from '../../../types/types';
 import ProfileStatus from '../ProfileStatus';
 
 type ProfileInfoProps = {
   profile: UserProfileType;
+  status: string;
 };
 
 const ProfileInfo: React.FC<ProfileInfoProps> = (props) => {
-  const { profile } = props;
+  const { profile, status } = props;
   return (
     <div className={classes.profileInfo}>
       <div className={classes.description}>
@@ -22,7 +22,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = (props) => {
           />
         </div>
         <div>
-          <ProfileStatus />
+          <ProfileStatus status={status} />
         </div>
         <div className={classes.profileDescription}>
           <h1>Fullname: {profile?.fullName}</h1>

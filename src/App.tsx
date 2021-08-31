@@ -33,5 +33,4 @@ const App: React.FC = () => {
   );
 };
 
-// asd
 export default App;

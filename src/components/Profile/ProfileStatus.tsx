@@ -1,24 +1,44 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 
-type PropsType = {};
+type PropsType = {
+  status: string;
+};
 
 const ProfileStatus: React.FC<PropsType> = (props) => {
+  const { status } = props;
   const [editMode, setEditMode] = useState(false);
+  const [localStatus, setLocalStatus] = useState(status);
+
+  useEffect(() => {
+    setLocalStatus(status);
+  }, [status]);
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
+
+  const onChangeStatus = (e: any) => {
+    setLocalStatus(e.currentTarget.value);
+  };
+
   return (
     <div>
       {!editMode && (
         <div>
-          <span onDoubleClick={toggleEditMode}>asdasd</span>
+          <span onDoubleClick={toggleEditMode}>{status}</span>
         </div>
       )}
 
       {editMode && (
         <div>
-          <input onBlur={toggleEditMode} autoFocus={true} value='hey' type='text' />
+          <input
+            onChange={onChangeStatus}
+            onBlur={toggleEditMode}
+            autoFocus={true}
+            value={status}
+            type='text'
+          />
         </div>
       )}
     </div>

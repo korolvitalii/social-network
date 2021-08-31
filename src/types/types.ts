@@ -50,6 +50,7 @@ export type RootStateType = {
     newPostText: string;
     friends: Array<string>;
     currentUser: UserProfileType;
+    status: string;
   };
   messagesPage: {
     dialogs: Array<DialogType>;

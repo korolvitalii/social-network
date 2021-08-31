@@ -27,8 +27,8 @@ export const apiProfile = {
       `/profile/${match?.params.id ? match.params.id : '19229'}`,
     );
   },
-  getUserStatus(userId: number) {
-    return instance.get(`/profile/status/${userId}`);
+  getUserStatus(match: any) {
+    return instance.get(`/profile/status/${match?.params.id ? match.params.id : '19229'}`);
   },
   updateUserStatus(status: any) {
     return instance.put(`/profile/status`, status);

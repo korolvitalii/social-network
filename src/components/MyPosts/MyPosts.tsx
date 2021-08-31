@@ -4,9 +4,10 @@ import classes from './MyPosts.module.css';
 
 import { PostType, RootStateType } from '../../types/types';
 import Post from './Post/Post';
-import { addNewPost, updateNewPostText } from '../../redux/actions/ProfileActions';
+import { actions } from '../../redux/actions/ProfileActions';
 
 const MyPosts: React.FC = () => {
+  const { addNewPost, updateNewPostText } = actions;
   const dispatch = useDispatch();
   const { posts, newPostText } = useSelector((state: RootStateType) => state.profilePage);
 
