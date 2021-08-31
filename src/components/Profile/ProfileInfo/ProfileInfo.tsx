@@ -3,6 +3,7 @@ import classes from './ProfileInfo.module.css';
 
 import homelogo from '../../../assets/images/home-logo1.jpg';
 import { UserProfileType } from '../../../types/types';
+import ProfileStatus from '../ProfileStatus';
 
 type ProfileInfoProps = {
   profile: UserProfileType;
@@ -12,9 +13,6 @@ const ProfileInfo: React.FC<ProfileInfoProps> = (props) => {
   const { profile } = props;
   return (
     <div className={classes.profileInfo}>
-      <div>
-        <img className={classes.homelogo} src={homelogo} alt='' />
-      </div>
       <div className={classes.description}>
         <div>
           <img
@@ -22,6 +20,9 @@ const ProfileInfo: React.FC<ProfileInfoProps> = (props) => {
             src={profile?.photos?.large ? profile.photos.large : ''}
             alt=''
           />
+        </div>
+        <div>
+          <ProfileStatus />
         </div>
         <div className={classes.profileDescription}>
           <h1>Fullname: {profile?.fullName}</h1>

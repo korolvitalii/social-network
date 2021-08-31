@@ -1,4 +1,4 @@
-import { apiUsers } from '../../api/api';
+import { apiProfile, apiUsers } from '../../api/api';
 
 const CHANGE_FLAG = 'CHANGE_FLAG';
 const SET_USERS = 'SET_USERS';
@@ -132,49 +132,6 @@ export const actions = {
   }),
 };
 
-// export const toggleFollowUnfollow = (id: number): ActionsType => ({
-//   type: CHANGE_FLAG,
-//   payload: {
-//     userId: id,
-//   },
-// });
-
-// export const setUsers = (items: Array<UserType>): ActionsType => ({
-//   type: SET_USERS,
-//   payload: {
-//     items: items,
-//   },
-// });
-
-// export const getTotalCount = (totalCount: number): ActionsType => ({
-//   type: GET_TOTAL_COUNT,
-//   payload: {
-//     totalCount,
-//   },
-// });
-
-// export const setPagesCount = (totalCount: number, pageSize: number): ActionsType => ({
-//   type: SET_PAGES_COUNT,
-//   payload: {
-//     totalCount,
-//     pageSize,
-//   },
-// });
-
-// export const isFetchData = (isFetch: boolean): ActionsType => ({
-//   type: TOGGLE_IS_FETCH_DATA,
-//   payload: {
-//     isFetch,
-//   },
-// });
-
-// export const toggleFollowingProgress = (isFollowingProgress: boolean): ActionsType => ({
-//   type: TOGGLE_FOLLOWING_PROGRESS,
-//   payload: {
-//     isFollowingProgress,
-//   },
-// });
-
 export const getUsers = (currentPage: number, pageSize: number) => (dispatch: any) => {
   dispatch(actions.isFetchData(true));
   apiUsers.getUsers(currentPage, pageSize).then((response: ServerData) => {
@@ -199,6 +156,10 @@ export const unfollowUserAction = (id: number) => (dispatch: any) => {
     dispatch(actions.toggleFollowUnfollow(id));
     dispatch(actions.toggleFollowingProgress(false));
   });
+};
+
+export const getUserStatusAction = (id: number) => (dispatch: any) => {
+  apiProfile.getUserStatus(id).then((response) => {});
 };
 
 export type ActionsTypes = typeof actions;

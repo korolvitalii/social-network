@@ -27,6 +27,12 @@ export const apiProfile = {
       `/profile/${match?.params.id ? match.params.id : '19229'}`,
     );
   },
+  getUserStatus(userId: number) {
+    return instance.get(`/profile/status/${userId}`);
+  },
+  updateUserStatus(status: any) {
+    return instance.put(`/profile/status`, status);
+  },
 };
 
 export const authApi = {
