@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateUserStatus } from '../../redux/actions/ProfileActions';
 
 type PropsType = {
   status: string;
@@ -9,16 +11,21 @@ const ProfileStatus: React.FC<PropsType> = (props) => {
   const { status } = props;
   const [editMode, setEditMode] = useState(false);
   const [localStatus, setLocalStatus] = useState(status);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLocalStatus(status);
   }, [status]);
 
-  const toggleEditMode = () => {
-    setEditMode(!editMode);
+  const deactivateEditMode = () => {
+    setEditMode(false);
+    dispatch(updateUserStatus(localStatus));
+  };
+  const activateEditMode = () => {
+    setEditMode(true);
   };
 
-  const onChangeStatus = (e: any) => {
+  const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
     setLocalStatus(e.currentTarget.value);
   };
 
@@ -26,7 +33,7 @@ const ProfileStatus: React.FC<PropsType> = (props) => {
     <div>
       {!editMode && (
         <div>
-          <span onDoubleClick={toggleEditMode}>{status}</span>
+          <span onDoubleClick={activateEditMode}>{status}</span>
         </div>
       )}
 
@@ -34,9 +41,9 @@ const ProfileStatus: React.FC<PropsType> = (props) => {
         <div>
           <input
             onChange={onChangeStatus}
-            onBlur={toggleEditMode}
+            onBlur={deactivateEditMode}
             autoFocus={true}
-            value={status}
+            value={localStatus}
             type='text'
           />
         </div>

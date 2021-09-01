@@ -73,6 +73,14 @@ export const getUserStatus = (match: any) => (dispatch: any) => {
   });
 };
 
+export const updateUserStatus = (status: string) => (dispatch: any) => {
+  apiProfile.updateUserStatus(status).then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(actions.setUserStatus(status));
+    }
+  });
+};
+
 export const getUserProfile = (match: any) => (dispatch: any) => {
   apiProfile.getUserProfile(match).then((response: any) => {
     dispatch(actions.setUserProfile(response.data));
