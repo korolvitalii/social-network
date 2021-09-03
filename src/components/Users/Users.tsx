@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 
 import classes from './Users.module.css';
 import userIcon from '../../assets/images/User-Icon.jpg';
 import Preloader from '../common/Preloader/Preloader';
-import { RootStateType, UserType } from '../../types/types';
+import { UserType } from '../../types/types';
 import { followUserAction, getUsers, unfollowUserAction } from '../../redux/actions/UsersActions';
 import { initialStateType } from '../../redux/reducers/UsersReducers';
 
@@ -19,7 +19,6 @@ type PropsType = {
 
 const Users: React.FC<PropsType> = (props) => {
   const dispatch = useDispatch();
-  // debugger;
   const {
     toggleFollowingProgress,
     usersPage: { pageSize, pagesCount, users },
@@ -27,13 +26,11 @@ const Users: React.FC<PropsType> = (props) => {
     isFetch,
   } = props;
 
-  const { isAuth } = useSelector((state: RootStateType) => state.auth);
-
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     dispatch(getUsers(currentPage, pageSize));
-  }, []);
+  }, [currentPage, dispatch, pageSize]);
 
   const onChangePageClick = ({ selected }: number | any) => {
     setCurrentPage(selected);

@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { AppStateType } from '../redux/reducers/rootReducer';
 
-type PropsType = {};
-
 type MapPropsType = {
   isAuth: boolean;
 };

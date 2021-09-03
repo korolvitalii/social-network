@@ -1,11 +1,10 @@
 import React from 'react';
 import classes from './ProfileInfo.module.css';
 
-import { UserProfileType } from '../../../types/types';
 import ProfileStatus from '../ProfileStatus';
 
 type ProfileInfoProps = {
-  profile: UserProfileType;
+  profile: any;
   status: string;
 };
 

@@ -1,10 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import Dialog from './Dialog';
 import classes from './Dialogs.module.css';
 import Message from './Message/Message';
-import { addNewMessage, updateNewMessageText } from '../../redux/actions/MessagesActions';
 import { InitialStateType } from '../../redux/reducers/MessagesReducer';
+import MessageForm from './Message/MessageForm';
 
 type PropsType = {
   messagePage: InitialStateType;
@@ -13,20 +12,10 @@ type PropsType = {
 
 const Dialogs: React.FC<PropsType> = (props) => {
   const {
-    messagePage: { dialogs, messages, newMessageText },
+    messagePage: { dialogs, messages },
   } = props;
-  const dispatch = useDispatch();
   const dialogsElements = dialogs.map(({ name, id }) => <Dialog name={name} id={id} key={id} />);
   const messageElements = messages.map(({ text, id }) => <Message text={text} id={id} key={id} />);
-
-  const onClickButton = (): void => {
-    const message = { id: 1, text: newMessageText };
-    dispatch(addNewMessage(message));
-  };
-  const onNewMessageTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    const text = e.target.value;
-    dispatch(updateNewMessageText(text));
-  };
 
   return (
     <div>
@@ -35,8 +24,7 @@ const Dialogs: React.FC<PropsType> = (props) => {
         <div className={classes.messages}>{messageElements}</div>
       </div>
       <div>
-        <textarea value={newMessageText} onChange={onNewMessageTextChange}></textarea>
-        <button onClick={onClickButton}>Send</button>
+        <MessageForm />
       </div>
     </div>
   );

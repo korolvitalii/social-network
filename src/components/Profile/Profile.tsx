@@ -1,25 +1,29 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 
 import MyPosts from '../MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import { getUserProfile, getUserStatus } from '../../redux/actions/ProfileActions';
-import { RootStateType } from '../../types/types';
 import classes from './Profile.module.css';
+import { InitialStateType } from '../../redux/reducers/ProfileReducer';
 
 type MatchParams = {
   id: string;
 };
 
-const Profile: React.FC = () => {
+type PropsType = {
+  profilePage: InitialStateType;
+};
+
+const Profile: React.FC<PropsType> = (props) => {
   let match = useRouteMatch<MatchParams>('/profile/:id/');
   const dispatch = useDispatch();
-  const { currentUser, status } = useSelector((state: RootStateType) => state.profilePage);
+  const { currentUser, status } = props.profilePage;
   useEffect(() => {
     dispatch(getUserProfile(match));
     dispatch(getUserStatus(match));
-  }, []);
+  }, [dispatch, match]);
 
   return (
     <div className={classes.profileContainer}>
@@ -30,6 +34,3 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
-
-/adasd
-

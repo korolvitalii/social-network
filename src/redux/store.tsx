@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import rootReducer from './reducers/rootReducer';

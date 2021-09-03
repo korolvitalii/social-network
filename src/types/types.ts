@@ -11,13 +11,13 @@ const SET_USER_PROFILE = ' SET_USER_PROFILE';
 const SET_USER_DATA = 'SET_USER_DATA';
 
 export type PostType = {
-  id: number;
-  message: string;
+  id: string;
+  text: string;
   likeCount: number;
 };
 
 export type MessageType = {
-  id: number;
+  id: string;
   text: string;
 };
 

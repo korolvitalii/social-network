@@ -11,7 +11,7 @@ const HeaderContainer: React.FC = (props: PropsType) => {
   const { auth } = useSelector((state: RootStateType) => state);
   useEffect(() => {
     dispatch(authMeAction());
-  }, []);
+  }, [dispatch]);
   return <Header {...auth} />;
 };
 

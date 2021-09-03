@@ -33,3 +33,11 @@ export const authMeAction = () => (dispatch: any) => {
     }
   });
 };
+
+export const loginAction = (loginData: any) => (dispatch: any) => {
+  authApi.login(loginData).then((response) => {
+    if (response.data.resultCode === 0) {
+      dispatch(authMeAction());
+    }
+  });
+};

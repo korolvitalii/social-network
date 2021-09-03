@@ -47,12 +47,6 @@ export const actions = {
       newPost: newPost,
     },
   }),
-  updateNewPostText: (text: string): ActionsType => ({
-    type: UPDATE_TEXT_NEW_POST,
-    payload: {
-      newPostText: text,
-    },
-  }),
   setUserProfile: (user: UserProfileType): ActionsType => ({
     type: SET_USER_PROFILE,
     payload: {

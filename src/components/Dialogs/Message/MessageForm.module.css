@@ -1,0 +1,54 @@
+body {
+  /* background: #0e101c; */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.button {
+  display: block;
+  box-sizing: border-box;
+  width: 150px;
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+button[type='submit'],
+button[type='submit'] {
+  background: rgba(6, 247, 154, 0.638);
+  color: rgb(0, 0, 0);
+  text-transform: uppercase;
+  border: none;
+  margin-top: 20px;
+  padding: 20px;
+  font-size: 10px;
+  font-weight: 100;
+  letter-spacing: 10px;
+}
+
+button[type='submit']:hover,
+button[type='submit']:hover {
+  background: rgba(5, 84, 53, 0.398);
+  /* background: rgba(0, 0, 0, 0.207); */
+}
+
+button[type='submit']:active,
+button[type='button']:active,
+button[type='submit']:active {
+  transition: 0.3s all;
+  transform: translateY(3px);
+  border: 1px solid transparent;
+  opacity: 1;
+}
+
+.textarea {
+  width: 300px;
+  height: 100px;
+}
