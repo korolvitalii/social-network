@@ -5,3 +5,7 @@
 - React
 - Redux
 - TypeScript
+- React-hook-form / Yup
+- Jest
+- Axios
+- CSS-modules
