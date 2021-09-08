@@ -2,13 +2,17 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import classes from './MyPosts.module.css';
 
-import { PostType, RootStateType } from '../../types/types';
+import { PostType, RootStateType } from '../../../types/types';
 import Post from './Post/Post';
 import MyPostsForm from './MyPostsForm';
 
-const MyPosts: React.FC = () => {
-  const { posts } = useSelector((state: RootStateType) => state.profilePage);
+type PropsType = {
+  posts: Array<PostType>;
+};
 
+const MyPosts: React.FC<PropsType> = (props) => {
+  const { posts } = props;
+  console.log('RENDER MY POSTS');
   const postsElements = posts.map((post: PostType) => {
     const { id, text, likeCount } = post;
     return <Post key={id} id={id} message={text} likeCount={likeCount} />;

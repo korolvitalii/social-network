@@ -1,4 +1,5 @@
 import { apiProfile, apiUsers } from '../../api/api';
+import { UserType } from '../../types/types';
 
 const CHANGE_FLAG = 'CHANGE_FLAG';
 const SET_USERS = 'SET_USERS';
@@ -21,18 +22,6 @@ export type MessageType = {
 export type DialogType = {
   id: number;
   name: string;
-};
-
-export type UserType = {
-  name: string;
-  id: number;
-  uniqueUrlName: null | string;
-  photos: {
-    small: undefined | string;
-    large: undefined | string;
-  };
-  status: null | string;
-  followed: boolean;
 };
 
 type ServerData = {

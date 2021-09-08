@@ -11,7 +11,7 @@ const SET_USER_PROFILE = ' SET_USER_PROFILE';
 const SET_USER_DATA = 'SET_USER_DATA';
 
 export type PostType = {
-  id: string;
+  id: number;
   text: string;
   likeCount: number;
 };
@@ -31,8 +31,8 @@ export type UserType = {
   id: number;
   uniqueUrlName: null | string;
   photos: {
-    small: undefined | string;
-    large: undefined | string;
+    small: null | string;
+    large: null | string;
   };
   status: null | string;
   followed: boolean;
@@ -70,6 +70,10 @@ export type RootStateType = {
     login: string;
     email: string;
     isAuth: boolean;
+    authErrors: Array<string>;
+  };
+  app: {
+    initialized: boolean;
   };
 };
 

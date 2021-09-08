@@ -17,11 +17,10 @@ const initialState = {
   isFollowingProgress: false as boolean,
 };
 
-export const users = (state = initialState, action: ActionsType) => {
+export const UsersReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case SET_USERS: {
-      const newUsers = action.payload.items;
-      return { ...state, users: newUsers };
+      return { ...state, users: action.payload.items };
     }
     case CHANGE_FLAG: {
       const updateUsers = state.users.map((user) => {

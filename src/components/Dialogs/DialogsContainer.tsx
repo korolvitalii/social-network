@@ -6,10 +6,12 @@ import Dialogs from './Dialogs';
 import withAuthRedirect from '../../hoc/withAuthRedirect';
 import { actions } from '../../redux/actions/MessagesActions';
 import { AppStateType } from '../../redux/reducers/rootReducer';
+import { getDialogs, getMessages } from '../../redux/selectors/dialogs';
 
 let mapStateToProps = (state: AppStateType) => {
   return {
-    messagePage: state.messagesPage,
+    dialogs: getDialogs(state),
+    messages: getMessages(state),
   };
 };
 

@@ -1,0 +1,114 @@
+{
+  "items": [
+    {
+      "name": "sanya_comp",
+      "id": 19508,
+      "uniqueUrlName": null,
+      "photos": {
+        "small": null,
+        "large": null
+      },
+      "status": null,
+      "followed": false
+    },
+    {
+      "name": "kate_zhdanovich",
+      "id": 19507,
+      "uniqueUrlName": null,
+      "photos": {
+        "small": null,
+        "large": null
+      },
+      "status": null,
+      "followed": false
+    },
+    {
+      "name": "test1488",
+      "id": 19506,
+      "uniqueUrlName": null,
+      "photos": {
+        "small": null,
+        "large": null
+      },
+      "status": null,
+      "followed": false
+    },
+    {
+      "name": "mau",
+      "id": 19505,
+      "uniqueUrlName": null,
+      "photos": {
+        "small": null,
+        "large": null
+      },
+      "status": null,
+      "followed": false
+    },
+    {
+      "name": "werty_potom",
+      "id": 19504,
+      "uniqueUrlName": null,
+      "photos": {
+        "small": null,
+        "large": null
+      },
+      "status": null,
+      "followed": false
+    },
+    {
+      "name": "alex_g",
+      "id": 19503,
+      "uniqueUrlName": null,
+      "photos": {
+        "small": null,
+        "large": null
+      },
+      "status": null,
+      "followed": false
+    },
+    {
+      "name": "philipp_moriss",
+      "id": 19502,
+      "uniqueUrlName": null,
+      "photos": {
+        "small": null,
+        "large": null
+      },
+      "status": null,
+      "followed": false
+    },
+    {
+      "name": "isckatel",
+      "id": 19501,
+      "uniqueUrlName": null,
+      "photos": {
+        "small": null,
+        "large": null
+      },
+      "status": null,
+      "followed": false
+    },
+    {
+      "name": "tester01",
+      "id": 19500,
+      "uniqueUrlName": null,
+      "photos": {
+        "small": "https://social-network.samuraijs.com/activecontent/images/users/19500/user-small.jpg?v=1",
+        "large": "https://social-network.samuraijs.com/activecontent/images/users/19500/user.jpg?v=1"
+      },
+      "status": "“Quality is not an act, it is a habit.”",
+      "followed": false
+    },
+    {
+      "name": "maxoptipoltava",
+      "id": 19499,
+      "uniqueUrlName": null,
+      "photos": {
+        "small": null,
+        "large": null
+      },
+      "status": null,
+      "followed": false
+    }
+  ]
+}

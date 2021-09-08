@@ -8,23 +8,20 @@ import userIcon from '../../assets/images/User-Icon.jpg';
 import Preloader from '../common/Preloader/Preloader';
 import { UserType } from '../../types/types';
 import { followUserAction, getUsers, unfollowUserAction } from '../../redux/actions/UsersActions';
-import { initialStateType } from '../../redux/reducers/UsersReducers';
 
 type PropsType = {
   toggleFollowingProgress: any;
-  usersPage: initialStateType;
+  users: Array<UserType>;
+  pageSize: number;
+  pagesCount: number;
   isFollowingProgress: boolean;
   isFetch: boolean;
 };
 
 const Users: React.FC<PropsType> = (props) => {
   const dispatch = useDispatch();
-  const {
-    toggleFollowingProgress,
-    usersPage: { pageSize, pagesCount, users },
-    isFollowingProgress,
-    isFetch,
-  } = props;
+  const { toggleFollowingProgress, pageSize, pagesCount, users, isFollowingProgress, isFetch } =
+    props;
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 

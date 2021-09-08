@@ -1,7 +1,7 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { actions } from '../../redux/actions/ProfileActions';
+import { actions } from '../../../redux/actions/ProfileActions';
 import classes from './MyPostForm.module.css';
 import { uniqueId } from 'lodash';
 
@@ -20,14 +20,12 @@ export default function MessageForm() {
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     const post = {
-      id: uniqueId(),
+      id: Number(uniqueId()),
       text: data.postText,
       likeCount: 0,
     };
     dispatch(actions.addNewPost(post));
   };
-  console.log(errors);
-
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <textarea

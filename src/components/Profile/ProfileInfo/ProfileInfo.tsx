@@ -10,6 +10,7 @@ type ProfileInfoProps = {
 
 const ProfileInfo: React.FC<ProfileInfoProps> = (props) => {
   const { profile, status } = props;
+
   return (
     <div className={classes.profileInfo}>
       <div className={classes.description}>
@@ -26,8 +27,12 @@ const ProfileInfo: React.FC<ProfileInfoProps> = (props) => {
         <div className={classes.profileDescription}>
           <h1>Fullname: {profile?.fullName}</h1>
           <h3>About Me: {profile?.aboutMe}</h3>
-          <div>{profile?.contacts?.facebook}</div>
-          <div>{profile?.contacts?.github}</div>
+          <div>
+            <h3>Contacts</h3>
+            <div>{profile?.contacts?.facebook}</div>
+            <div>{profile?.contacts?.github}</div>
+          </div>
+          <div>Looking for job {profile?.lookingForAJob}</div>
         </div>
         <div></div>
       </div>

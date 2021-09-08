@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux';
-import { posts } from './ProfileReducer';
+import { ProfileReducer } from './ProfileReducer';
 import { messages } from './MessagesReducer';
-import { users } from './UsersReducers';
+import { UsersReducer } from './UsersReducers';
 import { authReducer } from './AuthReducer';
+import { appReducer } from './AppReducers';
 
 const rootReducer = combineReducers({
-  profilePage: posts,
+  profilePage: ProfileReducer,
   messagesPage: messages,
-  usersPage: users,
+  usersPage: UsersReducer,
   auth: authReducer,
+  app: appReducer,
 });
 
 type RootReducerType = typeof rootReducer; // (globalstate: AppStateType) => AppStateType

@@ -1,27 +1,6 @@
-body {
-  /* background: #0e101c; */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-}
-
 .form {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.form {
-  /* background: #0e101c; */
   max-width: 400px;
-  margin: 0 auto;
-}
-
-p {
-  color: #bf1650;
-}
-
-p::before {
-  display: inline;
-  content: '⚠ ';
+  margin: 50px 80px;
 }
 
 .input {
@@ -46,7 +25,7 @@ label {
   font-weight: 200;
 }
 
-button[type='submit'],
+.form button[type='submit'],
 input[type='submit'] {
   background: rgb(185, 185, 255);
   color: black;
@@ -59,12 +38,12 @@ input[type='submit'] {
   letter-spacing: 10px;
 }
 
-button[type='submit']:hover,
+.form button[type='submit']:hover,
 input[type='submit']:hover {
   background: #3131af;
 }
 
-button[type='submit']:active,
+.form button[type='submit']:active,
 input[type='button']:active,
 input[type='submit']:active {
   transition: 0.3s all;
@@ -81,39 +60,56 @@ input[type='button']:hover {
   transition: 0.3s all;
 }
 
-button[type='submit'],
-input[type='button'],
-input[type='submit'] {
-  -webkit-appearance: none;
-}
-
-.App {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-button[type='button'] {
-  display: block;
-  appearance: none;
-  background: #333;
-  color: white;
+.logout button {
+  width: 150px;
+  margin-top: 5px;
+  height: 50px;
+  cursor: pointer;
   border: none;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #7f5a83;
+  background-image: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgb(112, 117, 131) 0%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  background-size: 200% 100%;
+  background-position: left;
+  background-repeat: no-repeat;
+  transition: 500ms;
 }
 
-hr {
-  margin-top: 30px;
+.logout button:before {
+  content: 'Logout';
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 40px;
+  background-color: #ffffff;
+  background-image: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(94, 108, 142, 1) 0%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  transition: 500ms;
 }
 
-button {
-  display: block;
-  appearance: none;
-  margin-top: 40px;
-  border: 1px solid #333;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  border-radius: 4px;
+.logout button:hover {
+  background-position: right;
+}
+
+.logout button:hover:before {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.logout button:focus {
+  outline: none;
 }

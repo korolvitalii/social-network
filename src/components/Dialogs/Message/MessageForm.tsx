@@ -25,7 +25,6 @@ export default function MessageForm() {
     };
     dispatch(actions.addNewMessage(message));
   };
-  console.log(errors);
 
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>

@@ -2,18 +2,16 @@ import React from 'react';
 import Dialog from './Dialog';
 import classes from './Dialogs.module.css';
 import Message from './Message/Message';
-import { InitialStateType } from '../../redux/reducers/MessagesReducer';
 import MessageForm from './Message/MessageForm';
+import { DialogType, MessageType } from '../../types/types';
 
 type PropsType = {
-  messagePage: InitialStateType;
-  sendMessage: (messageText: string) => void;
+  dialogs: Array<DialogType>;
+  messages: Array<MessageType>;
 };
 
 const Dialogs: React.FC<PropsType> = (props) => {
-  const {
-    messagePage: { dialogs, messages },
-  } = props;
+  const { dialogs, messages } = props;
   const dialogsElements = dialogs.map(({ name, id }) => <Dialog name={name} id={id} key={id} />);
   const messageElements = messages.map(({ text, id }) => <Message text={text} id={id} key={id} />);
 

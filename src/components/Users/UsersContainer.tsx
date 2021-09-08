@@ -5,12 +5,21 @@ import { connect } from 'react-redux';
 import withAuthRedirect from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 import { AppStateType } from '../../redux/reducers/rootReducer';
+import {
+  getIsFetch,
+  getIsFollowingProgress,
+  getPagesCount,
+  getPageSize,
+  getUsers,
+} from '../../redux/selectors/user-selectors';
 
 let mapStateToProps = (state: AppStateType) => {
   return {
-    usersPage: state.usersPage,
-    isFollowingProgress: state.usersPage.isFollowingProgress,
-    isFetch: state.usersPage.isFetch,
+    users: getUsers(state),
+    pageSize: getPageSize(state),
+    pagesCount: getPagesCount(state),
+    isFollowingProgress: getIsFollowingProgress(state),
+    isFetch: getIsFetch(state),
   };
 };
 

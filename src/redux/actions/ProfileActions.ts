@@ -2,49 +2,51 @@ import { apiProfile } from '../../api/api';
 import { PostType, UserProfileType } from '../../types/types';
 
 const ADD_NEW_POST = 'ADD_NEW_POST';
-const UPDATE_TEXT_NEW_POST = 'UPDATE_TEXT_NEW_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_USER_STATUS = ' SET_USER_STATUS';
+const SET_USER_STATUS = 'SET_USER_STATUS';
+const REMOVE_POST = 'REMOVE_POST';
 
-export type AddNewPostType = {
+type AddNewPostType = {
   type: typeof ADD_NEW_POST;
   payload: {
     newPost: PostType;
   };
 };
 
-export type UpdateNewPostTextType = {
-  type: typeof UPDATE_TEXT_NEW_POST;
-  payload: {
-    newPostText: string;
-  };
-};
-
-export type SetUserProfileType = {
+type SetUserProfileType = {
   type: typeof SET_USER_PROFILE;
   payload: {
     user: UserProfileType;
   };
 };
 
-export type SetUserStatusType = {
+type SetUserStatusType = {
   type: typeof SET_USER_STATUS;
   payload: {
     status: string;
   };
 };
 
-export type ActionsType =
-  | AddNewPostType
-  | UpdateNewPostTextType
-  | SetUserProfileType
-  | SetUserStatusType;
+type RemovePost = {
+  type: typeof REMOVE_POST;
+  payload: {
+    id: number;
+  };
+};
+
+export type ActionsType = AddNewPostType | SetUserProfileType | SetUserStatusType | RemovePost;
 
 export const actions = {
   addNewPost: (newPost: PostType): ActionsType => ({
     type: ADD_NEW_POST,
     payload: {
       newPost: newPost,
+    },
+  }),
+  removePost: (id: number): ActionsType => ({
+    type: REMOVE_POST,
+    payload: {
+      id,
     },
   }),
   setUserProfile: (user: UserProfileType): ActionsType => ({
