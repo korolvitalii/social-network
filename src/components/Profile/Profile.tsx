@@ -17,10 +17,9 @@ type PropsType = {
   status: string;
 };
 
-const Profile: React.FC<PropsType> = (props) => {
+const Profile: React.FC<PropsType> = ({ currentUser, status }) => {
   let match = useRouteMatch<MatchParams>('/profile/:id/');
   const dispatch = useDispatch();
-  const { currentUser, status } = props;
   useEffect(() => {
     dispatch(getUserProfile(match));
     dispatch(getUserStatus(match));
@@ -28,7 +27,7 @@ const Profile: React.FC<PropsType> = (props) => {
 
   return (
     <div className={classes.profileContainer}>
-      <ProfileInfo profile={currentUser} status={status} />
+      <ProfileInfo profile={currentUser} status={status} dispatch={dispatch} />
       <MyPostsContainer />
     </div>
   );

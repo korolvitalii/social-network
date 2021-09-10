@@ -12,8 +12,7 @@ type PropsType = {
   isAuth: boolean;
 };
 
-const Header: React.FC<PropsType> = (props) => {
-  const { isAuth } = props;
+const Header: React.FC<PropsType> = ({ isAuth }) => {
   const handleClick = () => {
     return <Redirect to='/profile' />;
   };

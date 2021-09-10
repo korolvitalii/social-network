@@ -25,7 +25,7 @@ const ContainerApp: React.FC<PropsType> = (props) => {
 
   useEffect(() => {
     dispatch(initializeApp());
-  }, []);
+  }, [dispatch]);
 
   if (!props.initialized) {
     return <Preloader />;

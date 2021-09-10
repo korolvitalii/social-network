@@ -7,8 +7,7 @@ type PropsType = {
   id: number;
 };
 
-const Dialog: React.FC<PropsType> = (props) => {
-  const { id, name } = props;
+const Dialog: React.FC<PropsType> = ({ id, name }) => {
   const path = '/dialogs/' + id;
   return (
     <div className={classes.dialog + ' ' + classes.active}>

@@ -17,12 +17,11 @@ const initialState = {
     { id: 1, name: 'shem' },
     { id: 1, name: 'rich' },
     { id: 1, name: 'unknown' },
-    ``,
   ] as Array<DialogType>,
   newMessageText: '' as string,
 };
 
-export const messages = (state = initialState, action: ActionsType): typeof initialState => {
+export const MessagesReducer = (state = initialState, action: ActionsType): typeof initialState => {
   switch (action.type) {
     case ADD_NEW_MESSAGE: {
       const messages = [...state.messages, action.payload.newMessage];

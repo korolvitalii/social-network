@@ -6,11 +6,10 @@ import ProfileStatus from '../ProfileStatus';
 type ProfileInfoProps = {
   profile: any;
   status: string;
+  dispatch: any;
 };
 
-const ProfileInfo: React.FC<ProfileInfoProps> = (props) => {
-  const { profile, status } = props;
-
+const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile, status, dispatch }) => {
   return (
     <div className={classes.profileInfo}>
       <div className={classes.description}>
@@ -22,7 +21,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = (props) => {
           />
         </div>
         <div>
-          <ProfileStatus status={status} />
+          <ProfileStatus status={status} dispatch={dispatch} />
         </div>
         <div className={classes.profileDescription}>
           <h1>Fullname: {profile?.fullName}</h1>

@@ -9,7 +9,7 @@ type FormValues = {
   messageText: string;
 };
 
-export default function MessageForm() {
+export default () => {
   const {
     register,
     handleSubmit,
@@ -38,4 +38,4 @@ export default function MessageForm() {
       </button>
     </form>
   );
-}
+};

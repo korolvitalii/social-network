@@ -147,8 +147,8 @@ export const unfollowUserAction = (id: number) => (dispatch: any) => {
   });
 };
 
-export const getUserStatusAction = (id: number) => (dispatch: any) => {
-  apiProfile.getUserStatus(id).then((response) => {});
-};
+// export const getUserStatusAction = (id: number) => (dispatch: any) => {
+//   apiProfile.getUserStatus(id).then((response) => {});
+// };
 
 export type ActionsTypes = typeof actions;

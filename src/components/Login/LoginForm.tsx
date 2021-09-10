@@ -1,11 +1,9 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../redux/actions/AuthActions';
 import classes from './LoginForm.module.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { RootStateType } from '../../types/types';
 
 type FormValues = {
   email: string;
@@ -14,12 +12,17 @@ type FormValues = {
   captcha?: boolean;
 };
 
+type PropsType = {
+  dispatch?: any;
+  authErrors?: Array<string>;
+};
+
 const schema = yup.object().shape({
   email: yup.string().email('Must be a valid email').max(255).required('Email is required'),
   password: yup.string().max(255).required('Password is required'),
 });
 
-const LoginForm: React.FC = () => {
+const LoginForm: React.FC<PropsType> = ({ dispatch, authErrors }) => {
   const {
     register,
     handleSubmit,
@@ -27,8 +30,6 @@ const LoginForm: React.FC = () => {
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
-  const dispatch = useDispatch();
-  const { authErrors } = useSelector((state: RootStateType) => state.auth);
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     const requestData = {
       email: data.email,
@@ -53,7 +54,7 @@ const LoginForm: React.FC = () => {
       />
       {errors.password && <p>{errors.password.message}</p>}
       <div>
-        <input type='checkbox' {...register('rememberMe')} />
+        <input type='checkbox' data-testid='login_form_checkbox' {...register('rememberMe')} />
         <span>Remember Me</span>
       </div>
       <div>{authErrors?.length !== 0 && authErrorsMessage}</div>

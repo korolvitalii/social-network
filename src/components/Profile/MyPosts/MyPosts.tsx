@@ -10,9 +10,7 @@ type PropsType = {
   posts: Array<PostType>;
 };
 
-const MyPosts: React.FC<PropsType> = (props) => {
-  const { posts } = props;
-  console.log('RENDER MY POSTS');
+const MyPosts: React.FC<PropsType> = ({ posts }) => {
   const postsElements = posts.map((post: PostType) => {
     const { id, text, likeCount } = post;
     return <Post key={id} id={id} message={text} likeCount={likeCount} />;

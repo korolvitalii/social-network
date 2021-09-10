@@ -26,5 +26,5 @@
     "types": ["jest"],
     "typeRoots": ["./src/types", "node_modules/@types"]
   },
-  "include": ["src", "tests"]
+  "include": ["src", "__tests__"]
 }
