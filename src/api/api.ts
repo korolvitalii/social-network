@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ServerData, UserProfileType } from '../types/types';
+import { ServerData, ProfileType } from '../types/types';
 
 const instance = axios.create({
   withCredentials: true,
@@ -21,17 +21,29 @@ export const apiUsers = {
   },
 };
 
-export const apiProfile = {
-  getUserProfile(match: any): any {
-    return instance.get<UserProfileType>(
-      `/profile/${match?.params.id ? match.params.id : '19229'}`,
-    );
+export const profileApi = {
+  getUserProfile(userId: number): any {
+    debugger;
+    return instance.get<ProfileType>(`/profile/${userId}`);
   },
-  getUserStatus(match: any) {
-    return instance.get(`/profile/status/${match?.params.id ? match.params.id : '19229'}`);
+  getUserStatus(userId: number) {
+    return instance.get(`/profile/status/${userId}`);
   },
   updateUserStatus(status: any) {
     return instance.put(`/profile/status`, { status: status }).then((response) => response.data);
+  },
+  updateUserPhoto(photo: any) {
+    const formData = new FormData();
+    formData.append('image', photo);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+    return instance.put(`/profile/photo`, formData, config);
+  },
+  updateProfile(profile: ProfileType) {
+    return instance.put(`/profile`, profile);
   },
 };
 

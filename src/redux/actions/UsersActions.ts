@@ -1,4 +1,4 @@
-import { apiProfile, apiUsers } from '../../api/api';
+import { apiUsers } from '../../api/api';
 import { UserType } from '../../types/types';
 
 const CHANGE_FLAG = 'CHANGE_FLAG';
@@ -121,34 +121,27 @@ export const actions = {
   }),
 };
 
-export const getUsers = (currentPage: number, pageSize: number) => (dispatch: any) => {
+export const getUsers = (currentPage: number, pageSize: number) => async (dispatch: any) => {
   dispatch(actions.isFetchData(true));
-  apiUsers.getUsers(currentPage, pageSize).then((response: ServerData) => {
-    dispatch(actions.setUsers(response.items));
-    dispatch(actions.getTotalCount(response.totalCount));
-    dispatch(actions.setPagesCount(response.totalCount, pageSize));
-    dispatch(actions.isFetchData(false));
-  });
+  const response: any = await apiUsers.getUsers(currentPage, pageSize);
+  dispatch(actions.setUsers(response.items));
+  dispatch(actions.getTotalCount(response.totalCount));
+  dispatch(actions.setPagesCount(response.totalCount, pageSize));
+  dispatch(actions.isFetchData(false));
 };
 
-export const followUserAction = (id: number) => (dispatch: any) => {
-  apiUsers.follow(id).then((response: any) => {
-    if (response.data.resultCode === 0) {
-      dispatch(actions.toggleFollowUnfollow(id));
-      dispatch(actions.toggleFollowingProgress(false));
-    }
-  });
-};
-
-export const unfollowUserAction = (id: number) => (dispatch: any) => {
-  apiUsers.unfollow(id).then((response: any) => {
+export const followUserAction = (id: number) => async (dispatch: any) => {
+  const response = await apiUsers.follow(id);
+  if (response.data.resultCode === 0) {
     dispatch(actions.toggleFollowUnfollow(id));
     dispatch(actions.toggleFollowingProgress(false));
-  });
+  }
 };
 
-// export const getUserStatusAction = (id: number) => (dispatch: any) => {
-//   apiProfile.getUserStatus(id).then((response) => {});
-// };
+export const unfollowUserAction = (id: number) => async (dispatch: any) => {
+  const response = await apiUsers.unfollow(id);
+  dispatch(actions.toggleFollowUnfollow(id));
+  dispatch(actions.toggleFollowingProgress(false));
+};
 
 export type ActionsTypes = typeof actions;

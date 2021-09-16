@@ -1,10 +1,12 @@
-import { PostType, UserProfileType } from '../../types/types';
+import { PostType, ProfileType } from '../../types/types';
 import { ActionsType } from '../actions/ProfileActions';
 
 const ADD_NEW_POST = 'ADD_NEW_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_USER_STATUS = 'SET_USER_STATUS';
 const REMOVE_POST = 'REMOVE_POST';
+const SET_USER_PHOTO = 'SET_USER_PHOTO';
+const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 
 const initialState = {
   posts: [
@@ -13,8 +15,7 @@ const initialState = {
     { id: 3, text: 'Some news', likeCount: 1 },
     { id: 4, text: 'SomePost', likeCount: 5 },
   ] as Array<PostType>,
-  newPostText: '' as string,
-  currentUser: 19229 as UserProfileType | number,
+  profile: null as ProfileType | null,
   friends: ['John', 'Jack', 'Stasy'] as Array<string>,
   status: '' as string,
 };
@@ -32,10 +33,19 @@ export const ProfileReducer = (state = initialState, action: ActionsType): Initi
       return { ...state, posts: newPosts };
     }
     case SET_USER_PROFILE: {
-      return { ...state, currentUser: action.payload.user };
+      return { ...state, profile: action.payload.user };
     }
     case SET_USER_STATUS: {
       return { ...state, status: action.payload.status };
+    }
+    case SET_USER_PHOTO: {
+      return {
+        ...state,
+        profile: { ...state.profile, photos: action.payload.photos } as ProfileType,
+      };
+    }
+    case UPDATE_USER_INFO: {
+      return { ...state, profile: action.payload.toUpdateProfile };
     }
     default:
       return state;

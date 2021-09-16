@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
-import logo from '../../assets/images/logo.jpg';
+import logo from '../../assets/images/app-logo.png';
 import classes from './Header.module.css';
 
-import { Logout } from '../Login/Logout';
+import Logout from '../Login/Logout';
 
 type PropsType = {
   id: number;
@@ -18,12 +18,12 @@ const Header: React.FC<PropsType> = ({ isAuth }) => {
   };
   return (
     <header className={classes.header}>
-      <img src={logo} alt='' onClick={handleClick} />
+      <img className={classes.appLogo} src={logo} alt='' onClick={handleClick} />
       <div>
         {!isAuth ? (
           <NavLink to='/login'>
             <div className={classes.login}>
-              <button type='button'></button>
+              <button type='button'>Login</button>
             </div>
           </NavLink>
         ) : (

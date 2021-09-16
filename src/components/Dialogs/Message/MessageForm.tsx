@@ -9,12 +9,8 @@ type FormValues = {
   messageText: string;
 };
 
-export default () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+const MessageForm: React.FC = () => {
+  const { register, handleSubmit } = useForm();
 
   const dispatch = useDispatch();
 
@@ -32,10 +28,11 @@ export default () => {
         className={classes.textarea}
         {...register('messageText', { required: true, max: 200 })}
       />
-
       <button type='submit' className={classes.button}>
         Send
       </button>
     </form>
   );
 };
+
+export default MessageForm;

@@ -1,15 +1,3 @@
-const ADD_NEW_POST = 'ADD_NEW_POST';
-const UPDATE_TEXT_NEW_POST = 'UPDATE_TEXT_NEW_POST';
-const UPDATE_TEXT_NEW_MESSAGE = 'UPDATE_TEXT_NEW_MESSAGE';
-const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE';
-const CHANGE_FLAG = 'CHANGE_FLAG';
-const SET_USERS = 'SET_USERS';
-const GET_TOTAL_COUNT = 'GET_TOTAL_COUNT';
-const SET_PAGES_COUNT = 'SET_PAGES_COUNT';
-const TOGGLE_IS_FETCH_DATA = 'TOGGLE_IS_FETCH_DATA';
-const SET_USER_PROFILE = ' SET_USER_PROFILE';
-const SET_USER_DATA = 'SET_USER_DATA';
-
 export type PostType = {
   id: number;
   text: string;
@@ -26,20 +14,8 @@ export type DialogType = {
   name: string;
 };
 
-export type UserType = {
-  name: string;
-  id: number;
-  uniqueUrlName: null | string;
-  photos: {
-    small: null | string;
-    large: null | string;
-  };
-  status: null | string;
-  followed: boolean;
-};
-
 export type ServerData = {
-  items: Array<UserType>;
+  items: Array<ProfileType>;
   totalCount: number;
   error: null | string;
 };
@@ -49,8 +25,9 @@ export type RootStateType = {
     posts: Array<PostType>;
     newPostText: string;
     friends: Array<string>;
-    currentUser: UserProfileType;
+    currentUser: UserType;
     status: string;
+    photo: string;
   };
   messagesPage: {
     dialogs: Array<DialogType>;
@@ -58,7 +35,7 @@ export type RootStateType = {
     newMessageText: string;
   };
   usersPage: {
-    users: Array<UserType>;
+    users: Array<ProfileType>;
     totalCount: number;
     pageSize: number;
     pagesCount: number;
@@ -77,24 +54,35 @@ export type RootStateType = {
   };
 };
 
-export type UserProfileType = {
-  aboutMe: string | null;
-  contacts: {
-    facebook: string | null;
-    website: string | null;
-    vk: string | null;
-    twitter: string | null;
-    instagram: string | null;
-    youtube: string | null;
-    github: string | null;
-    mainLink: string | null;
-  };
-  lookingForAJob: boolean;
-  lookingForAJobDescription: string | null;
-  fullName: string | null;
+export type ContactsType = {
+  github: string;
+  vk: string;
+  facebook: string;
+  instagram: string;
+  twitter: string;
+  website: string;
+  youtube: string;
+  mainLink: string;
+};
+export type PhotosType = {
+  small: string | null;
+  large: string | null;
+};
+
+export type ProfileType = {
   userId: number;
-  photos: {
-    small: string;
-    large: string;
-  };
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string;
+  fullName: string;
+  contacts: ContactsType;
+  photos: PhotosType;
+  aboutMe: string;
+};
+
+export type UserType = {
+  id: number;
+  name: string;
+  followed: boolean;
+  status: string | null;
+  photos: PhotosType;
 };

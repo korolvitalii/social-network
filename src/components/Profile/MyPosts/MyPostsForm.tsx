@@ -10,11 +10,7 @@ type FormValues = {
 };
 
 export default function MessageForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const dispatch = useDispatch();
 

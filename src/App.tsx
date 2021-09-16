@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, withRouter } from 'react-router-dom';
-import { connect, Provider, useDispatch, useSelector } from 'react-redux';
+import { connect, Provider, useDispatch } from 'react-redux';
 import store from './redux/store';
 
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
-import Sitebar from './components/Sitebar/Sitebar';
 import Login from './components/Login/Login';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
-import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import { compose } from 'redux';
 import { RootStateType } from './types/types';
 import { initializeApp } from './redux/actions/AppActions';
 import Preloader from './components/common/Preloader/Preloader';
+import SitebarContainer from './components/Sitebar/SitebarContainer';
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 type PropsType = {
   initialized: boolean;
@@ -36,11 +37,16 @@ const ContainerApp: React.FC<PropsType> = (props) => {
         <div className='app-wrapper'>
           <HeaderContainer />
           <Navbar />
-          <Sitebar />
+          <SitebarContainer />
           <div className='app-wrapper-content'>
             <Route path='/profile' render={() => <ProfileContainer />} />
-            <Route path='/dialogs' render={() => <DialogsContainer />} />
-            <Route path='/users' render={() => <UsersContainer />} />
+            <React.Suspense fallback={<Preloader />}>
+              <Route path='/dialogs' render={() => <DialogsContainer />} />
+            </React.Suspense>
+            <React.Suspense fallback={<Preloader />}>
+              <Route path='/users' render={() => <UsersContainer />} />{' '}
+            </React.Suspense>
+
             <Route path='/login' render={() => <Login />} />
           </div>
         </div>

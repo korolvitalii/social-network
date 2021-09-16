@@ -1,8 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import classes from './MyPosts.module.css';
 
-import { PostType, RootStateType } from '../../../types/types';
+import { PostType } from '../../../types/types';
 import Post from './Post/Post';
 import MyPostsForm from './MyPostsForm';
 

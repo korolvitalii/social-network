@@ -22,7 +22,6 @@ const Users: React.FC<PropsType> = (props) => {
   const dispatch = useDispatch();
   const { toggleFollowingProgress, pageSize, pagesCount, users, isFollowingProgress, isFetch } =
     props;
-
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {

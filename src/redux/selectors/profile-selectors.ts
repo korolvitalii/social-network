@@ -1,7 +1,7 @@
 import { AppStateType } from '../reducers/rootReducer';
 
 export const getCurrentUser = (state: AppStateType) => {
-  return state.profilePage.currentUser;
+  return state.profilePage.profile;
 };
 
 export const getStatus = (state: AppStateType) => {

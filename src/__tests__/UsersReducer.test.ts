@@ -1,6 +1,6 @@
 import usersRaw from './UsersRaw.json';
 import { actions } from '../redux/actions/UsersActions';
-import { UserType } from '../types/types';
+import { ProfileType, UserType } from '../types/types';
 import { UsersReducer } from '../redux/reducers/UsersReducers';
 
 const state = {
