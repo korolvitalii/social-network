@@ -1,12 +1,15 @@
 import { ActionsType } from '../actions/AuthActions';
-const SET_USER_DATA = 'SET_USER_DATA';
-const SET_AUTH_ERRORS = 'SET_AUTH_ERRORS';
+
+const SET_USER_DATA = 'SN/AUTHACTIONS/SET_USER_DATA';
+const SET_AUTH_ERRORS = 'SN/AUTHACTIONS/SET_AUTH_ERRORS';
+const SET_CAPTCHA_URL = 'SN/AUTHACTIONS/SET_CAPTCHA_URL';
 
 const initialState = {
   id: null as number | null,
   email: null as string | null,
   login: null as string | null,
   isAuth: false as boolean,
+  captcha: null as string | null,
 };
 
 export const authReducer = (state = initialState, action: ActionsType) => {
@@ -16,6 +19,9 @@ export const authReducer = (state = initialState, action: ActionsType) => {
     }
     case SET_AUTH_ERRORS: {
       return { ...state, authErrors: action.payload.errors };
+    }
+    case SET_CAPTCHA_URL: {
+      return { ...state, captcha: action.payload.captcha };
     }
     default:
       return state;

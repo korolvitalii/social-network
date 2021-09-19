@@ -23,7 +23,6 @@ export const apiUsers = {
 
 export const profileApi = {
   getUserProfile(userId: number): any {
-    debugger;
     return instance.get<ProfileType>(`/profile/${userId}`);
   },
   getUserStatus(userId: number) {
@@ -56,5 +55,11 @@ export const authApi = {
   },
   logout() {
     return instance.delete(`/auth/login`);
+  },
+};
+
+export const securityApi = {
+  getCaptchaUrl() {
+    return instance.get('/security/get-captcha-url');
   },
 };

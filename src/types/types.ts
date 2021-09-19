@@ -48,6 +48,7 @@ export type RootStateType = {
     email: string;
     isAuth: boolean;
     authErrors: Array<string>;
+    captcha: string;
   };
   app: {
     initialized: boolean;

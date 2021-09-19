@@ -13,6 +13,7 @@ type ProfileInfoProps = {
   dispatch: any;
   savePhoto: (e: any) => void;
   isOwner?: string;
+  formErrors: Array<string>;
 };
 
 const ProfileInfo: React.FC<ProfileInfoProps> = ({
@@ -21,9 +22,9 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
   dispatch,
   savePhoto,
   isOwner,
+  formErrors,
 }) => {
   const [editMode, setEditMode] = useState(false);
-  const keys = profile?.contacts ? Object.keys(profile.contacts) : null;
 
   const goToEditMode = () => {
     setEditMode(!editMode);
@@ -56,6 +57,12 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
             userId={profile.userId}
             handleButtonClick={goToEditMode}
             editMode={editMode}
+            formErrors={formErrors}
+            fullName={profile.fullName}
+            aboutMe={profile.aboutMe}
+            contacts={profile.contacts}
+            lookingForAJob={profile.lookingForAJob}
+            lookingForAJobDescription={profile.lookingForAJobDescription}
           />
         ) : (
           <ProfileData

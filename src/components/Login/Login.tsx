@@ -6,13 +6,13 @@ import LoginForm from './LoginForm';
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
-  const { isAuth, authErrors } = useSelector((state: RootStateType) => state.auth);
+  const { isAuth, authErrors, captcha } = useSelector((state: RootStateType) => state.auth);
   return (
     <div>
       {isAuth ? (
         <Redirect to='/profile' />
       ) : (
-        <LoginForm dispatch={dispatch} authErrors={authErrors} />
+        <LoginForm dispatch={dispatch} authErrors={authErrors} captcha={captcha} />
       )}
     </div>
   );

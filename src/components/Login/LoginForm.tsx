@@ -15,6 +15,7 @@ type FormValues = {
 type PropsType = {
   dispatch?: any;
   authErrors?: Array<string>;
+  captcha: string;
 };
 
 const schema = yup.object().shape({
@@ -22,7 +23,7 @@ const schema = yup.object().shape({
   password: yup.string().max(255).required('Password is required'),
 });
 
-const LoginForm: React.FC<PropsType> = ({ dispatch, authErrors }) => {
+const LoginForm: React.FC<PropsType> = ({ dispatch, authErrors, captcha }) => {
   const {
     register,
     handleSubmit,
@@ -30,12 +31,13 @@ const LoginForm: React.FC<PropsType> = ({ dispatch, authErrors }) => {
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
+
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     const requestData = {
       email: data.email,
       password: data.password,
       rememberMe: data.rememberMe,
-      captcha: false,
+      captcha: data.captcha,
     };
     dispatch(loginAction(requestData));
   };
@@ -58,6 +60,11 @@ const LoginForm: React.FC<PropsType> = ({ dispatch, authErrors }) => {
         <span>Remember Me</span>
       </div>
       <div>{authErrors?.length !== 0 && authErrorsMessage}</div>
+      <div>
+        {captcha && <img src={captcha} />}
+        {captcha && <input {...register('captcha', { required: true })} />}
+      </div>
+
       <input className={classes.submit} type='submit' />
     </form>
   );

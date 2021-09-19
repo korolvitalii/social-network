@@ -8,6 +8,7 @@ const SET_USER_STATUS = 'SET_USER_STATUS';
 const REMOVE_POST = 'REMOVE_POST';
 const SET_USER_PHOTO = 'SET_USER_PHOTO';
 const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
+const SET_USER_INFO_FORM_ERRORS = 'SET_USER_INFO_FORM_ERRORS';
 
 type AddNewPostType = {
   type: typeof ADD_NEW_POST;
@@ -50,13 +51,22 @@ type UpdateUserInfoType = {
     toUpdateProfile: ProfileType;
   };
 };
+
+type setUserInfoFormErrors = {
+  type: typeof SET_USER_INFO_FORM_ERRORS;
+  payload: {
+    errors: Array<string>;
+  };
+};
+
 export type ActionsType =
   | AddNewPostType
   | SetUserProfileType
   | SetUserStatusType
   | RemovePost
   | SetUserPhotoType
-  | UpdateUserInfoType;
+  | UpdateUserInfoType
+  | setUserInfoFormErrors;
 
 export const actions = {
   addNewPost: (newPost: PostType): ActionsType => ({
@@ -87,6 +97,12 @@ export const actions = {
     type: SET_USER_PHOTO,
     payload: {
       photos,
+    },
+  }),
+  setUserInfoFormErrors: (errors: Array<string>): ActionsType => ({
+    type: SET_USER_INFO_FORM_ERRORS,
+    payload: {
+      errors,
     },
   }),
 };
@@ -126,18 +142,14 @@ export const undateUserProfileInfo =
   async (dispatch, getState) => {
     const userId = getState().auth.id;
     const data = await profileApi.updateProfile(profile);
-
     if (data.data.resultCode === 0) {
       if (userId != null) {
         dispatch(getUserProfile(userId));
-        debugger;
       } else {
         throw new Error("userId can't be null");
       }
     } else {
-      // dispatch(stopSubmit("edit-profile", {_error: data.messages[0] }))
-      // return Promise.reject(data.messages[0])
-      return;
+      dispatch(actions.setUserInfoFormErrors(data.data.messages));
     }
   };
 

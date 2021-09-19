@@ -24,12 +24,6 @@ export type DialogType = {
   name: string;
 };
 
-type ServerData = {
-  items: Array<UserType>;
-  totalCount: number;
-  error: null | string;
-};
-
 type ToggleFollowUnfollowType = {
   type: typeof CHANGE_FLAG;
   payload: {

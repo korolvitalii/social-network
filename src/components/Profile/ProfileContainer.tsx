@@ -6,12 +6,13 @@ import Profile from './Profile';
 import withAuthRedirect from '../../hoc/withAuthRedirect';
 import { actions } from '../../redux/actions/ProfileActions';
 import { AppStateType } from '../../redux/reducers/rootReducer';
-import { getCurrentUser, getStatus } from '../../redux/selectors/profile-selectors';
+import { getAuthUserId, getCurrentUser, getStatus } from '../../redux/selectors/profile-selectors';
 
 let mapStateToProps = (state: AppStateType) => {
   return {
     currentUser: getCurrentUser(state),
     status: getStatus(state),
+    authUserID: getAuthUserId(state),
   };
 };
 

@@ -12,11 +12,9 @@ type ProfileDataProps = {
 };
 
 const ProfileData: React.FunctionComponent<ProfileDataProps> = ({
-  isOwner,
-  dispatch,
-  status,
   profile,
   goToEditMode,
+  isOwner,
 }) => {
   return (
     <div className={classes.profileDescription}>
@@ -46,9 +44,11 @@ const ProfileData: React.FunctionComponent<ProfileDataProps> = ({
             })}
         </div>
       </div>
-      <button type='button' onClick={goToEditMode}>
-        Edit profile info
-      </button>
+      {!isOwner && (
+        <button type='button' onClick={goToEditMode}>
+          Edit
+        </button>
+      )}
     </div>
   );
 };

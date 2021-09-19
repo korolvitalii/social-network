@@ -7,6 +7,7 @@ const SET_USER_STATUS = 'SET_USER_STATUS';
 const REMOVE_POST = 'REMOVE_POST';
 const SET_USER_PHOTO = 'SET_USER_PHOTO';
 const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
+const SET_USER_INFO_FORM_ERRORS = 'SET_USER_INFO_FORM_ERRORS';
 
 const initialState = {
   posts: [
@@ -18,6 +19,7 @@ const initialState = {
   profile: null as ProfileType | null,
   friends: ['John', 'Jack', 'Stasy'] as Array<string>,
   status: '' as string,
+  userInfoFormErrors: [] as Array<string>,
 };
 
 export type InitialStateType = typeof initialState;
@@ -46,6 +48,9 @@ export const ProfileReducer = (state = initialState, action: ActionsType): Initi
     }
     case UPDATE_USER_INFO: {
       return { ...state, profile: action.payload.toUpdateProfile };
+    }
+    case SET_USER_INFO_FORM_ERRORS: {
+      return { ...state, userInfoFormErrors: action.payload.errors };
     }
     default:
       return state;
