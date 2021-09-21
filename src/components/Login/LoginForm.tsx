@@ -9,13 +9,13 @@ type FormValues = {
   email: string;
   password: string;
   rememberMe: boolean;
-  captcha?: boolean;
+  captcha?: string;
 };
 
 type PropsType = {
   dispatch?: any;
   authErrors?: Array<string>;
-  captcha: string;
+  captcha: string | null;
 };
 
 const schema = yup.object().shape({
@@ -42,7 +42,7 @@ const LoginForm: React.FC<PropsType> = ({ dispatch, authErrors, captcha }) => {
     dispatch(loginAction(requestData));
   };
 
-  const authErrorsMessage = authErrors?.map((error) => <span>{error}</span>);
+  const authErrorsMessage = authErrors?.map((error) => <span key={error}>{error}</span>);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
@@ -61,7 +61,7 @@ const LoginForm: React.FC<PropsType> = ({ dispatch, authErrors, captcha }) => {
       </div>
       <div>{authErrors?.length !== 0 && authErrorsMessage}</div>
       <div>
-        {captcha && <img src={captcha} />}
+        {captcha && <img src={captcha} alt='captcha' />}
         {captcha && <input {...register('captcha', { required: true })} />}
       </div>
 

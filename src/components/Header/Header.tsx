@@ -6,10 +6,10 @@ import classes from './Header.module.css';
 import Logout from '../Login/Logout';
 
 type PropsType = {
-  id: number;
-  login: string;
-  email: string;
-  isAuth: boolean;
+  id: number | null;
+  login: string | null;
+  email: string | null;
+  isAuth: boolean | null;
 };
 
 const Header: React.FC<PropsType> = ({ isAuth }) => {

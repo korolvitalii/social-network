@@ -2,7 +2,6 @@ import React from 'react';
 import classes from './Message.module.css';
 
 type PropsType = {
-  id: string;
   text: string;
 };
 

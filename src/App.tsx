@@ -9,10 +9,10 @@ import Navbar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import { compose } from 'redux';
-import { RootStateType } from './types/types';
 import { initializeApp } from './redux/actions/AppActions';
 import Preloader from './components/common/Preloader/Preloader';
 import SitebarContainer from './components/Sitebar/SitebarContainer';
+import { AppStateType } from './redux/reducers/rootReducer';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
@@ -39,6 +39,7 @@ const ContainerApp: React.FC<PropsType> = (props) => {
           <Navbar />
           <SitebarContainer />
           <div className='app-wrapper-content'>
+            <Route path='/' exact render={() => <ProfileContainer />} />
             <Route path='/profile' render={() => <ProfileContainer />} />
             <React.Suspense fallback={<Preloader />}>
               <Route path='/dialogs' render={() => <DialogsContainer />} />
@@ -55,7 +56,7 @@ const ContainerApp: React.FC<PropsType> = (props) => {
   );
 };
 
-const mapStateToProps = (state: RootStateType) => ({
+const mapStateToProps = (state: AppStateType) => ({
   initialized: state.app.initialized,
 });
 

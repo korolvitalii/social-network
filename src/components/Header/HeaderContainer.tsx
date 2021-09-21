@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuthUserData } from '../../redux/actions/AuthActions';
-import { RootStateType } from '../../types/types';
+import { AppStateType } from '../../redux/reducers/rootReducer';
 import Header from './Header';
 
-type PropsType = {};
-
-const HeaderContainer: React.FC = (props: PropsType) => {
+const HeaderContainer: React.FC = () => {
   const dispatch = useDispatch();
-  const { auth } = useSelector((state: RootStateType) => state);
+  const { auth } = useSelector((state: AppStateType) => state);
+
   useEffect(() => {
     dispatch(getAuthUserData());
   }, [dispatch]);

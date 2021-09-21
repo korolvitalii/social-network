@@ -20,41 +20,6 @@ export type ServerData = {
   error: null | string;
 };
 
-export type RootStateType = {
-  profilePage: {
-    posts: Array<PostType>;
-    newPostText: string;
-    friends: Array<string>;
-    currentUser: UserType;
-    status: string;
-    photo: string;
-  };
-  messagesPage: {
-    dialogs: Array<DialogType>;
-    messages: Array<MessageType>;
-    newMessageText: string;
-  };
-  usersPage: {
-    users: Array<ProfileType>;
-    totalCount: number;
-    pageSize: number;
-    pagesCount: number;
-    isFetch: boolean;
-    isFollowingProgress: boolean;
-  };
-  auth: {
-    id: number;
-    login: string;
-    email: string;
-    isAuth: boolean;
-    authErrors: Array<string>;
-    captcha: string;
-  };
-  app: {
-    initialized: boolean;
-  };
-};
-
 export type ContactsType = {
   github: string;
   vk: string;
@@ -86,4 +51,11 @@ export type UserType = {
   followed: boolean;
   status: string | null;
   photos: PhotosType;
+};
+
+export type LoginDataType = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+  captcha?: string;
 };

@@ -7,7 +7,7 @@ import { prepareErrors } from '../../../helpers/helpers';
 import classes from './EditProfileInfoForm.module.css';
 
 type PropsType = {
-  handleButtonClick: any;
+  handleButtonClick: (editMode: boolean) => void;
   editMode: boolean;
   userId?: number;
   formErrors: Array<string>;
@@ -16,6 +16,14 @@ type PropsType = {
   contacts: ContactsType;
   lookingForAJob: boolean;
   lookingForAJobDescription: string;
+};
+type FormValuesType = {
+  formErrors: Array<string>;
+  fullName: string;
+  aboutMe: string;
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string;
+  contacts: ContactsType;
 };
 
 const EditProfileInfoForm: React.FC<PropsType> = ({
@@ -34,27 +42,25 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<any>();
+  } = useForm<FormValuesType>();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    formErrors.map((error: string) => {
+    formErrors.forEach((error: string) => {
       if (error.includes('Contacts')) {
-        const errorTypeCapitalize = prepareErrors(error, 'Contacts->');
+        const errorTypeCapitalize: any = prepareErrors(error, 'Contacts->');
         setError(errorTypeCapitalize, {
           type: 'server',
           message: error,
         });
       }
-      const errorTypeCapitalize = prepareErrors(error, ' (');
+      const errorTypeCapitalize: any = prepareErrors(error, ' (');
       setError(errorTypeCapitalize, {
         type: 'server',
         message: error,
       });
-      return;
     });
   }, [formErrors, setError]);
-  console.log(errors);
   const onSubmit: SubmitHandler<ProfileType> = (data) => {
     const updateData = { data: { userId: userId }, ...data };
     dispatch(undateUserProfileInfo(updateData));
@@ -111,15 +117,18 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
       </div>
       <div>
         {contacts &&
-          Object.keys(contacts).map((contact) => {
+          Object.keys(contacts).map((key) => {
             return (
-              <div key={contact}>
-                <span>{contact}</span>
+              <div key={key}>
+                <span>{key}</span>
                 <input
-                  {...register(`contacts.${contact}`)}
-                  defaultValue={contacts[contact as keyof ContactsType]}
+                  {...register(`contacts.${key as keyof ContactsType}`)}
+                  defaultValue={contacts[key as keyof ContactsType]}
                 />
-                {errors[contact] && <p>{errors[contact].message}</p>}
+                {errors[key as keyof FormValuesType] && (
+                  <p>{errors[key as keyof FormValuesType]}</p>
+                  // <p>{errors[key as keyof FormValuesType]?.message}</p>
+                )}
               </div>
             );
           })}

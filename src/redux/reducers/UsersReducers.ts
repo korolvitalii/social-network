@@ -1,12 +1,12 @@
 import { UserType } from '../../types/types';
 import { ActionsType } from '../actions/UsersActions';
 
-const CHANGE_FLAG = 'CHANGE_FLAG';
-const SET_USERS = 'SET_USERS';
-const GET_TOTAL_COUNT = 'GET_TOTAL_COUNT';
-const SET_PAGES_COUNT = 'SET_PAGES_COUNT';
-const TOGGLE_IS_FETCH_DATA = 'TOGGLE_IS_FETCH_DATA';
-const TOGGLE_FOLLOWING_PROGRESS = 'TOGGLE_FOLLOWING_PROGRESS';
+const CHANGE_FLAG = 'SN/USERACTIONS/CHANGE_FLAG';
+const SET_USERS = 'SN/USERACTIONS/SET_USERS';
+const GET_TOTAL_COUNT = 'SN/USERACTIONS/GET_TOTAL_COUNT';
+const SET_PAGES_COUNT = 'SN/USERACTIONS/SET_PAGES_COUNT';
+const TOGGLE_IS_FETCH_DATA = 'SN/USERACTIONS/TOGGLE_IS_FETCH_DATA';
+const TOGGLE_FOLLOWING_PROGRESS = 'SN/USERACTIONS/TOGGLE_FOLLOWING_PROGRESS';
 
 const initialState = {
   users: [] as Array<UserType>,
@@ -16,8 +16,9 @@ const initialState = {
   isFetch: true as boolean,
   isFollowingProgress: false as boolean,
 };
+type InitialStateType = typeof initialState;
 
-export const UsersReducer = (state = initialState, action: ActionsType) => {
+export const UsersReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case SET_USERS: {
       return { ...state, users: action.payload.items };

@@ -9,10 +9,13 @@ const initialState = {
   email: null as string | null,
   login: null as string | null,
   isAuth: false as boolean,
+  authErrors: [] as Array<string>,
   captcha: null as string | null,
 };
 
-export const authReducer = (state = initialState, action: ActionsType) => {
+type InitialStateType = typeof initialState;
+
+export const authReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case SET_USER_DATA: {
       return { ...state, ...action.payload.userData, isAuth: action.payload.userData.isAuth };

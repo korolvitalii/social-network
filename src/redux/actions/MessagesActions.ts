@@ -1,9 +1,6 @@
-const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE';
+import { MessageType } from '../../types/types';
 
-export type MessageType = {
-  id: string;
-  text: string;
-};
+const ADD_NEW_MESSAGE = 'SN/MESSAGEACTIONS/ADD_NEW_MESSAGE';
 
 export type AddNewMessageType = {
   type: typeof ADD_NEW_MESSAGE;

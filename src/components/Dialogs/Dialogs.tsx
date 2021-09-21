@@ -13,7 +13,7 @@ type PropsType = {
 const Dialogs: React.FC<PropsType> = (props) => {
   const { dialogs, messages } = props;
   const dialogsElements = dialogs.map(({ name, id }) => <Dialog name={name} id={id} key={id} />);
-  const messageElements = messages.map(({ text, id }) => <Message text={text} id={id} key={id} />);
+  const messageElements = messages.map(({ text, id }) => <Message text={text} key={id} />);
 
   return (
     <div>

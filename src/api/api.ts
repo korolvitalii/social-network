@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ServerData, ProfileType } from '../types/types';
+import { ServerData, ProfileType, LoginDataType } from '../types/types';
 
 const instance = axios.create({
   withCredentials: true,
@@ -8,10 +8,8 @@ const instance = axios.create({
 });
 
 export const apiUsers = {
-  getUsers(currentPage = 1, pageSize = 10): Promise<ServerData> {
-    return instance
-      .get(`users?page=${currentPage}&count=${pageSize}`)
-      .then((response) => response.data);
+  getUsers(currentPage = 1, pageSize = 10): Promise<ServerData | undefined> {
+    return instance.get(`users?page=${currentPage}&count=${pageSize}`);
   },
   follow(id: number): any {
     return instance.post<ServerData>(`/follow/${id}`);
@@ -46,15 +44,39 @@ export const profileApi = {
   },
 };
 
+type AuthMeType = {
+  resultCode: number;
+  messages: Array<string>;
+  data: {
+    id: number;
+    email: string;
+    login: string;
+  };
+};
+
+type LoginType = {
+  resultCode: number;
+  messages: Array<string>;
+  data: {
+    userId: number;
+  };
+};
+
+type LogoutType = {
+  resultCode: number;
+  messages: Array<string>;
+  data: {};
+};
+
 export const authApi = {
   authMe() {
-    return instance.get(`/auth/me`);
+    return instance.get<AuthMeType>(`/auth/me`);
   },
-  login(loginData: any) {
-    return instance.post(`/auth/login`, loginData);
+  login(loginData: LoginDataType) {
+    return instance.post<LoginType>(`/auth/login`, loginData);
   },
   logout() {
-    return instance.delete(`/auth/login`);
+    return instance.delete<LogoutType>(`/auth/login`);
   },
 };
 

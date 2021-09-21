@@ -1,7 +1,7 @@
 import { DialogType, MessageType } from '../../types/types';
 import { ActionsType } from '../actions/MessagesActions';
 
-const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE';
+const ADD_NEW_MESSAGE = 'SN/MESSAGEACTIONS/ADD_NEW_MESSAGE';
 
 const initialState = {
   messages: [
@@ -21,7 +21,9 @@ const initialState = {
   newMessageText: '' as string,
 };
 
-export const MessagesReducer = (state = initialState, action: ActionsType): typeof initialState => {
+type InitialStateType = typeof initialState;
+
+export const MessagesReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case ADD_NEW_MESSAGE: {
       const messages = [...state.messages, action.payload.newMessage];
@@ -31,5 +33,3 @@ export const MessagesReducer = (state = initialState, action: ActionsType): type
       return state;
   }
 };
-
-export type InitialStateType = typeof initialState;

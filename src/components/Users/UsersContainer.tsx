@@ -12,8 +12,28 @@ import {
   getPageSize,
   getUsers,
 } from '../../redux/selectors/user-selectors';
+import { UserType } from '../../types/types';
 
-let mapStateToProps = (state: AppStateType) => {
+type MapStateToPropsType = {
+  users: Array<UserType>;
+  pageSize: number;
+  pagesCount: number;
+  isFollowingProgress: boolean;
+  isFetch: boolean;
+};
+
+type MapDispatchToPropsType = {
+  toggleFollowUnfollow: (id: number) => void;
+  setUsers: (items: Array<UserType>) => void;
+  getTotalCount: (totalCount: number) => void;
+  setPagesCount: (totalCount: number, pageSize: number) => void;
+  isFetchData: (isFetch: boolean) => void;
+  toggleFollowingProgress: (isFollowingProgress: boolean) => void;
+};
+
+type OwnPropsType = {};
+
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
   return {
     users: getUsers(state),
     pageSize: getPageSize(state),
@@ -24,6 +44,9 @@ let mapStateToProps = (state: AppStateType) => {
 };
 
 export default compose<React.ComponentType>(
-  connect(mapStateToProps, { ...actions }),
+  connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(
+    mapStateToProps,
+    { ...actions },
+  ),
   withAuthRedirect,
 )(Users);

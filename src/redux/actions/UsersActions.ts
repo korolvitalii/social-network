@@ -1,28 +1,14 @@
+import { ThunkAction } from 'redux-thunk';
 import { apiUsers } from '../../api/api';
 import { UserType } from '../../types/types';
+import { AppStateType } from '../reducers/rootReducer';
 
-const CHANGE_FLAG = 'CHANGE_FLAG';
-const SET_USERS = 'SET_USERS';
-const GET_TOTAL_COUNT = 'GET_TOTAL_COUNT';
-const SET_PAGES_COUNT = 'SET_PAGES_COUNT';
-const TOGGLE_IS_FETCH_DATA = 'TOGGLE_IS_FETCH_DATA';
-const TOGGLE_FOLLOWING_PROGRESS = 'TOGGLE_FOLLOWING_PROGRESS';
-
-export type PostType = {
-  id: number;
-  message: string;
-  likeCount: number;
-};
-
-export type MessageType = {
-  id: number;
-  text: string;
-};
-
-export type DialogType = {
-  id: number;
-  name: string;
-};
+const CHANGE_FLAG = 'SN/USERACTIONS/CHANGE_FLAG';
+const SET_USERS = 'SN/USERACTIONS/SET_USERS';
+const GET_TOTAL_COUNT = 'SN/USERACTIONS/GET_TOTAL_COUNT';
+const SET_PAGES_COUNT = 'SN/USERACTIONS/SET_PAGES_COUNT';
+const TOGGLE_IS_FETCH_DATA = 'SN/USERACTIONS/TOGGLE_IS_FETCH_DATA';
+const TOGGLE_FOLLOWING_PROGRESS = 'SN/USERACTIONS/TOGGLE_FOLLOWING_PROGRESS';
 
 type ToggleFollowUnfollowType = {
   type: typeof CHANGE_FLAG;
@@ -115,27 +101,47 @@ export const actions = {
   }),
 };
 
-export const getUsers = (currentPage: number, pageSize: number) => async (dispatch: any) => {
-  dispatch(actions.isFetchData(true));
-  const response: any = await apiUsers.getUsers(currentPage, pageSize);
-  dispatch(actions.setUsers(response.items));
-  dispatch(actions.getTotalCount(response.totalCount));
-  dispatch(actions.setPagesCount(response.totalCount, pageSize));
-  dispatch(actions.isFetchData(false));
-};
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>;
 
-export const followUserAction = (id: number) => async (dispatch: any) => {
-  const response = await apiUsers.follow(id);
-  if (response.data.resultCode === 0) {
-    dispatch(actions.toggleFollowUnfollow(id));
-    dispatch(actions.toggleFollowingProgress(false));
-  }
-};
+export const getUsers =
+  (currentPage: number, pageSize: number): ThunkType =>
+  async (dispatch) => {
+    try {
+      dispatch(actions.isFetchData(true));
+      const response: any = await apiUsers.getUsers(currentPage, pageSize);
+      dispatch(actions.setUsers(response.data.items));
+      dispatch(actions.getTotalCount(response.data.totalCount));
+      dispatch(actions.setPagesCount(response.data.totalCount, pageSize));
+      dispatch(actions.isFetchData(false));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-export const unfollowUserAction = (id: number) => async (dispatch: any) => {
-  const response = await apiUsers.unfollow(id);
-  dispatch(actions.toggleFollowUnfollow(id));
-  dispatch(actions.toggleFollowingProgress(false));
-};
+export const followUserAction =
+  (id: number): ThunkType =>
+  async (dispatch) => {
+    try {
+      const response = await apiUsers.follow(id);
+      if (response.data.resultCode === 0) {
+        dispatch(actions.toggleFollowUnfollow(id));
+        dispatch(actions.toggleFollowingProgress(false));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+export const unfollowUserAction =
+  (id: number): ThunkType =>
+  async (dispatch) => {
+    try {
+      await apiUsers.unfollow(id);
+      dispatch(actions.toggleFollowUnfollow(id));
+      dispatch(actions.toggleFollowingProgress(false));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 export type ActionsTypes = typeof actions;

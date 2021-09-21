@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 
@@ -24,15 +24,16 @@ const Profile: React.FC<PropsType> = ({ currentUser, status, authUserID }) => {
   const { userInfoFormErrors } = useSelector((state: AppStateType) => state.profilePage);
   const match = useRouteMatch<MatchParams>('/profile/:id/');
   const dispatch = useDispatch();
-  const userId = match?.params.id ? match.params.id : authUserID;
+  const userId = match?.params.id ? Number(match.params.id) : authUserID;
   useEffect(() => {
     dispatch(getUserProfile(userId));
     dispatch(getUserStatus(userId));
   }, [match?.params.id, dispatch, userId]);
 
-  const savePhoto = (e: any) => {
-    const photo = e.target.files[0];
-    dispatch(uploadUserPhoto(photo));
+  const savePhoto = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      dispatch(uploadUserPhoto(e.target.files[0]));
+    }
   };
 
   return (

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootStateType } from '../../types/types';
+import { AppStateType } from '../../redux/reducers/rootReducer';
 import classes from './Sitebar.module.css';
 
 const Sitebar: React.FC = () => {
-  const { friends } = useSelector((state: RootStateType) => state.profilePage);
+  const { friends } = useSelector((state: AppStateType) => state.profilePage);
   const friendElements = friends.map((friend) => {
     return (
       <div className='sitebarFriend' key={friend}>
