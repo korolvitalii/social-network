@@ -4,6 +4,7 @@ import { loginAction } from '../../redux/actions/AuthActions';
 import classes from './LoginForm.module.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
 
 type FormValues = {
   email: string;
@@ -13,7 +14,6 @@ type FormValues = {
 };
 
 type PropsType = {
-  dispatch?: any;
   authErrors?: Array<string>;
   captcha: string | null;
 };
@@ -23,7 +23,7 @@ const schema = yup.object().shape({
   password: yup.string().max(255).required('Password is required'),
 });
 
-const LoginForm: React.FC<PropsType> = ({ dispatch, authErrors, captcha }) => {
+const LoginForm: React.FC<PropsType> = ({ authErrors, captcha }) => {
   const {
     register,
     handleSubmit,
@@ -31,6 +31,8 @@ const LoginForm: React.FC<PropsType> = ({ dispatch, authErrors, captcha }) => {
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
+
+  const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     const requestData = {

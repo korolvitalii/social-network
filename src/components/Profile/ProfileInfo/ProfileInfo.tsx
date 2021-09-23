@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import classes from './ProfileInfo.module.css';
 import userIcon from '../../../assets/images/User-Icon.jpg';
 
@@ -6,12 +6,12 @@ import ProfileStatus from '../ProfileStatus';
 import { ProfileType } from '../../../types/types';
 import EditProfileInfoForm from './EditProfileInfoForm';
 import ProfileData from './ProfileData';
+import { useDispatch } from 'react-redux';
 
 type ProfileInfoProps = {
   profile: ProfileType;
   status: string;
-  dispatch: any;
-  savePhoto: (e: any) => void;
+  savePhoto: (e: ChangeEvent<HTMLInputElement>) => void;
   isOwner?: string;
   formErrors: Array<string>;
 };
@@ -19,13 +19,11 @@ type ProfileInfoProps = {
 const ProfileInfo: React.FC<ProfileInfoProps> = ({
   profile,
   status,
-  dispatch,
   savePhoto,
   isOwner,
   formErrors,
 }) => {
   const [editMode, setEditMode] = useState(false);
-
   const goToEditMode = () => {
     setEditMode(!editMode);
   };
@@ -68,13 +66,12 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
           <ProfileData
             isOwner={isOwner}
             goToEditMode={goToEditMode}
-            dispatch={dispatch}
             status={status}
             profile={profile}
           />
         )}
         <div>
-          <ProfileStatus status={status} dispatch={dispatch} />
+          <ProfileStatus status={status} />
         </div>
       </div>
     </div>

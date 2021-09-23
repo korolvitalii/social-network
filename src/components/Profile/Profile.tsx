@@ -41,7 +41,6 @@ const Profile: React.FC<PropsType> = ({ currentUser, status, authUserID }) => {
       <ProfileInfo
         profile={currentUser}
         status={status}
-        dispatch={dispatch}
         savePhoto={savePhoto}
         isOwner={match?.params.id}
         formErrors={userInfoFormErrors}

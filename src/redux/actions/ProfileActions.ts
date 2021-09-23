@@ -1,6 +1,6 @@
 import { profileApi } from '../../api/api';
 import { PhotosType, PostType, ProfileType } from '../../types/types';
-import { AppStateType, BaseThunkType } from '../../redux/reducers/rootReducer';
+import { BaseThunkType } from '../../redux/reducers/rootReducer';
 
 const ADD_NEW_POST = 'SN/PROFILEACTION/ADD_NEW_POST';
 const SET_USER_PROFILE = 'SN/PROFILEACTION/SET_USER_PROFILE';
@@ -112,6 +112,7 @@ export const getUserStatus =
   async (dispatch) => {
     try {
       const response = await profileApi.getUserStatus(userId);
+      debugger;
       dispatch(actions.setUserStatus(response.data));
     } catch (error) {
       console.error(error);

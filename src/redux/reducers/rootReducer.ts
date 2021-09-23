@@ -21,5 +21,8 @@ export type BaseThunkType<A extends Action = Action, R = Promise<void>> = ThunkA
 >;
 type RootReducerType = typeof rootReducer; // (globalstate: AppStateType) => AppStateType
 export type AppStateType = ReturnType<RootReducerType>;
+export type InferActionsTypes<T> = T extends { [key: string]: (...args: any[]) => infer U }
+  ? U
+  : never;
 
 export default rootReducer;

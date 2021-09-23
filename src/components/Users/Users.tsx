@@ -10,7 +10,7 @@ import { UserType } from '../../types/types';
 import { followUserAction, getUsers, unfollowUserAction } from '../../redux/actions/UsersActions';
 
 type PropsType = {
-  toggleFollowingProgress: any;
+  toggleFollowingProgress: (param: boolean) => void;
   users: Array<UserType>;
   pageSize: number;
   pagesCount: number;

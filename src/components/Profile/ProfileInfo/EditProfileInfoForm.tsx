@@ -17,6 +17,7 @@ type PropsType = {
   lookingForAJob: boolean;
   lookingForAJobDescription: string;
 };
+
 type FormValuesType = {
   formErrors: Array<string>;
   fullName: string;
@@ -48,13 +49,13 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
   useEffect(() => {
     formErrors.forEach((error: string) => {
       if (error.includes('Contacts')) {
-        const errorTypeCapitalize: any = prepareErrors(error, 'Contacts->');
+        const errorTypeCapitalize = prepareErrors(error, 'Contacts->');
         setError(errorTypeCapitalize, {
           type: 'server',
           message: error,
         });
       }
-      const errorTypeCapitalize: any = prepareErrors(error, ' (');
+      const errorTypeCapitalize = prepareErrors(error, ' (');
       setError(errorTypeCapitalize, {
         type: 'server',
         message: error,

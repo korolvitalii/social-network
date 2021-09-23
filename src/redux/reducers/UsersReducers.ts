@@ -1,5 +1,5 @@
 import { UserType } from '../../types/types';
-import { ActionsType } from '../actions/UsersActions';
+import { ActionsTypes } from '../actions/UsersActions';
 
 const CHANGE_FLAG = 'SN/USERACTIONS/CHANGE_FLAG';
 const SET_USERS = 'SN/USERACTIONS/SET_USERS';
@@ -18,7 +18,7 @@ const initialState = {
 };
 type InitialStateType = typeof initialState;
 
-export const UsersReducer = (state = initialState, action: ActionsType): InitialStateType => {
+export const UsersReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
   switch (action.type) {
     case SET_USERS: {
       return { ...state, users: action.payload.items };
@@ -52,5 +52,3 @@ export const UsersReducer = (state = initialState, action: ActionsType): Initial
       return state;
   }
 };
-
-export type initialStateType = typeof initialState;

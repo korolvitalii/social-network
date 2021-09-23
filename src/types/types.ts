@@ -14,12 +14,6 @@ export type DialogType = {
   name: string;
 };
 
-export type ServerData = {
-  items: Array<ProfileType>;
-  totalCount: number;
-  error: null | string;
-};
-
 export type ContactsType = {
   github: string;
   vk: string;
