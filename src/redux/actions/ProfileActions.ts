@@ -1,110 +1,61 @@
-import { profileApi } from '../../api/api';
+import { profileApi } from '../../api/profile-api';
 import { PhotosType, PostType, ProfileType } from '../../types/types';
-import { BaseThunkType } from '../../redux/reducers/rootReducer';
+import { BaseThunkType, InferActionsTypes } from '../../redux/reducers/rootReducer';
+import { ResultCodesEnum } from '../../api/api';
 
 const ADD_NEW_POST = 'SN/PROFILEACTION/ADD_NEW_POST';
 const SET_USER_PROFILE = 'SN/PROFILEACTION/SET_USER_PROFILE';
 const SET_USER_STATUS = 'SN/PROFILEACTION/SET_USER_STATUS';
 const REMOVE_POST = 'SN/PROFILEACTIONS/REMOVE_POST';
 const SET_USER_PHOTO = 'SN/PROFILEACTIONS/SET_USER_PHOTO';
-const UPDATE_USER_INFO = 'SN/PROFILEACTIONS/UPDATE_USER_INFO';
+// const UPDATE_USER_INFO = 'SN/PROFILEACTIONS/UPDATE_USER_INFO';
 const SET_USER_INFO_FORM_ERRORS = 'SN/PROFILEACTIONS/SET_USER_INFO_FORM_ERRORS';
 
-type AddNewPostType = {
-  type: typeof ADD_NEW_POST;
-  payload: {
-    newPost: PostType;
-  };
-};
-
-type SetUserProfileType = {
-  type: typeof SET_USER_PROFILE;
-  payload: {
-    user: ProfileType;
-  };
-};
-
-type SetUserStatusType = {
-  type: typeof SET_USER_STATUS;
-  payload: {
-    status: string;
-  };
-};
-
-type RemovePost = {
-  type: typeof REMOVE_POST;
-  payload: {
-    id: number;
-  };
-};
-
-type SetUserPhotoType = {
-  type: typeof SET_USER_PHOTO;
-  payload: {
-    photos: PhotosType;
-  };
-};
-
-type UpdateUserInfoType = {
-  type: typeof UPDATE_USER_INFO;
-  payload: {
-    toUpdateProfile: ProfileType;
-  };
-};
-
-type setUserInfoFormErrors = {
-  type: typeof SET_USER_INFO_FORM_ERRORS;
-  payload: {
-    errors: Array<string>;
-  };
-};
-
-export type ActionsType =
-  | AddNewPostType
-  | SetUserProfileType
-  | SetUserStatusType
-  | RemovePost
-  | SetUserPhotoType
-  | UpdateUserInfoType
-  | setUserInfoFormErrors;
+export type ActionsType = InferActionsTypes<typeof actions>;
 
 export const actions = {
-  addNewPost: (newPost: PostType): ActionsType => ({
-    type: ADD_NEW_POST,
-    payload: {
-      newPost: newPost,
-    },
-  }),
-  removePost: (id: number): ActionsType => ({
-    type: REMOVE_POST,
-    payload: {
-      id,
-    },
-  }),
-  setUserProfile: (user: ProfileType): ActionsType => ({
-    type: SET_USER_PROFILE,
-    payload: {
-      user,
-    },
-  }),
-  setUserStatus: (status: string): ActionsType => ({
-    type: SET_USER_STATUS,
-    payload: {
-      status,
-    },
-  }),
-  setUserPhoto: (photos: PhotosType): ActionsType => ({
-    type: SET_USER_PHOTO,
-    payload: {
-      photos,
-    },
-  }),
-  setUserInfoFormErrors: (errors: Array<string>): ActionsType => ({
-    type: SET_USER_INFO_FORM_ERRORS,
-    payload: {
-      errors,
-    },
-  }),
+  addNewPost: (newPost: PostType) =>
+    ({
+      type: ADD_NEW_POST,
+      payload: {
+        newPost: newPost,
+      },
+    } as const),
+  removePost: (id: number) =>
+    ({
+      type: REMOVE_POST,
+      payload: {
+        id,
+      },
+    } as const),
+  setUserProfile: (user: ProfileType) =>
+    ({
+      type: SET_USER_PROFILE,
+      payload: {
+        user,
+      },
+    } as const),
+  setUserStatus: (status: string) =>
+    ({
+      type: SET_USER_STATUS,
+      payload: {
+        status,
+      },
+    } as const),
+  setUserPhoto: (photos: PhotosType) =>
+    ({
+      type: SET_USER_PHOTO,
+      payload: {
+        photos,
+      },
+    } as const),
+  setUserInfoFormErrors: (errors: Array<string>) =>
+    ({
+      type: SET_USER_INFO_FORM_ERRORS,
+      payload: {
+        errors,
+      },
+    } as const),
 };
 
 export const getUserStatus =
@@ -112,7 +63,6 @@ export const getUserStatus =
   async (dispatch) => {
     try {
       const response = await profileApi.getUserStatus(userId);
-      debugger;
       dispatch(actions.setUserStatus(response.data));
     } catch (error) {
       console.error(error);
@@ -124,7 +74,7 @@ export const updateUserStatus =
   async (dispatch) => {
     try {
       const response = await profileApi.updateUserStatus(status);
-      if (response.resultCode === 0) {
+      if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(actions.setUserStatus(status));
       }
     } catch (error) {

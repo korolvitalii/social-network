@@ -46,9 +46,9 @@ export const ProfileReducer = (state = initialState, action: ActionsType): Initi
         profile: { ...state.profile, photos: action.payload.photos } as ProfileType,
       };
     }
-    case UPDATE_USER_INFO: {
-      return { ...state, profile: action.payload.toUpdateProfile };
-    }
+    // case UPDATE_USER_INFO: {
+    //   return { ...state, profile: action.payload.toUpdateProfile };
+    // }
     case SET_USER_INFO_FORM_ERRORS: {
       return { ...state, userInfoFormErrors: action.payload.errors };
     }

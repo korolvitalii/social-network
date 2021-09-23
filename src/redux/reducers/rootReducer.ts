@@ -13,14 +13,18 @@ const rootReducer = combineReducers({
   auth: authReducer,
   app: appReducer,
 });
+
+type RootReducerType = typeof rootReducer; // (globalstate: AppStateType) => AppStateType
+
+export type AppStateType = ReturnType<RootReducerType>;
+
 export type BaseThunkType<A extends Action = Action, R = Promise<void>> = ThunkAction<
   R,
   AppStateType,
   unknown,
   A
 >;
-type RootReducerType = typeof rootReducer; // (globalstate: AppStateType) => AppStateType
-export type AppStateType = ReturnType<RootReducerType>;
+
 export type InferActionsTypes<T> = T extends { [key: string]: (...args: any[]) => infer U }
   ? U
   : never;

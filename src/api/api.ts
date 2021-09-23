@@ -13,7 +13,7 @@ export type ResponseType<D = {}, RC = ResultCodesEnum> = {
   resultCode: RC;
 };
 
-enum ResultCodesEnum {
+export enum ResultCodesEnum {
   Success = 0,
   Error = 1,
 }

@@ -1,27 +1,21 @@
-import { UserType } from '../types/types';
-import { instance, ReponseType } from './api';
+import { LoginDataType, UserType } from '../types/types';
+import { instance, ResponseType } from './api';
 
 type MeDataResponse = {
-  items: Array<UserType>;
-  totalCount: number;
-  error: null | string;
+  id: number;
+  email: string;
+  login: string;
 };
-
-type LoginDataType = {
-  userId: number;
-};
-
-type LogoutDataType = {};
 
 export const authApi = {
   authMe() {
-    return instance.get<ReponseType<MeDataResponse>>(`/auth/me`);
+    return instance.get<ResponseType<MeDataResponse>>(`/auth/me`);
   },
   login(loginData: LoginDataType) {
-    return instance.post<LoginDataType>(`/auth/login`, loginData);
+    return instance.post(`/auth/login`, loginData);
   },
   logout() {
-    return instance.delete<LogoutDataType>(`/auth/login`);
+    return instance.delete(`/auth/login`);
   },
 };
 

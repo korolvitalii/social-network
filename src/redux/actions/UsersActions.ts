@@ -1,5 +1,4 @@
-import { ThunkAction } from 'redux-thunk';
-import { apiUsers } from '../../api/api';
+import { apiUsers } from '../../api/users-api';
 import { UserType } from '../../types/types';
 import { BaseThunkType, InferActionsTypes } from '../reducers/rootReducer';
 
