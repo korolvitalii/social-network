@@ -7,6 +7,7 @@ const GET_TOTAL_COUNT = 'SN/USERACTIONS/GET_TOTAL_COUNT';
 const SET_PAGES_COUNT = 'SN/USERACTIONS/SET_PAGES_COUNT';
 const TOGGLE_IS_FETCH_DATA = 'SN/USERACTIONS/TOGGLE_IS_FETCH_DATA';
 const TOGGLE_FOLLOWING_PROGRESS = 'SN/USERACTIONS/TOGGLE_FOLLOWING_PROGRESS';
+const SHOW_ERROR = 'SHOW_ERROR';
 
 const initialState = {
   users: [] as Array<UserType>,
@@ -15,8 +16,10 @@ const initialState = {
   pagesCount: 10 as number,
   isFetch: true as boolean,
   isFollowingProgress: false as boolean,
+  errorToShow: [] as Array<string>,
 };
-type InitialStateType = typeof initialState;
+
+export type InitialStateType = typeof initialState;
 
 export const UsersReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
   switch (action.type) {
@@ -48,6 +51,10 @@ export const UsersReducer = (state = initialState, action: ActionsTypes): Initia
     case TOGGLE_FOLLOWING_PROGRESS: {
       return { ...state, isFollowingProgress: action.payload.isFollowingProgress };
     }
+    case SHOW_ERROR: {
+      return { ...state, errorToShow: action.payload.error };
+    }
+
     default:
       return state;
   }

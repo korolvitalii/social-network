@@ -44,6 +44,7 @@ const Profile: React.FC<PropsType> = ({ currentUser, status, authUserID }) => {
         savePhoto={savePhoto}
         isOwner={match?.params.id}
         formErrors={userInfoFormErrors}
+        dispatch={dispatch}
       />
       <MyPostsContainer />
     </div>

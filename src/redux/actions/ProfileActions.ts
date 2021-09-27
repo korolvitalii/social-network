@@ -8,8 +8,8 @@ const SET_USER_PROFILE = 'SN/PROFILEACTION/SET_USER_PROFILE';
 const SET_USER_STATUS = 'SN/PROFILEACTION/SET_USER_STATUS';
 const REMOVE_POST = 'SN/PROFILEACTIONS/REMOVE_POST';
 const SET_USER_PHOTO = 'SN/PROFILEACTIONS/SET_USER_PHOTO';
-// const UPDATE_USER_INFO = 'SN/PROFILEACTIONS/UPDATE_USER_INFO';
 const SET_USER_INFO_FORM_ERRORS = 'SN/PROFILEACTIONS/SET_USER_INFO_FORM_ERRORS';
+const SHOW_ERROR = 'SHOW_ERROR';
 
 export type ActionsType = InferActionsTypes<typeof actions>;
 
@@ -56,6 +56,13 @@ export const actions = {
         errors,
       },
     } as const),
+  showError: (error: any) =>
+    ({
+      type: SHOW_ERROR,
+      payload: {
+        error,
+      },
+    } as const),
 };
 
 export const getUserStatus =
@@ -65,7 +72,7 @@ export const getUserStatus =
       const response = await profileApi.getUserStatus(userId);
       dispatch(actions.setUserStatus(response.data));
     } catch (error) {
-      console.error(error);
+      dispatch(actions.showError(error));
     }
   };
 
@@ -78,7 +85,7 @@ export const updateUserStatus =
         dispatch(actions.setUserStatus(status));
       }
     } catch (error) {
-      console.error(error);
+      dispatch(actions.showError(error));
     }
   };
 
@@ -89,7 +96,7 @@ export const getUserProfile =
       const response = await profileApi.getUserProfile(userId);
       dispatch(actions.setUserProfile(response.data));
     } catch (error) {
-      console.error(error);
+      dispatch(actions.showError(error));
     }
   };
 
@@ -100,7 +107,7 @@ export const uploadUserPhoto =
       const response = await profileApi.updateUserPhoto(photo);
       dispatch(actions.setUserPhoto(response.data.data.photos));
     } catch (error) {
-      console.error(error);
+      dispatch(actions.showError(error));
     }
   };
 
@@ -114,13 +121,13 @@ export const undateUserProfileInfo =
         if (userId != null) {
           dispatch(getUserProfile(userId));
         } else {
-          throw new Error("userId can't be null");
+          dispatch(actions.showError("userId can't be null"));
         }
       } else {
         dispatch(actions.setUserInfoFormErrors(data.data.messages));
       }
     } catch (error) {
-      console.error(error);
+      dispatch(actions.showError(error));
     }
   };
 

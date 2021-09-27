@@ -5,7 +5,6 @@ import classes from './ProfileInfo.module.css';
 
 type ProfileDataProps = {
   isOwner?: string;
-  status: string;
   profile: ProfileType;
   goToEditMode: () => void;
 };

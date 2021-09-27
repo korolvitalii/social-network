@@ -1,16 +1,16 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 import { updateUserStatus } from '../../redux/actions/ProfileActions';
 
 type PropsType = {
   status: string;
+  dispatch: any;
 };
 
-const ProfileStatus: React.FC<PropsType> = ({ status }) => {
+const ProfileStatus: React.FC<PropsType> = ({ status, dispatch }) => {
   const [editMode, setEditMode] = useState(false);
   const [localStatus, setLocalStatus] = useState(status);
-  const dispatch = useDispatch();
   useEffect(() => {
     setLocalStatus(status);
   }, [status]);

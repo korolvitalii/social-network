@@ -6,8 +6,8 @@ const SET_USER_PROFILE = 'SN/PROFILEACTION/SET_USER_PROFILE';
 const SET_USER_STATUS = 'SN/PROFILEACTION/SET_USER_STATUS';
 const REMOVE_POST = 'SN/PROFILEACTIONS/REMOVE_POST';
 const SET_USER_PHOTO = 'SN/PROFILEACTIONS/SET_USER_PHOTO';
-const UPDATE_USER_INFO = 'SN/PROFILEACTIONS/UPDATE_USER_INFO';
 const SET_USER_INFO_FORM_ERRORS = 'SN/PROFILEACTIONS/SET_USER_INFO_FORM_ERRORS';
+const SHOW_ERROR = 'SHOW_ERROR';
 
 const initialState = {
   posts: [
@@ -20,6 +20,7 @@ const initialState = {
   friends: ['John', 'Jack', 'Stasy'] as Array<string>,
   status: '' as string,
   userInfoFormErrors: [] as Array<string>,
+  errorToShow: [] as Array<string>,
 };
 
 export type InitialStateType = typeof initialState;
@@ -46,9 +47,9 @@ export const ProfileReducer = (state = initialState, action: ActionsType): Initi
         profile: { ...state.profile, photos: action.payload.photos } as ProfileType,
       };
     }
-    // case UPDATE_USER_INFO: {
-    //   return { ...state, profile: action.payload.toUpdateProfile };
-    // }
+    case SHOW_ERROR: {
+      return { ...state, errorToShow: action.payload.error };
+    }
     case SET_USER_INFO_FORM_ERRORS: {
       return { ...state, userInfoFormErrors: action.payload.errors };
     }

@@ -5,6 +5,7 @@ import { ContactsType, ProfileType } from '../../../types/types';
 import { undateUserProfileInfo } from '../../../redux/actions/ProfileActions';
 import { prepareErrors } from '../../../helpers/helpers';
 import classes from './EditProfileInfoForm.module.css';
+import { Dispatch } from 'redux';
 
 type PropsType = {
   handleButtonClick: (editMode: boolean) => void;
@@ -16,6 +17,7 @@ type PropsType = {
   contacts: ContactsType;
   lookingForAJob: boolean;
   lookingForAJobDescription: string;
+  dispatch: any;
 };
 
 type FormValuesType = {
@@ -37,6 +39,7 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
   contacts,
   lookingForAJob,
   lookingForAJobDescription,
+  dispatch,
 }) => {
   const {
     register,
@@ -44,8 +47,6 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
     setError,
     formState: { errors },
   } = useForm<FormValuesType>();
-  const dispatch = useDispatch();
-
   useEffect(() => {
     formErrors.forEach((error: string) => {
       if (error.includes('Contacts')) {

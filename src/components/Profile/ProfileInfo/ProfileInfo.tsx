@@ -6,7 +6,7 @@ import ProfileStatus from '../ProfileStatus';
 import { ProfileType } from '../../../types/types';
 import EditProfileInfoForm from './EditProfileInfoForm';
 import ProfileData from './ProfileData';
-import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 
 type ProfileInfoProps = {
   profile: ProfileType;
@@ -14,6 +14,7 @@ type ProfileInfoProps = {
   savePhoto: (e: ChangeEvent<HTMLInputElement>) => void;
   isOwner?: string;
   formErrors: Array<string>;
+  dispatch: Dispatch;
 };
 
 const ProfileInfo: React.FC<ProfileInfoProps> = ({
@@ -22,6 +23,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
   savePhoto,
   isOwner,
   formErrors,
+  dispatch,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const goToEditMode = () => {
@@ -61,17 +63,13 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
             contacts={profile.contacts}
             lookingForAJob={profile.lookingForAJob}
             lookingForAJobDescription={profile.lookingForAJobDescription}
+            dispatch={dispatch}
           />
         ) : (
-          <ProfileData
-            isOwner={isOwner}
-            goToEditMode={goToEditMode}
-            status={status}
-            profile={profile}
-          />
+          <ProfileData isOwner={isOwner} goToEditMode={goToEditMode} profile={profile} />
         )}
         <div>
-          <ProfileStatus status={status} />
+          <ProfileStatus status={status} dispatch={dispatch} />
         </div>
       </div>
     </div>

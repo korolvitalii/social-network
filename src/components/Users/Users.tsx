@@ -28,9 +28,10 @@ const Users: React.FC<PropsType> = (props) => {
     dispatch(getUsers(currentPage, pageSize));
   }, [currentPage, dispatch, pageSize]);
 
-  const onChangePageClick = ({ selected }: number | any) => {
-    setCurrentPage(selected);
-    dispatch(getUsers(selected + 1, pageSize));
+  const onChangePageClick = ({ selected }: any) => {
+    const incSelected = selected + 1;
+    setCurrentPage(incSelected);
+    dispatch(getUsers(incSelected, pageSize));
   };
 
   const follow = (id: number) => {

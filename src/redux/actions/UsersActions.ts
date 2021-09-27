@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+import { ResultCodesEnum } from '../../api/api';
 import { apiUsers } from '../../api/users-api';
 import { UserType } from '../../types/types';
 import { BaseThunkType, InferActionsTypes } from '../reducers/rootReducer';
@@ -8,6 +10,7 @@ const GET_TOTAL_COUNT = 'SN/USERACTIONS/GET_TOTAL_COUNT';
 const SET_PAGES_COUNT = 'SN/USERACTIONS/SET_PAGES_COUNT';
 const TOGGLE_IS_FETCH_DATA = 'SN/USERACTIONS/TOGGLE_IS_FETCH_DATA';
 const TOGGLE_FOLLOWING_PROGRESS = 'SN/USERACTIONS/TOGGLE_FOLLOWING_PROGRESS';
+const SHOW_ERROR = 'SHOW_ERROR';
 
 export const actions = {
   toggleFollowUnfollow: (id: number) =>
@@ -53,6 +56,13 @@ export const actions = {
         isFollowingProgress,
       },
     } as const),
+  showError: (error: Array<string> | string | unknown) =>
+    ({
+      type: SHOW_ERROR,
+      payload: {
+        error,
+      },
+    } as const),
 };
 
 export const getUsers =
@@ -61,12 +71,17 @@ export const getUsers =
     try {
       dispatch(actions.isFetchData(true));
       const response = await apiUsers.getUsers(currentPage, pageSize);
-      dispatch(actions.setUsers(response.data.items));
-      dispatch(actions.getTotalCount(response.data.totalCount));
-      dispatch(actions.setPagesCount(response.data.totalCount, pageSize));
-      dispatch(actions.isFetchData(false));
+      if (!response.data.error) {
+        dispatch(actions.setUsers(response.data.items));
+        dispatch(actions.getTotalCount(response.data.totalCount));
+        dispatch(actions.setPagesCount(response.data.totalCount, pageSize));
+        dispatch(actions.isFetchData(false));
+      } else {
+        dispatch(actions.showError(response.data.error));
+        dispatch(actions.isFetchData(false));
+      }
     } catch (error) {
-      console.error(error);
+      dispatch(actions.showError(error));
     }
   };
 
@@ -75,12 +90,17 @@ export const followUserAction =
   async (dispatch) => {
     try {
       const response = await apiUsers.follow(id);
-      if (response.data.resultCode === 0) {
+      console.log(response);
+      if (response.resultCode === ResultCodesEnum.Success) {
+        dispatch(actions.toggleFollowingProgress(false));
         dispatch(actions.toggleFollowUnfollow(id));
+        dispatch(actions.toggleFollowingProgress(true));
+      } else {
+        dispatch(actions.showError(response.message));
         dispatch(actions.toggleFollowingProgress(false));
       }
     } catch (error) {
-      console.error(error);
+      dispatch(actions.showError(error));
     }
   };
 
@@ -88,11 +108,16 @@ export const unfollowUserAction =
   (id: number): ThunkType =>
   async (dispatch) => {
     try {
-      await apiUsers.unfollow(id);
-      dispatch(actions.toggleFollowUnfollow(id));
-      dispatch(actions.toggleFollowingProgress(false));
+      const response = await apiUsers.unfollow(id);
+      if (response.resultCode === ResultCodesEnum.Success) {
+        dispatch(actions.toggleFollowUnfollow(id));
+        dispatch(actions.toggleFollowingProgress(false));
+      } else {
+        dispatch(actions.showError(response.message));
+        dispatch(actions.toggleFollowingProgress(false));
+      }
     } catch (error) {
-      console.error(error);
+      dispatch(actions.showError(error));
     }
   };
 

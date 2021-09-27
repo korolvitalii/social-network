@@ -12,9 +12,9 @@ export const apiUsers = {
     return instance.get<GetUsersData>(`users?page=${currentPage}&count=${pageSize}`);
   },
   follow(id: number) {
-    return instance.post(`/follow/${id}`);
+    return instance.post<ResponseType>(`/follow/${id}`).then((res) => res.data);
   },
   unfollow(id: number) {
-    return instance.delete(`/follow/${id}`);
+    return instance.delete<ResponseType>(`/follow/${id}`).then((res) => res.data);
   },
 };
