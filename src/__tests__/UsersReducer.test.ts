@@ -10,7 +10,7 @@ let state: InitialStateType = {
   pagesCount: 10,
   isFetch: true,
   isFollowingProgress: false,
-  errorToShow: [],
+  networkErrors: '',
 };
 
 beforeEach(() => {
@@ -64,7 +64,7 @@ beforeEach(() => {
     pagesCount: 1,
     isFetch: false,
     isFollowingProgress: false,
-    errorToShow: [],
+    networkErrors: '',
   };
 });
 

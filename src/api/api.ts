@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ProfileType, LoginDataType, UserType, PhotosType } from '../types/types';
 
 export const instance = axios.create({
   withCredentials: true,
@@ -9,7 +8,7 @@ export const instance = axios.create({
 
 export type ResponseType<D = {}, RC = ResultCodesEnum> = {
   data: D;
-  message: Array<string>;
+  messages: Array<string>;
   resultCode: RC;
 };
 

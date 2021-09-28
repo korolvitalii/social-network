@@ -1,4 +1,4 @@
-import { LoginDataType, UserType } from '../types/types';
+import { LoginDataType } from '../types/types';
 import { instance, ResponseType } from './api';
 
 type MeDataResponse = {

@@ -7,13 +7,13 @@ type UpdateUserPhotoData = {
 
 export const profileApi = {
   getUserProfile(userId: number) {
-    return instance.get<ProfileType>(`/profile/${userId}`);
+    return instance.get<ProfileType>(`/profile/${userId}`).then((res) => res.data);
   },
   getUserStatus(userId: number) {
-    return instance.get<string>(`/profile/status/${userId}`);
+    return instance.get<string>(`/profile/status/${userId}`).then((res) => res.data);
   },
   updateUserStatus(status: string) {
-    return instance.put(`/profile/status`, { status: status }).then((response) => response.data);
+    return instance.put(`/profile/status`, { status: status }).then((res) => res.data);
   },
   updateUserPhoto(photo: File) {
     const formData = new FormData();
@@ -23,9 +23,11 @@ export const profileApi = {
         'content-type': 'multipart/form-data',
       },
     };
-    return instance.put<ResponseType<UpdateUserPhotoData>>(`/profile/photo`, formData, config);
+    return instance
+      .put<ResponseType<UpdateUserPhotoData>>(`/profile/photo`, formData, config)
+      .then((res) => res.data);
   },
   updateProfile(profile: ProfileType) {
-    return instance.put(`/profile`, profile);
+    return instance.put(`/profile`, profile).then((res) => res.data);
   },
 };

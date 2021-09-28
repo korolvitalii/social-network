@@ -2,6 +2,7 @@ import { profileApi } from '../../api/profile-api';
 import { PhotosType, PostType, ProfileType } from '../../types/types';
 import { BaseThunkType, InferActionsTypes } from '../../redux/reducers/rootReducer';
 import { ResultCodesEnum } from '../../api/api';
+import { actions as errorActions } from '../actions/ErrorsActions';
 
 const ADD_NEW_POST = 'SN/PROFILEACTION/ADD_NEW_POST';
 const SET_USER_PROFILE = 'SN/PROFILEACTION/SET_USER_PROFILE';
@@ -9,9 +10,6 @@ const SET_USER_STATUS = 'SN/PROFILEACTION/SET_USER_STATUS';
 const REMOVE_POST = 'SN/PROFILEACTIONS/REMOVE_POST';
 const SET_USER_PHOTO = 'SN/PROFILEACTIONS/SET_USER_PHOTO';
 const SET_USER_INFO_FORM_ERRORS = 'SN/PROFILEACTIONS/SET_USER_INFO_FORM_ERRORS';
-const SHOW_ERROR = 'SHOW_ERROR';
-
-export type ActionsType = InferActionsTypes<typeof actions>;
 
 export const actions = {
   addNewPost: (newPost: PostType) =>
@@ -56,13 +54,6 @@ export const actions = {
         errors,
       },
     } as const),
-  showError: (error: any) =>
-    ({
-      type: SHOW_ERROR,
-      payload: {
-        error,
-      },
-    } as const),
 };
 
 export const getUserStatus =
@@ -70,9 +61,11 @@ export const getUserStatus =
   async (dispatch) => {
     try {
       const response = await profileApi.getUserStatus(userId);
-      dispatch(actions.setUserStatus(response.data));
-    } catch (error) {
-      dispatch(actions.showError(error));
+      dispatch(actions.setUserStatus(response));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        dispatch(errorActions.setError(err.message));
+      }
     }
   };
 
@@ -83,9 +76,15 @@ export const updateUserStatus =
       const response = await profileApi.updateUserStatus(status);
       if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(actions.setUserStatus(status));
+      } else {
+        const errorMessage = `${response.message.map((e: string) => e)}`;
+        console.log(errorMessage);
+        dispatch(errorActions.setError(errorMessage));
       }
-    } catch (error) {
-      dispatch(actions.showError(error));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        dispatch(errorActions.setError(err.message));
+      }
     }
   };
 
@@ -94,9 +93,11 @@ export const getUserProfile =
   async (dispatch) => {
     try {
       const response = await profileApi.getUserProfile(userId);
-      dispatch(actions.setUserProfile(response.data));
-    } catch (error) {
-      dispatch(actions.showError(error));
+      dispatch(actions.setUserProfile(response));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        dispatch(errorActions.setError(err.message));
+      }
     }
   };
 
@@ -105,9 +106,16 @@ export const uploadUserPhoto =
   async (dispatch) => {
     try {
       const response = await profileApi.updateUserPhoto(photo);
-      dispatch(actions.setUserPhoto(response.data.data.photos));
-    } catch (error) {
-      dispatch(actions.showError(error));
+      if (response.resultCode === ResultCodesEnum.Success) {
+        dispatch(actions.setUserPhoto(response.data.photos));
+      } else {
+        const errorMessage = `${response.messages.map((e: string) => e)}`;
+        dispatch(errorActions.setError(errorMessage));
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        dispatch(errorActions.setError(err.message));
+      }
     }
   };
 
@@ -116,19 +124,22 @@ export const undateUserProfileInfo =
   async (dispatch, getState) => {
     try {
       const userId = getState().auth.id;
-      const data = await profileApi.updateProfile(profile);
-      if (data.data.resultCode === 0) {
-        if (userId != null) {
+      const response = await profileApi.updateProfile(profile);
+      if (response.data.resultCode === ResultCodesEnum.Success) {
+        if (userId !== null) {
           dispatch(getUserProfile(userId));
         } else {
-          dispatch(actions.showError("userId can't be null"));
+          dispatch(errorActions.setError("userId can't be null"));
         }
       } else {
-        dispatch(actions.setUserInfoFormErrors(data.data.messages));
+        dispatch(actions.setUserInfoFormErrors(response.data.messages));
       }
-    } catch (error) {
-      dispatch(actions.showError(error));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        dispatch(errorActions.setError(err.message));
+      }
     }
   };
 
+export type ActionsType = InferActionsTypes<typeof actions & typeof errorActions>;
 type ThunkType = BaseThunkType<ActionsType>;

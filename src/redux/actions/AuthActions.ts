@@ -2,6 +2,7 @@ import { ResultCodeForCaptchaEnum, ResultCodesEnum } from '../../api/api';
 import { authApi, securityApi } from '../../api/auth-api';
 import { LoginDataType } from '../../types/types';
 import { BaseThunkType, InferActionsTypes } from '../reducers/rootReducer';
+import { actions as errorActions } from '../actions/ErrorsActions';
 
 const SET_USER_DATA = 'SN/AUTHACTIONS/SET_USER_DATA';
 const SET_AUTH_ERRORS = 'SN/AUTHACTIONS/SET_AUTH_ERRORS';
@@ -43,8 +44,10 @@ export const getAuthUserData = (): ThunkType => async (dispatch) => {
     if (response.data.resultCode === ResultCodesEnum.Success) {
       dispatch(actions.setUserData(id, email, login, true));
     }
-  } catch (error) {
-    console.error(error);
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      dispatch(errorActions.setError(err.message));
+    }
   }
 };
 
@@ -62,8 +65,10 @@ export const loginAction =
         }
         dispatch(actions.authErrors(response.data.messages));
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        dispatch(errorActions.setError(err.message));
+      }
     }
   };
 
@@ -73,8 +78,10 @@ export const logoutAction = (): ThunkType => async (dispatch) => {
     if (response.data.resultCode === ResultCodesEnum.Success) {
       dispatch(actions.setUserData(null, null, null, false));
     }
-  } catch (error) {
-    console.error(error);
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      dispatch(errorActions.setError(err.message));
+    }
   }
 };
 
@@ -82,11 +89,12 @@ export const getCaptcha = (): ThunkType => async (dispatch) => {
   try {
     const response = await securityApi.getCaptchaUrl();
     dispatch(actions.setCaptcha(response.data.url));
-  } catch (error) {
-    console.error(error);
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      dispatch(errorActions.setError(err.message));
+    }
   }
 };
 
-export type ActionsType = InferActionsTypes<typeof actions>;
-
+export type ActionsType = InferActionsTypes<typeof actions & typeof errorActions>;
 type ThunkType = BaseThunkType<ActionsType>;

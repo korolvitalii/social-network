@@ -1,7 +1,7 @@
 import { UserType } from '../types/types';
 import { instance, ResultCodeForCaptchaEnum, ResponseType } from './api';
 
-type GetUsersData = {
+export type GetUsersData = {
   totalCount: number;
   error: null | string;
   items: Array<UserType>;
@@ -9,7 +9,9 @@ type GetUsersData = {
 
 export const apiUsers = {
   getUsers(currentPage = 1, pageSize = ResultCodeForCaptchaEnum.CaptchaIsRequired) {
-    return instance.get<GetUsersData>(`users?page=${currentPage}&count=${pageSize}`);
+    return instance
+      .get<GetUsersData>(`users?page=${currentPage}&count=${pageSize}`)
+      .then((res) => res.data);
   },
   follow(id: number) {
     return instance.post<ResponseType>(`/follow/${id}`).then((res) => res.data);

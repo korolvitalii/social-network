@@ -10,10 +10,11 @@ const state = {
     { id: 3, text: 'Some news', likeCount: 1 },
     { id: 4, text: 'SomePost', likeCount: 5 },
   ],
-  newPostText: '',
-  currentUser: 0,
+  profile: null,
   friends: ['John', 'Jack', 'Stasy'],
   status: '',
+  userInfoFormErrors: [],
+  networkErrors: '',
 };
 
 it('length of posts should be incremented', () => {
