@@ -1,6 +1,11 @@
 import { ResponseType, ResultCodesEnum } from '../api/api';
 import { profileApi } from '../api/profile-api';
-import { actions, getUserStatus, updateUserStatus } from '../redux/actions/ProfileActions';
+import {
+  actions,
+  getUserProfile,
+  getUserStatus,
+  updateUserStatus,
+} from '../redux/actions/ProfileActions';
 import { actions as errorActions } from '../redux/actions/ErrorsActions';
 
 jest.mock('../api/profile-api');
@@ -58,4 +63,38 @@ test('success update status', async () => {
   await thunk(dispatchMock, getStateMock, {});
   expect(dispatchMock).toBeCalledTimes(1);
   expect(dispatchMock).toHaveBeenNthCalledWith(1, actions.setUserStatus('some status'));
+});
+
+const successUserProfileReponse = {
+  userId: 1,
+  lookingForAJob: true,
+  lookingForAJobDescription: 'new description',
+  fullName: 'Johny One',
+  contacts: {
+    github: 'test.com',
+    vk: 'test.com',
+    facebook: 'test.com',
+    instagram: 'test.com',
+    twitter: 'test.com',
+    website: 'test.com',
+    youtube: 'test.com',
+    mainLink: 'test.com',
+  },
+  photos: {
+    small: null,
+    large: null,
+  },
+  aboutMe: 'about me test',
+};
+
+test('success get user profile', async () => {
+  profileAPIMock.getUserProfile.mockReturnValue(Promise.resolve(successUserProfileReponse));
+  const thunk = getUserProfile(1);
+
+  await thunk(dispatchMock, getStateMock, {});
+  expect(dispatchMock).toBeCalledTimes(1);
+  expect(dispatchMock).toHaveBeenNthCalledWith(
+    1,
+    actions.setUserProfile(successUserProfileReponse),
+  );
 });

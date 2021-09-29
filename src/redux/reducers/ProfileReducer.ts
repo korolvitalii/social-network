@@ -7,7 +7,6 @@ const SET_USER_STATUS = 'SN/PROFILEACTION/SET_USER_STATUS';
 const REMOVE_POST = 'SN/PROFILEACTIONS/REMOVE_POST';
 const SET_USER_PHOTO = 'SN/PROFILEACTIONS/SET_USER_PHOTO';
 const SET_USER_INFO_FORM_ERRORS = 'SN/PROFILEACTIONS/SET_USER_INFO_FORM_ERRORS';
-const SET_ERROR = 'SET_ERROR';
 
 const initialState = {
   posts: [
@@ -20,7 +19,6 @@ const initialState = {
   friends: ['John', 'Jack', 'Stasy'] as Array<string>,
   status: '' as string,
   userInfoFormErrors: [] as Array<string>,
-  networkErrors: '' as string,
 };
 
 export type InitialStateType = typeof initialState;

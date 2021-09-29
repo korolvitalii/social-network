@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useEffect } from 'react';
-import { Dispatch } from 'redux';
 import { updateUserStatus } from '../../redux/actions/ProfileActions';
 
 type PropsType = {

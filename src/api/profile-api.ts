@@ -1,4 +1,4 @@
-import { PhotosType, ProfileType, UserType } from '../types/types';
+import { PhotosType, ProfileType } from '../types/types';
 import { instance, ResponseType } from './api';
 
 type UpdateUserPhotoData = {

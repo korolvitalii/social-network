@@ -1,13 +1,13 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
-
-import ProfileInfo from './ProfileInfo/ProfileInfo';
 import { getUserProfile, getUserStatus, uploadUserPhoto } from '../../redux/actions/ProfileActions';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 import classes from './Profile.module.css';
-import { ProfileType } from '../../types/types';
+import { PhotosType, PostType, ProfileType } from '../../types/types';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import { AppStateType } from '../../redux/reducers/rootReducer';
+import ShowErrorModal from '../common/ShowErrorModal';
 
 type MatchParams = {
   id: string;
@@ -18,9 +18,18 @@ type PropsType = {
   status: string;
   authUserID: number;
   formErrors: Array<string>;
+  addNewPost: (newPost: PostType) => void;
+  removePost: (id: number) => void;
+  setUserProfile: (user: ProfileType) => void;
+  setUserStatus: (status: string) => void;
+  setUserPhoto: (photos: PhotosType) => void;
+  setUserInfoFormErrors: (errors: Array<string>) => void;
+  resetError: () => void;
+  errors: string;
 };
 
-const Profile: React.FC<PropsType> = ({ currentUser, status, authUserID }) => {
+const Profile: React.FC<PropsType> = (props) => {
+  const { authUserID, currentUser, status, errors, resetError } = props;
   const { userInfoFormErrors } = useSelector((state: AppStateType) => state.profilePage);
   const match = useRouteMatch<MatchParams>('/profile/:id/');
   const dispatch = useDispatch();
@@ -38,6 +47,7 @@ const Profile: React.FC<PropsType> = ({ currentUser, status, authUserID }) => {
 
   return (
     <div className={classes.profileContainer}>
+      <ShowErrorModal errors={errors} resetError={resetError} />
       <ProfileInfo
         profile={currentUser}
         status={status}

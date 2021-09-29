@@ -19,3 +19,7 @@ export const getPosts = (state: AppStateType) => {
 export const getFormErrors = (state: AppStateType) => {
   return state.profilePage.userInfoFormErrors;
 };
+
+export const getErrors = (state: AppStateType) => {
+  return state.errors.errors;
+};

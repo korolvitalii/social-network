@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { ContactsType, ProfileType } from '../../../types/types';
 import { undateUserProfileInfo } from '../../../redux/actions/ProfileActions';
 import { prepareErrors } from '../../../helpers/helpers';
 import classes from './EditProfileInfoForm.module.css';
-import { Dispatch } from 'redux';
 
 type PropsType = {
   handleButtonClick: (editMode: boolean) => void;

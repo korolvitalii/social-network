@@ -13,6 +13,8 @@ import {
   getUsers,
 } from '../../redux/selectors/user-selectors';
 import { UserType } from '../../types/types';
+import { actions as errorAction } from '../../redux/actions/ErrorsActions';
+import { getErrors } from '../../redux/selectors/profile-selectors';
 
 type MapStateToPropsType = {
   users: Array<UserType>;
@@ -20,6 +22,7 @@ type MapStateToPropsType = {
   pagesCount: number;
   isFollowingProgress: boolean;
   isFetch: boolean;
+  errors: string;
 };
 
 type MapDispatchToPropsType = {
@@ -29,6 +32,7 @@ type MapDispatchToPropsType = {
   setPagesCount: (totalCount: number, pageSize: number) => void;
   isFetchData: (isFetch: boolean) => void;
   toggleFollowingProgress: (isFollowingProgress: boolean) => void;
+  resetError: () => void;
 };
 
 type OwnPropsType = {};
@@ -40,13 +44,14 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     pagesCount: getPagesCount(state),
     isFollowingProgress: getIsFollowingProgress(state),
     isFetch: getIsFetch(state),
+    errors: getErrors(state),
   };
 };
 
 export default compose<React.ComponentType>(
   connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(
     mapStateToProps,
-    { ...actions },
+    { ...actions, ...errorAction },
   ),
   withAuthRedirect,
 )(Users);

@@ -8,6 +8,7 @@ import userIcon from '../../assets/images/User-Icon.jpg';
 import Preloader from '../common/Preloader/Preloader';
 import { UserType } from '../../types/types';
 import { followUserAction, getUsers, unfollowUserAction } from '../../redux/actions/UsersActions';
+import ShowErrorModal from '../common/ShowErrorModal';
 
 type PropsType = {
   toggleFollowingProgress: (param: boolean) => void;
@@ -16,12 +17,22 @@ type PropsType = {
   pagesCount: number;
   isFollowingProgress: boolean;
   isFetch: boolean;
+  errors: string;
+  resetError: () => void;
 };
 
 const Users: React.FC<PropsType> = (props) => {
   const dispatch = useDispatch();
-  const { toggleFollowingProgress, pageSize, pagesCount, users, isFollowingProgress, isFetch } =
-    props;
+  const {
+    toggleFollowingProgress,
+    pageSize,
+    pagesCount,
+    users,
+    isFollowingProgress,
+    isFetch,
+    errors,
+    resetError,
+  } = props;
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
@@ -106,6 +117,7 @@ const Users: React.FC<PropsType> = (props) => {
           nextLabel={<>&raquo;</>}
         />
       </div>
+      <ShowErrorModal errors={errors} resetError={resetError} />
       <div>{usersElements}</div>
     </>
   );

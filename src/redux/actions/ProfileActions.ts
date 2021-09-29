@@ -77,8 +77,7 @@ export const updateUserStatus =
       if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(actions.setUserStatus(status));
       } else {
-        const errorMessage = `${response.message.map((e: string) => e)}`;
-        console.log(errorMessage);
+        const errorMessage = `${response.messages.map((e: string) => e)}`;
         dispatch(errorActions.setError(errorMessage));
       }
     } catch (err: unknown) {
