@@ -19,3 +19,7 @@ export const getPagesCount = (state: AppStateType) => {
 export const getIsFetch = (state: AppStateType) => {
   return state.usersPage.isFetch;
 };
+
+export const getTerm = (state: AppStateType) => {
+  return state.usersPage.term;
+};

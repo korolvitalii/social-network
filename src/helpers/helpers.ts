@@ -7,3 +7,7 @@ export const prepareErrors = (error: string, char: string): any => {
   const errorType = result[1].substring(0, result[1].length - 1);
   return capitalizeFirstLetter(errorType);
 };
+
+export const arrayMessagesToStringMessage = (arrayWithMessages: Array<string>) => {
+  return `${arrayWithMessages.map((message: string) => message)}`;
+};

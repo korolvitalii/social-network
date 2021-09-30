@@ -11,6 +11,7 @@ import {
   getPagesCount,
   getPageSize,
   getUsers,
+  getTerm,
 } from '../../redux/selectors/user-selectors';
 import { UserType } from '../../types/types';
 import { actions as errorAction } from '../../redux/actions/ErrorsActions';
@@ -23,6 +24,7 @@ type MapStateToPropsType = {
   isFollowingProgress: boolean;
   isFetch: boolean;
   errors: string;
+  term: string;
 };
 
 type MapDispatchToPropsType = {
@@ -45,6 +47,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     isFollowingProgress: getIsFollowingProgress(state),
     isFetch: getIsFetch(state),
     errors: getErrors(state),
+    term: getTerm(state),
   };
 };
 

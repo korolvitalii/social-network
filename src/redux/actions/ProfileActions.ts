@@ -3,6 +3,7 @@ import { PhotosType, PostType, ProfileType } from '../../types/types';
 import { BaseThunkType, InferActionsTypes } from '../../redux/reducers/rootReducer';
 import { ResultCodesEnum } from '../../api/api';
 import { actions as errorActions } from '../actions/ErrorsActions';
+import { arrayMessagesToStringMessage } from '../../helpers/helpers';
 
 const ADD_NEW_POST = 'SN/PROFILEACTION/ADD_NEW_POST';
 const SET_USER_PROFILE = 'SN/PROFILEACTION/SET_USER_PROFILE';
@@ -77,8 +78,7 @@ export const updateUserStatus =
       if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(actions.setUserStatus(status));
       } else {
-        const errorMessage = `${response.messages.map((e: string) => e)}`;
-        dispatch(errorActions.setError(errorMessage));
+        dispatch(errorActions.setError(arrayMessagesToStringMessage(response.messages)));
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -108,8 +108,7 @@ export const uploadUserPhoto =
       if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(actions.setUserPhoto(response.data.photos));
       } else {
-        const errorMessage = `${response.messages.map((e: string) => e)}`;
-        dispatch(errorActions.setError(errorMessage));
+        dispatch(errorActions.setError(arrayMessagesToStringMessage(response.messages)));
       }
     } catch (err: unknown) {
       if (err instanceof Error) {

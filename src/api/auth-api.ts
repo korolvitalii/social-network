@@ -1,26 +1,42 @@
 import { LoginDataType } from '../types/types';
-import { instance, ResponseType } from './api';
+import { instance, ResponseType, ResultCodeForCaptchaEnum, ResultCodesEnum } from './api';
 
-type MeDataResponse = {
-  id: number;
-  email: string;
-  login: string;
+export type MeDataResponse = {
+  id: number | null;
+  email: string | null;
+  login: string | null;
+};
+
+export type LoginResponseType = {
+  userId: number;
+};
+
+export type authResponseType = {
+  data: {};
+  messages: Array<string>;
+  fieldsErrors: Array<string>;
+  resultCode: number;
 };
 
 export const authApi = {
   authMe() {
-    return instance.get<ResponseType<MeDataResponse>>(`/auth/me`);
+    return instance.get<ResponseType<MeDataResponse>>(`/auth/me`).then((res) => res.data);
   },
   login(loginData: LoginDataType) {
-    return instance.post(`/auth/login`, loginData);
+    return instance
+      .post<ResponseType<LoginResponseType, ResultCodeForCaptchaEnum | ResultCodesEnum>>(
+        `/auth/login`,
+        loginData,
+      )
+      .then((res) => res.data);
   },
   logout() {
-    return instance.delete(`/auth/login`);
+    return instance.delete(`/auth/login`).then((res) => res.data);
   },
 };
 
 export const securityApi = {
   getCaptchaUrl() {
-    return instance.get('/security/get-captcha-url');
+    return instance.get('/security/get-captcha-url').then((res) => res.data);
   },
 };

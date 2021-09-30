@@ -9,6 +9,7 @@ import Preloader from '../common/Preloader/Preloader';
 import { UserType } from '../../types/types';
 import { followUserAction, getUsers, unfollowUserAction } from '../../redux/actions/UsersActions';
 import ShowErrorModal from '../common/ShowErrorModal';
+import SearchUserForm from './SearchUsersForm';
 
 type PropsType = {
   toggleFollowingProgress: (param: boolean) => void;
@@ -18,7 +19,9 @@ type PropsType = {
   isFollowingProgress: boolean;
   isFetch: boolean;
   errors: string;
+  term: string;
   resetError: () => void;
+  setTerm: () => void;
 };
 
 const Users: React.FC<PropsType> = (props) => {
@@ -31,18 +34,21 @@ const Users: React.FC<PropsType> = (props) => {
     isFollowingProgress,
     isFetch,
     errors,
+    term,
     resetError,
+    setTerm,
   } = props;
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
-    dispatch(getUsers(currentPage, pageSize));
-  }, [currentPage, dispatch, pageSize]);
+    debugger;
+    dispatch(getUsers(currentPage, pageSize, term));
+  }, [currentPage, dispatch, pageSize, term]);
 
   const onChangePageClick = ({ selected }: any) => {
     const incSelected = selected + 1;
     setCurrentPage(incSelected);
-    dispatch(getUsers(incSelected, pageSize));
+    dispatch(getUsers(incSelected, pageSize, term));
   };
 
   const follow = (id: number) => {
@@ -116,6 +122,9 @@ const Users: React.FC<PropsType> = (props) => {
           previousLabel={<>&laquo;</>}
           nextLabel={<>&raquo;</>}
         />
+      </div>
+      <div>
+        <SearchUserForm setTerm={setTerm} dispatch={dispatch} />
       </div>
       <ShowErrorModal errors={errors} resetError={resetError} />
       <div>{usersElements}</div>

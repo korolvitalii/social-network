@@ -23,7 +23,7 @@ beforeEach(() => {
 
 const FollowUnfollowReponse: ResponseType = {
   resultCode: ResultCodesEnum.Success,
-  message: [],
+  messages: [],
   data: {},
 };
 

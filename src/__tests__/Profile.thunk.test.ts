@@ -1,4 +1,4 @@
-import { ResponseType, ResultCodesEnum } from '../api/api';
+import { ResponseType } from '../api/api';
 import { profileApi } from '../api/profile-api';
 import {
   actions,

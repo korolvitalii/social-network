@@ -7,6 +7,7 @@ const GET_TOTAL_COUNT = 'SN/USERACTIONS/GET_TOTAL_COUNT';
 const SET_PAGES_COUNT = 'SN/USERACTIONS/SET_PAGES_COUNT';
 const TOGGLE_IS_FETCH_DATA = 'SN/USERACTIONS/TOGGLE_IS_FETCH_DATA';
 const TOGGLE_FOLLOWING_PROGRESS = 'SN/USERACTIONS/TOGGLE_FOLLOWING_PROGRESS';
+const SET_TERM = 'SN/USERACTIONS/SET_TERM';
 
 const initialState = {
   users: [] as Array<UserType>,
@@ -16,6 +17,7 @@ const initialState = {
   isFetch: true as boolean,
   isFollowingProgress: false as boolean,
   networkErrors: '' as string,
+  term: '' as string,
 };
 
 export type InitialStateType = typeof initialState;
@@ -49,6 +51,9 @@ export const UsersReducer = (state = initialState, action: ActionsTypes): Initia
     }
     case TOGGLE_FOLLOWING_PROGRESS: {
       return { ...state, isFollowingProgress: action.payload.isFollowingProgress };
+    }
+    case SET_TERM: {
+      return { ...state, term: action.payload.term };
     }
     default:
       return state;

@@ -8,9 +8,9 @@ export type GetUsersData = {
 };
 
 export const apiUsers = {
-  getUsers(currentPage = 1, pageSize = ResultCodeForCaptchaEnum.CaptchaIsRequired) {
+  getUsers(currentPage = 1, pageSize = ResultCodeForCaptchaEnum.CaptchaIsRequired, term = '') {
     return instance
-      .get<GetUsersData>(`users?page=${currentPage}&count=${pageSize}`)
+      .get<GetUsersData>(`users?page=${currentPage}&count=${pageSize}&term=${term}`)
       .then((res) => res.data);
   },
   follow(id: number) {
