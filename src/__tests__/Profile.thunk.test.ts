@@ -92,9 +92,12 @@ test('success get user profile', async () => {
   const thunk = getUserProfile(1);
 
   await thunk(dispatchMock, getStateMock, {});
-  expect(dispatchMock).toBeCalledTimes(1);
+  expect(dispatchMock).toBeCalledTimes(3);
+
+  expect(dispatchMock).toHaveBeenNthCalledWith(1, actions.isFetchProfile(false));
   expect(dispatchMock).toHaveBeenNthCalledWith(
-    1,
+    2,
     actions.setUserProfile(successUserProfileReponse),
   );
+  expect(dispatchMock).toHaveBeenNthCalledWith(3, actions.isFetchProfile(true));
 });

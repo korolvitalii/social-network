@@ -7,9 +7,12 @@ import { ProfileType } from '../../../types/types';
 import EditProfileInfoForm from './EditProfileInfoForm';
 import ProfileData from './ProfileData';
 import { Dispatch } from 'redux';
+import { useSelector } from 'react-redux';
+import { getIsLoadPhoto } from '../../../redux/selectors/profile-selectors';
+import Preloader from '../../common/Preloader/Preloader';
 
 type ProfileInfoProps = {
-  profile: ProfileType;
+  profile: ProfileType | null;
   status: string;
   savePhoto: (e: ChangeEvent<HTMLInputElement>) => void;
   isOwner?: string;
@@ -30,15 +33,21 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
     setEditMode(!editMode);
   };
 
+  const isLoadPhoto = useSelector(getIsLoadPhoto);
+
   return (
     <div className={classes.profileInfo}>
       <div className={classes.description}>
         <div>
-          <img
-            className={classes.avatarPhoto}
-            src={profile?.photos?.large ? profile.photos.large : userIcon}
-            alt=''
-          />
+          {!isLoadPhoto ? (
+            <Preloader />
+          ) : (
+            <img
+              className={classes.avatarPhoto}
+              src={profile?.photos?.large ? profile.photos.large : userIcon}
+              alt=''
+            />
+          )}
           {!isOwner && (
             <div>
               <input
@@ -54,16 +63,15 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
         </div>
         {editMode ? (
           <EditProfileInfoForm
-            userId={profile.userId}
+            userId={profile?.userId}
             handleButtonClick={goToEditMode}
             editMode={editMode}
             formErrors={formErrors}
-            fullName={profile.fullName}
-            aboutMe={profile.aboutMe}
-            contacts={profile.contacts}
-            lookingForAJob={profile.lookingForAJob}
-            lookingForAJobDescription={profile.lookingForAJobDescription}
-            dispatch={dispatch}
+            fullName={profile?.fullName}
+            aboutMe={profile?.aboutMe}
+            contacts={profile?.contacts}
+            lookingForAJob={profile?.lookingForAJob}
+            lookingForAJobDescription={profile?.lookingForAJobDescription}
           />
         ) : (
           <ProfileData isOwner={isOwner} goToEditMode={goToEditMode} profile={profile} />

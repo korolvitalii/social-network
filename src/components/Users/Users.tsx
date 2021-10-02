@@ -1,65 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-
-import classes from './Users.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import userIcon from '../../assets/images/User-Icon.jpg';
-import Preloader from '../common/Preloader/Preloader';
+import { actions as errorActions } from '../../redux/actions/ErrorsActions';
+import { actions, followThunk, getUsers, unfollowThunk } from '../../redux/actions/UsersActions';
+import { getErrors } from '../../redux/selectors/profile-selectors';
+import {
+  getIsFollowingProgress,
+  getPagesCount,
+  getPageSize,
+  getShowFriends,
+  getTerm,
+  getUsersFromState,
+} from '../../redux/selectors/user-selectors';
 import { UserType } from '../../types/types';
-import { followUserAction, getUsers, unfollowUserAction } from '../../redux/actions/UsersActions';
 import ShowErrorModal from '../common/ShowErrorModal';
 import SearchUserForm from './SearchUsersForm';
+import classes from './Users.module.css';
 
-type PropsType = {
-  toggleFollowingProgress: (param: boolean) => void;
-  users: Array<UserType>;
-  pageSize: number;
-  pagesCount: number;
-  isFollowingProgress: boolean;
-  isFetch: boolean;
-  errors: string;
-  term: string;
-  resetError: () => void;
-  setTerm: () => void;
-};
+type PropsType = {};
 
 const Users: React.FC<PropsType> = (props) => {
   const dispatch = useDispatch();
-  const {
-    toggleFollowingProgress,
-    pageSize,
-    pagesCount,
-    users,
-    isFollowingProgress,
-    isFetch,
-    errors,
-    term,
-    resetError,
-    setTerm,
-  } = props;
+  const users = useSelector(getUsersFromState);
+  const pageSize = useSelector(getPageSize);
+  const pagesCount = useSelector(getPagesCount);
+  const isFollowingProgress = useSelector(getIsFollowingProgress);
+  const errors = useSelector(getErrors);
+  const term = useSelector(getTerm);
+  const showFriends = useSelector(getShowFriends);
+
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
-    debugger;
-    dispatch(getUsers(currentPage, pageSize, term));
-  }, [currentPage, dispatch, pageSize, term]);
+    dispatch(getUsers(currentPage, pageSize, term, showFriends));
+  }, [currentPage, dispatch, pageSize, term, showFriends]);
 
   const onChangePageClick = ({ selected }: any) => {
     const incSelected = selected + 1;
     setCurrentPage(incSelected);
-    dispatch(getUsers(incSelected, pageSize, term));
+    dispatch(getUsers(incSelected, pageSize, term, showFriends));
   };
 
   const follow = (id: number) => {
-    dispatch(toggleFollowingProgress(true));
-    dispatch(followUserAction(id));
+    dispatch(followThunk(id));
   };
 
   const unfollow = (id: number) => {
-    dispatch(toggleFollowingProgress(true));
-    dispatch(unfollowUserAction(id));
+    dispatch(unfollowThunk(id));
   };
+
+  const toggleShowFriends = (flag: boolean | string) => dispatch(actions.toggleShowFriends(flag));
+
+  const setTerm = (term: string) => dispatch(actions.setTerm(term));
+
+  const resetError = () => dispatch(errorActions.resetError());
 
   const usersElements = users.map((user: UserType) => {
     const {
@@ -80,11 +76,19 @@ const Users: React.FC<PropsType> = (props) => {
           </div>
           <div>
             {followed ? (
-              <button disabled={isFollowingProgress} onClick={() => unfollow(id)}>
+              <button
+                disabled={isFollowingProgress}
+                onClick={() => {
+                  unfollow(id);
+                }}>
                 UNFOLLOW
               </button>
             ) : (
-              <button disabled={isFollowingProgress} onClick={() => follow(id)}>
+              <button
+                disabled={isFollowingProgress}
+                onClick={() => {
+                  follow(id);
+                }}>
                 FOLLOW
               </button>
             )}
@@ -100,7 +104,6 @@ const Users: React.FC<PropsType> = (props) => {
 
   return (
     <>
-      {isFetch && <Preloader />}
       <div>
         <ReactPaginate
           disableInitialCallback={true}
@@ -124,7 +127,11 @@ const Users: React.FC<PropsType> = (props) => {
         />
       </div>
       <div>
-        <SearchUserForm setTerm={setTerm} dispatch={dispatch} />
+        <SearchUserForm
+          setTerm={setTerm}
+          toggleShowFriends={toggleShowFriends}
+          dispatch={dispatch}
+        />
       </div>
       <ShowErrorModal errors={errors} resetError={resetError} />
       <div>{usersElements}</div>

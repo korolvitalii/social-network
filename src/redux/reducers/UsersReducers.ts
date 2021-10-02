@@ -8,6 +8,7 @@ const SET_PAGES_COUNT = 'SN/USERACTIONS/SET_PAGES_COUNT';
 const TOGGLE_IS_FETCH_DATA = 'SN/USERACTIONS/TOGGLE_IS_FETCH_DATA';
 const TOGGLE_FOLLOWING_PROGRESS = 'SN/USERACTIONS/TOGGLE_FOLLOWING_PROGRESS';
 const SET_TERM = 'SN/USERACTIONS/SET_TERM';
+const TOGGLE_FRIEND = 'SN/USERACTIONS/TOGGLE_FRIEND';
 
 const initialState = {
   users: [] as Array<UserType>,
@@ -17,7 +18,10 @@ const initialState = {
   isFetch: true as boolean,
   isFollowingProgress: false as boolean,
   networkErrors: '' as string,
-  term: '' as string,
+  filters: {
+    term: '' as string,
+    showFriends: false as boolean | string,
+  },
 };
 
 export type InitialStateType = typeof initialState;
@@ -53,7 +57,16 @@ export const UsersReducer = (state = initialState, action: ActionsTypes): Initia
       return { ...state, isFollowingProgress: action.payload.isFollowingProgress };
     }
     case SET_TERM: {
-      return { ...state, term: action.payload.term };
+      return {
+        ...state,
+        filters: { term: action.payload.term, showFriends: state.filters.showFriends },
+      };
+    }
+    case TOGGLE_FRIEND: {
+      return {
+        ...state,
+        filters: { term: state.filters.term, showFriends: action.payload.showFriends },
+      };
     }
     default:
       return state;

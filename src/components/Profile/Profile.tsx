@@ -1,42 +1,41 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
+import { actions as errorsActions } from '../../redux/actions/ErrorsActions';
 import { getUserProfile, getUserStatus, uploadUserPhoto } from '../../redux/actions/ProfileActions';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
-import classes from './Profile.module.css';
-import { PhotosType, PostType, ProfileType } from '../../types/types';
-import MyPostsContainer from './MyPosts/MyPostsContainer';
 import { AppStateType } from '../../redux/reducers/rootReducer';
+import {
+  getAuthUserId,
+  getCurrentUser,
+  getErrors,
+  getStatus,
+} from '../../redux/selectors/profile-selectors';
 import ShowErrorModal from '../common/ShowErrorModal';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
+import classes from './Profile.module.css';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 type MatchParams = {
   id: string;
 };
 
-type PropsType = {
-  currentUser: ProfileType;
-  status: string;
-  authUserID: number;
-  formErrors: Array<string>;
-  addNewPost: (newPost: PostType) => void;
-  removePost: (id: number) => void;
-  setUserProfile: (user: ProfileType) => void;
-  setUserStatus: (status: string) => void;
-  setUserPhoto: (photos: PhotosType) => void;
-  setUserInfoFormErrors: (errors: Array<string>) => void;
-  resetError: () => void;
-  errors: string;
-};
+type PropsType = {};
 
 const Profile: React.FC<PropsType> = (props) => {
-  const { authUserID, currentUser, status, errors, resetError } = props;
+  const dispatch = useDispatch();
+  const currentUser = useSelector(getCurrentUser);
+  const status = useSelector(getStatus);
+  const authUserID = useSelector(getAuthUserId);
+  const errors = useSelector(getErrors);
   const { userInfoFormErrors } = useSelector((state: AppStateType) => state.profilePage);
   const match = useRouteMatch<MatchParams>('/profile/:id/');
-  const dispatch = useDispatch();
   const userId = match?.params.id ? Number(match.params.id) : authUserID;
+
+  const resetError = () => errorsActions.resetError();
+
   useEffect(() => {
-    dispatch(getUserProfile(userId));
-    dispatch(getUserStatus(userId));
+    dispatch(getUserProfile(userId as number));
+    dispatch(getUserStatus(userId as number));
   }, [match?.params.id, dispatch, userId]);
 
   const savePhoto = (e: ChangeEvent<HTMLInputElement>) => {

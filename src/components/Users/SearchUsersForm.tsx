@@ -1,28 +1,45 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Dispatch } from 'redux';
 
 type Inputs = {
   searchUser: string;
+  showUsers: string;
   exampleRequired: string;
 };
 
 type PropsType = {
   setTerm: (term: string) => void;
+  toggleShowFriends: (showFriends: boolean | string) => void;
   dispatch: any;
 };
 
-const SearchUserForm: React.FC<PropsType> = ({ setTerm, dispatch }) => {
+const SearchUserForm: React.FC<PropsType> = ({ setTerm, toggleShowFriends, dispatch }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => dispatch(setTerm(data.searchUser));
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    if (data.showUsers === 'Only followed') {
+      dispatch(toggleShowFriends(true));
+    } else if (data.showUsers === 'Only unfollowed') {
+      dispatch(toggleShowFriends(false));
+    } else {
+      dispatch(toggleShowFriends(''));
+    }
+    dispatch(setTerm(data.searchUser));
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('searchUser')} />
-      {errors.exampleRequired && <span>This field is required</span>}
+      <input {...register('searchUser')} placeholder='Search' />
+      <div>
+        <select {...register('showUsers')}>
+          <option value='All'>All</option>
+          <option value='Only followed'>Only followed</option>
+          <option value='Only unfollowed'>Only unfollowed</option>
+        </select>
+      </div>
       <input type='submit' />
     </form>
   );

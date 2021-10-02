@@ -11,6 +11,8 @@ const SET_USER_STATUS = 'SN/PROFILEACTION/SET_USER_STATUS';
 const REMOVE_POST = 'SN/PROFILEACTIONS/REMOVE_POST';
 const SET_USER_PHOTO = 'SN/PROFILEACTIONS/SET_USER_PHOTO';
 const SET_USER_INFO_FORM_ERRORS = 'SN/PROFILEACTIONS/SET_USER_INFO_FORM_ERRORS';
+const IS_LOAD_PHOTO = 'SN/PROFILEACTIONS/IS_LOAD_PHOTO';
+const TOGGLE_IS_FETCH_PROFILE = 'SN/PROFILEACTIONS/TOGGLE_IS_FETCH_PROFILE';
 
 export const actions = {
   addNewPost: (newPost: PostType) =>
@@ -55,6 +57,20 @@ export const actions = {
         errors,
       },
     } as const),
+  isLoadPhoto: (isLoad: boolean) =>
+    ({
+      type: IS_LOAD_PHOTO,
+      payload: {
+        isLoad,
+      },
+    } as const),
+  isFetchProfile: (isFetch: boolean) =>
+    ({
+      type: TOGGLE_IS_FETCH_PROFILE,
+      payload: {
+        isFetch,
+      },
+    } as const),
 };
 
 export const getUserStatus =
@@ -91,8 +107,10 @@ export const getUserProfile =
   (userId: number): ThunkType =>
   async (dispatch) => {
     try {
+      dispatch(actions.isFetchProfile(false));
       const response = await profileApi.getUserProfile(userId);
       dispatch(actions.setUserProfile(response));
+      dispatch(actions.isFetchProfile(true));
     } catch (err: unknown) {
       if (err instanceof Error) {
         dispatch(errorActions.setError(err.message));
@@ -104,9 +122,11 @@ export const uploadUserPhoto =
   (photo: File): ThunkType =>
   async (dispatch) => {
     try {
+      dispatch(actions.isLoadPhoto(false));
       const response = await profileApi.updateUserPhoto(photo);
       if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(actions.setUserPhoto(response.data.photos));
+        dispatch(actions.isLoadPhoto(true));
       } else {
         dispatch(errorActions.setError(arrayMessagesToStringMessage(response.messages)));
       }

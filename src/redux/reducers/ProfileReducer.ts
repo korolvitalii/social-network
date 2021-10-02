@@ -7,6 +7,8 @@ const SET_USER_STATUS = 'SN/PROFILEACTION/SET_USER_STATUS';
 const REMOVE_POST = 'SN/PROFILEACTIONS/REMOVE_POST';
 const SET_USER_PHOTO = 'SN/PROFILEACTIONS/SET_USER_PHOTO';
 const SET_USER_INFO_FORM_ERRORS = 'SN/PROFILEACTIONS/SET_USER_INFO_FORM_ERRORS';
+const IS_LOAD_PHOTO = 'SN/PROFILEACTIONS/IS_LOAD_PHOTO';
+const TOGGLE_IS_FETCH_PROFILE = 'SN/PROFILEACTIONS/TOGGLE_IS_FETCH_PROFILE';
 
 const initialState = {
   posts: [
@@ -19,6 +21,8 @@ const initialState = {
   friends: ['John', 'Jack', 'Stasy'] as Array<string>,
   status: '' as string,
   userInfoFormErrors: [] as Array<string>,
+  isLoadPhoto: true as boolean,
+  isFetchProfile: true as boolean,
 };
 
 export type InitialStateType = typeof initialState;
@@ -48,9 +52,12 @@ export const ProfileReducer = (state = initialState, action: ActionsType): Initi
     case SET_USER_INFO_FORM_ERRORS: {
       return { ...state, userInfoFormErrors: action.payload.errors };
     }
-    // case SET_ERROR: {
-    //   return { ...state, networkErrors: action.payload.error as string };
-    // }
+    case IS_LOAD_PHOTO: {
+      return { ...state, isLoadPhoto: action.payload.isLoad };
+    }
+    case TOGGLE_IS_FETCH_PROFILE: {
+      return { ...state, isLoadPhoto: action.payload.isFetch };
+    }
     default:
       return state;
   }

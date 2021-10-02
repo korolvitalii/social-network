@@ -1,9 +1,4 @@
-import {
-  actions,
-  followUserAction,
-  getUsers,
-  unfollowUserAction,
-} from '../redux/actions/UsersActions';
+import { actions, followThunk, getUsers, unfollowThunk } from '../redux/actions/UsersActions';
 import { apiUsers, GetUsersData } from '../api/users-api';
 import { ResponseType, ResultCodesEnum } from '../api/api';
 import usersRaw from './UsersRaw.json';
@@ -35,7 +30,7 @@ const getUsersResponse: GetUsersData = {
 
 test('success follow thunk', async () => {
   userAPIMock.follow.mockReturnValue(Promise.resolve(FollowUnfollowReponse));
-  const thunk = followUserAction(1);
+  const thunk = followThunk(1);
 
   await thunk(dispatchMock, getStateMock, {});
 
@@ -47,7 +42,7 @@ test('success follow thunk', async () => {
 
 test('success unfollow thunk', async () => {
   userAPIMock.unfollow.mockReturnValue(Promise.resolve(FollowUnfollowReponse));
-  const thunk = unfollowUserAction(1);
+  const thunk = unfollowThunk(1);
 
   await thunk(dispatchMock, getStateMock, {});
 
@@ -59,7 +54,7 @@ test('success unfollow thunk', async () => {
 
 test('success getUsers thunk', async () => {
   userAPIMock.getUsers.mockReturnValue(Promise.resolve(getUsersResponse));
-  const thunk = getUsers(1, 10);
+  const thunk = getUsers(1, 10, '', false);
 
   await thunk(dispatchMock, getStateMock, {});
   expect(dispatchMock).toBeCalledTimes(5);

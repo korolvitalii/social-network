@@ -23,3 +23,11 @@ export const getFormErrors = (state: AppStateType) => {
 export const getErrors = (state: AppStateType) => {
   return state.errors.errors;
 };
+
+export const getIsFetchProfile = (state: AppStateType) => {
+  return state.profilePage.isFetchProfile;
+};
+
+export const getIsLoadPhoto = (state: AppStateType) => {
+  return state.profilePage.isLoadPhoto;
+};

@@ -1,8 +1,6 @@
 import { AppStateType } from '../reducers/rootReducer';
 
-export const getUsers = (state: AppStateType) => {
-  return state.usersPage.users;
-};
+export const getUsersFromState = (state: AppStateType) => state.usersPage.users;
 
 export const getPageSize = (state: AppStateType) => {
   return state.usersPage.pageSize;
@@ -21,5 +19,9 @@ export const getIsFetch = (state: AppStateType) => {
 };
 
 export const getTerm = (state: AppStateType) => {
-  return state.usersPage.term;
+  return state.usersPage.filters.term;
+};
+
+export const getShowFriends = (state: AppStateType) => {
+  return state.usersPage.filters.showFriends;
 };

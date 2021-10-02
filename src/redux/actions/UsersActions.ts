@@ -3,6 +3,7 @@ import { apiUsers } from '../../api/users-api';
 import { UserType } from '../../types/types';
 import { BaseThunkType, InferActionsTypes } from '../reducers/rootReducer';
 import { actions as errorActions } from '../actions/ErrorsActions';
+import { arrayMessagesToStringMessage } from '../../helpers/helpers';
 
 const CHANGE_FLAG = 'SN/USERACTIONS/CHANGE_FLAG';
 const SET_USERS = 'SN/USERACTIONS/SET_USERS';
@@ -11,6 +12,7 @@ const SET_PAGES_COUNT = 'SN/USERACTIONS/SET_PAGES_COUNT';
 const TOGGLE_IS_FETCH_DATA = 'SN/USERACTIONS/TOGGLE_IS_FETCH_DATA';
 const TOGGLE_FOLLOWING_PROGRESS = 'SN/USERACTIONS/TOGGLE_FOLLOWING_PROGRESS';
 const SET_TERM = 'SN/USERACTIONS/SET_TERM';
+const TOGGLE_FRIEND = 'SN/USERACTIONS/TOGGLE_FRIEND';
 
 export const actions = {
   toggleFollowUnfollow: (id: number) =>
@@ -63,14 +65,21 @@ export const actions = {
         term,
       },
     } as const),
+  toggleShowFriends: (showFriends: boolean | string) =>
+    ({
+      type: TOGGLE_FRIEND,
+      payload: {
+        showFriends,
+      },
+    } as const),
 };
 
 export const getUsers =
-  (currentPage: number, pageSize: number, term: string): ThunkType =>
+  (currentPage: number, pageSize: number, term: string, showFriends: boolean | string): ThunkType =>
   async (dispatch) => {
     try {
       dispatch(actions.isFetchData(true));
-      const response = await apiUsers.getUsers(currentPage, pageSize, term);
+      const response = await apiUsers.getUsers(currentPage, pageSize, term, showFriends);
       if (!response.error) {
         dispatch(actions.setUsers(response.items));
         dispatch(actions.getTotalCount(response.totalCount));
@@ -87,27 +96,28 @@ export const getUsers =
     }
   };
 
-export const followUserAction =
+export const followThunk =
   (id: number): ThunkType =>
   async (dispatch) => {
     try {
+      dispatch(actions.toggleFollowingProgress(true));
       const response = await apiUsers.follow(id);
       if (response.resultCode === ResultCodesEnum.Success) {
-        dispatch(actions.toggleFollowingProgress(true));
         dispatch(actions.toggleFollowUnfollow(id));
         dispatch(actions.toggleFollowingProgress(false));
       } else {
-        // dispatch(errorActions.setError(response.message));
+        dispatch(errorActions.setError(arrayMessagesToStringMessage(response.messages)));
         dispatch(actions.toggleFollowingProgress(false));
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
         dispatch(errorActions.setError(err.message));
+        dispatch(actions.toggleFollowingProgress(false));
       }
     }
   };
 
-export const unfollowUserAction =
+export const unfollowThunk =
   (id: number): ThunkType =>
   async (dispatch) => {
     try {
@@ -117,7 +127,7 @@ export const unfollowUserAction =
         dispatch(actions.toggleFollowUnfollow(id));
         dispatch(actions.toggleFollowingProgress(false));
       } else {
-        // dispatch(actions.setError(response.message));
+        dispatch(errorActions.setError(arrayMessagesToStringMessage(response.messages)));
         dispatch(actions.toggleFollowingProgress(false));
       }
     } catch (err: unknown) {

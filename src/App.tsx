@@ -15,7 +15,7 @@ import SitebarContainer from './components/Sitebar/SitebarContainer';
 import { AppStateType } from './redux/reducers/rootReducer';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+const UsersPage = React.lazy(() => import('./components/Users/UsersContainer'));
 
 type PropsType = {
   initialized: boolean;
@@ -45,7 +45,7 @@ const ContainerApp: React.FC<PropsType> = (props) => {
               <Route path='/dialogs' render={() => <DialogsContainer />} />
             </React.Suspense>
             <React.Suspense fallback={<Preloader />}>
-              <Route path='/users' render={() => <UsersContainer />} />{' '}
+              <Route path='/users' render={() => <UsersPage />} />{' '}
             </React.Suspense>
 
             <Route path='/login' render={() => <Login />} />
@@ -76,7 +76,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-// 1) Обробка помилок, зробити модалку з виводом на екран
-// 2) фільтрація + пошук юзерів + сайдбар з друзямм
-// 3) юніт тести редюсери + санки

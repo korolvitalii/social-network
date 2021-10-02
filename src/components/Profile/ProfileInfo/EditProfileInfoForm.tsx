@@ -4,18 +4,18 @@ import { ContactsType, ProfileType } from '../../../types/types';
 import { undateUserProfileInfo } from '../../../redux/actions/ProfileActions';
 import { prepareErrors } from '../../../helpers/helpers';
 import classes from './EditProfileInfoForm.module.css';
+import { useDispatch } from 'react-redux';
 
 type PropsType = {
   handleButtonClick: (editMode: boolean) => void;
   editMode: boolean;
-  userId?: number;
-  formErrors: Array<string>;
-  fullName: string;
-  aboutMe: string;
-  contacts: ContactsType;
-  lookingForAJob: boolean;
-  lookingForAJobDescription: string;
-  dispatch: any;
+  userId?: number | null;
+  formErrors: Array<string> | null;
+  fullName?: string | null;
+  aboutMe?: string | null;
+  contacts?: ContactsType | null;
+  lookingForAJob?: boolean | null;
+  lookingForAJobDescription?: string | null;
 };
 
 type FormValuesType = {
@@ -37,7 +37,6 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
   contacts,
   lookingForAJob,
   lookingForAJobDescription,
-  dispatch,
 }) => {
   const {
     register,
@@ -45,8 +44,9 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
     setError,
     formState: { errors },
   } = useForm<FormValuesType>();
+  const dispatch = useDispatch();
   useEffect(() => {
-    formErrors.forEach((error: string) => {
+    formErrors?.forEach((error: string) => {
       if (error.includes('Contacts')) {
         const errorTypeCapitalize = prepareErrors(error, 'Contacts->');
         setError(errorTypeCapitalize, {
@@ -71,7 +71,7 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <b>Fullname: </b>
-        <input {...register('fullName', { required: true })} defaultValue={fullName} />
+        <input {...register('fullName', { required: true })} defaultValue={fullName || undefined} />
       </div>
       <div>
         {errors.fullName?.type === 'server' && (
@@ -84,7 +84,7 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
         <input
           type='checkbox'
           {...register('lookingForAJob', { required: true })}
-          defaultChecked={lookingForAJob}
+          defaultChecked={lookingForAJob || undefined}
         />
       </div>
       <div>
@@ -96,7 +96,7 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
         <b>My professional skills:</b>
         <textarea
           {...register('lookingForAJobDescription', { required: true })}
-          defaultValue={lookingForAJobDescription}
+          defaultValue={lookingForAJobDescription || undefined}
         />
       </div>
       <div>
@@ -109,7 +109,10 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
       </div>
       <div>
         <b>About me</b>:
-        <textarea {...register('aboutMe', { required: true })} defaultValue={aboutMe} />
+        <textarea
+          {...register('aboutMe', { required: true })}
+          defaultValue={aboutMe || undefined}
+        />
       </div>
       <div>
         {errors.aboutMe && <span className={classes.errors}>This field is required</span>}

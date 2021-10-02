@@ -57,15 +57,14 @@ const LoginForm: React.FC<PropsType> = ({ authErrors, captcha, dispatch }) => {
       {errors.password && <p>{errors.password.message}</p>}
       <div>
         <input type='checkbox' data-testid='login_form_checkbox' {...register('rememberMe')} />
-        <span>Remember Me</span>
+        <span>Remember me</span>
       </div>
       <div>{authErrors?.length !== 0 && authErrorsMessage}</div>
       <div>
         {captcha && <img src={captcha} alt='captcha' />}
         {captcha && <input {...register('captcha', { required: true })} />}
       </div>
-
-      <input className={classes.submit} type='submit' />
+      <input className={classes.submit} type='submit' value='Sign in' />
     </form>
   );
 };
