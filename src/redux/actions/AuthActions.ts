@@ -65,8 +65,9 @@ export const loginAction =
       } else {
         if (response.resultCode === ResultCodeForCaptchaEnum.CaptchaIsRequired) {
           dispatch(getCaptcha());
+        } else {
+          dispatch(actions.authErrors(response.messages));
         }
-        dispatch(actions.authErrors(response.messages));
       }
     } catch (err: unknown) {
       if (err instanceof Error) {

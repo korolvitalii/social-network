@@ -38,7 +38,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
   return (
     <div className={classes.profileInfo}>
       <div className={classes.description}>
-        <div>
+        <div className={classes.photoWithButton}>
           {!isLoadPhoto ? (
             <Preloader />
           ) : (
@@ -61,25 +61,25 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
             </div>
           )}
         </div>
-        {editMode ? (
-          <EditProfileInfoForm
-            userId={profile?.userId}
-            handleButtonClick={goToEditMode}
-            editMode={editMode}
-            formErrors={formErrors}
-            fullName={profile?.fullName}
-            aboutMe={profile?.aboutMe}
-            contacts={profile?.contacts}
-            lookingForAJob={profile?.lookingForAJob}
-            lookingForAJobDescription={profile?.lookingForAJobDescription}
-          />
-        ) : (
-          <ProfileData isOwner={isOwner} goToEditMode={goToEditMode} profile={profile} />
-        )}
+      </div>
+      {editMode ? (
+        <EditProfileInfoForm
+          userId={profile?.userId}
+          handleButtonClick={goToEditMode}
+          editMode={editMode}
+          formErrors={formErrors}
+          fullName={profile?.fullName}
+          aboutMe={profile?.aboutMe}
+          contacts={profile?.contacts}
+          lookingForAJob={profile?.lookingForAJob}
+          lookingForAJobDescription={profile?.lookingForAJobDescription}
+        />
+      ) : (
         <div>
           <ProfileStatus status={status} dispatch={dispatch} />
+          <ProfileData isOwner={isOwner} goToEditMode={goToEditMode} profile={profile} />
         </div>
-      </div>
+      )}
     </div>
   );
 };

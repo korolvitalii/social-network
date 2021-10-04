@@ -9,7 +9,7 @@ export type GetUsersData = {
 
 export const apiUsers = {
   getUsers(
-    currentPage = 1,
+    currentPage = 1 as number | null | undefined,
     pageSize = ResultCodeForCaptchaEnum.CaptchaIsRequired,
     term = '',
     friend: boolean | string,

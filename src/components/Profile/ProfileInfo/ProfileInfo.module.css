@@ -5,6 +5,8 @@
 
 .profileInfo {
   /* padding-left: -200px; */
+  display: flex;
+  align-items: flex-end;
   margin-left: -150px;
   border: 1px solid black;
 }
@@ -22,8 +24,9 @@
 
 .profileDescription {
   padding: 10px;
+  display: flex;
   flex-direction: column;
-  justify-content: right;
+  justify-content: space-around;
   height: 400px;
 }
 .profileDescription h1 {
@@ -33,7 +36,11 @@
   display: flex;
   justify-content: left;
 }
-
+.photoWithButton {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 150px;
+}
 .inputfile {
   width: 0.1px;
   height: 0.1px;

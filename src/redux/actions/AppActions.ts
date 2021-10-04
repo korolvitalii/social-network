@@ -9,15 +9,26 @@ export const actions = {
   initializedSuccess: () => ({ type: INITIALIZED_SUCCESS } as const),
 };
 
-export const initializeApp = (): ThunkType => async (dispatch) => {
-  try {
-    await dispatch(getAuthUserData());
+// export const initializeApp = (): ThunkType => async (dispatch) => {
+//   try {
+
+//     dispatch(actions.initializedSuccess());
+//     dispatch(getAuthUserData());
+//   } catch (err: unknown) {
+//     if (err instanceof Error) {
+//       dispatch(errorActions.setError(err.message));
+//     }
+//   }
+// };
+
+// why???
+
+export const initializeApp = () => (dispatch: any) => {
+  let promise = dispatch(getAuthUserData());
+
+  Promise.all([promise]).then(() => {
     dispatch(actions.initializedSuccess());
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      dispatch(errorActions.setError(err.message));
-    }
-  }
+  });
 };
 
 export type ActionsType = InferActionsTypes<typeof actions & typeof errorActions>;

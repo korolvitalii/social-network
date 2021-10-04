@@ -75,7 +75,12 @@ export const actions = {
 };
 
 export const getUsers =
-  (currentPage: number, pageSize: number, term: string, showFriends: boolean | string): ThunkType =>
+  (
+    currentPage: number | null | undefined,
+    pageSize: number,
+    term: string,
+    showFriends: boolean | string,
+  ): ThunkType =>
   async (dispatch) => {
     try {
       dispatch(actions.isFetchData(true));

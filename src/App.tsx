@@ -1,75 +1,66 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Route, withRouter } from 'react-router-dom';
-import { connect, Provider, useDispatch } from 'react-redux';
-import store from './redux/store';
-
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter, Redirect, Route, Switch, withRouter } from 'react-router-dom';
+import { QueryParamProvider } from 'use-query-params';
 import './App.css';
-import HeaderContainer from './components/Header/HeaderContainer';
-import Navbar from './components/Navbar/Navbar';
-import Login from './components/Login/Login';
-import ProfileContainer from './components/Profile/ProfileContainer';
-import { compose } from 'redux';
-import { initializeApp } from './redux/actions/AppActions';
 import Preloader from './components/common/Preloader/Preloader';
+import HeaderContainer from './components/Header/HeaderContainer';
+import Login from './components/Login/Login';
+import Navbar from './components/Navbar/Navbar';
+import ProfileContainer from './components/Profile/ProfileContainer';
 import SitebarContainer from './components/Sitebar/SitebarContainer';
+import { withSuspense } from './hoc/withSuspense';
+import { initializeApp } from './redux/actions/AppActions';
 import { AppStateType } from './redux/reducers/rootReducer';
+import store from './redux/store';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const UsersPage = React.lazy(() => import('./components/Users/UsersContainer'));
 
-type PropsType = {
-  initialized: boolean;
-};
-
-const ContainerApp: React.FC<PropsType> = (props) => {
+const ContainerApp: React.FC = (props) => {
   const dispatch = useDispatch();
+  const initialized = useSelector((state: AppStateType) => state.app.initialized);
 
   useEffect(() => {
     dispatch(initializeApp());
-  }, [dispatch]);
+  }, []);
 
-  if (!props.initialized) {
+  if (!initialized) {
     return <Preloader />;
   }
-  return (
-    <BrowserRouter>
-      <Provider store={store}>
-        <div className='app-wrapper'>
-          <HeaderContainer />
-          <Navbar />
-          <SitebarContainer />
-          <div className='app-wrapper-content'>
-            <Route path='/' exact render={() => <ProfileContainer />} />
-            <Route path='/profile' render={() => <ProfileContainer />} />
-            <React.Suspense fallback={<Preloader />}>
-              <Route path='/dialogs' render={() => <DialogsContainer />} />
-            </React.Suspense>
-            <React.Suspense fallback={<Preloader />}>
-              <Route path='/users' render={() => <UsersPage />} />{' '}
-            </React.Suspense>
 
-            <Route path='/login' render={() => <Login />} />
-          </div>
-        </div>
-      </Provider>
-    </BrowserRouter>
+  const SuspendedProfile = withSuspense(ProfileContainer);
+  const SuspendedDialogs = withSuspense(DialogsContainer);
+  const SuspendedUserPage = withSuspense(UsersPage);
+  const SuspendedLoginPage = withSuspense(Login);
+
+  return (
+    <div className='app-wrapper'>
+      <HeaderContainer />
+      <Navbar />
+      <SitebarContainer />
+      <div className='app-wrapper-content'>
+        <Switch>
+          <Route path='/' exact render={() => <Redirect to={'/profile'} />}></Route>
+          <Route path='/dialogs/' render={() => <SuspendedDialogs />} />
+          <Route path='/profile' render={() => <SuspendedProfile />} />
+          <Route path='/users' render={() => <SuspendedUserPage />} />
+          <Route path='/login' render={() => <SuspendedLoginPage />} />
+        </Switch>
+      </div>
+    </div>
   );
 };
 
-const mapStateToProps = (state: AppStateType) => ({
-  initialized: state.app.initialized,
-});
-
-const AppContainer = compose<React.ComponentType>(
-  withRouter,
-  connect(mapStateToProps, { initializeApp }),
-)(ContainerApp);
+const AppContainerWithRouter = withRouter(ContainerApp);
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Provider store={store}>
-        <AppContainer />
+        <QueryParamProvider ReactRouterRoute={Route}>
+          <AppContainerWithRouter />
+        </QueryParamProvider>
       </Provider>
     </BrowserRouter>
   );

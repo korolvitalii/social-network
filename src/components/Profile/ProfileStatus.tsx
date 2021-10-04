@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useEffect } from 'react';
 import { updateUserStatus } from '../../redux/actions/ProfileActions';
+import classes from './ProfileStatus.module.css';
 
 type PropsType = {
   status: string;
@@ -27,25 +28,23 @@ const ProfileStatus: React.FC<PropsType> = ({ status, dispatch }) => {
   };
 
   return (
-    <div>
+    <>
       {!editMode && (
-        <div>
-          <span onDoubleClick={activateEditMode}>{status}</span>
-        </div>
+        <span className={classes.spanProfileStatus} onDoubleClick={activateEditMode}>
+          {status}
+        </span>
       )}
 
       {editMode && (
-        <div>
-          <input
-            onChange={onChangeStatus}
-            onBlur={deactivateEditMode}
-            autoFocus={true}
-            value={localStatus}
-            type='text'
-          />
-        </div>
+        <input
+          onChange={onChangeStatus}
+          onBlur={deactivateEditMode}
+          autoFocus={true}
+          value={localStatus}
+          type='text'
+        />
       )}
-    </div>
+    </>
   );
 };
 export default ProfileStatus;

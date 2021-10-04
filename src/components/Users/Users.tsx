@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
+import {
+  BooleanParam,
+  NumberParam,
+  StringParam,
+  useQueryParams,
+  withDefault,
+} from 'use-query-params';
 import userIcon from '../../assets/images/User-Icon.jpg';
 import { actions as errorActions } from '../../redux/actions/ErrorsActions';
 import { actions, followThunk, getUsers, unfollowThunk } from '../../redux/actions/UsersActions';
@@ -28,14 +35,33 @@ const Users: React.FC<PropsType> = (props) => {
   const pagesCount = useSelector(getPagesCount);
   const isFollowingProgress = useSelector(getIsFollowingProgress);
   const errors = useSelector(getErrors);
-  const term = useSelector(getTerm);
-  const showFriends = useSelector(getShowFriends);
+  let term = useSelector(getTerm);
+  let showFriends = useSelector(getShowFriends);
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [query, setQuery] = useQueryParams({
+    term: StringParam,
+    friend: StringParam,
+    currentPage: NumberParam,
+  });
+
+  const { term: termQuery, friend: friendQuery, currentPage: currentPageQuery } = query;
+  const [currentPageHook, setCurrentPage] = useState(currentPageQuery);
+  console.log(currentPageHook);
+  useEffect(() => {
+    dispatch(getUsers(currentPageHook, pageSize, term, showFriends));
+  }, [currentPageHook, pageSize, term, showFriends]);
 
   useEffect(() => {
-    dispatch(getUsers(currentPage, pageSize, term, showFriends));
-  }, [currentPage, dispatch, pageSize, term, showFriends]);
+    if (termQuery) {
+      term = termQuery;
+    }
+    if (friendQuery) {
+      showFriends = friendQuery;
+    }
+    if (currentPageQuery) {
+      setCurrentPage(currentPageQuery);
+    }
+  }, [termQuery, friendQuery, currentPageQuery]);
 
   const onChangePageClick = ({ selected }: any) => {
     const incSelected = selected + 1;
@@ -46,15 +72,12 @@ const Users: React.FC<PropsType> = (props) => {
   const follow = (id: number) => {
     dispatch(followThunk(id));
   };
-
   const unfollow = (id: number) => {
     dispatch(unfollowThunk(id));
   };
 
   const toggleShowFriends = (flag: boolean | string) => dispatch(actions.toggleShowFriends(flag));
-
   const setTerm = (term: string) => dispatch(actions.setTerm(term));
-
   const resetError = () => dispatch(errorActions.resetError());
 
   const usersElements = users.map((user: UserType) => {
@@ -65,7 +88,9 @@ const Users: React.FC<PropsType> = (props) => {
       status,
       photos: { small },
     } = user;
+
     const path = `/profile/${id}`;
+
     return (
       <div key={id} className={classes.userContainer}>
         <div className={classes.photoAndButton}>
@@ -107,7 +132,7 @@ const Users: React.FC<PropsType> = (props) => {
       <div>
         <ReactPaginate
           disableInitialCallback={true}
-          initialPage={0}
+          initialPage={currentPageHook as number | undefined}
           pageCount={pagesCount}
           pageRangeDisplayed={5}
           marginPagesDisplayed={1}
@@ -129,6 +154,8 @@ const Users: React.FC<PropsType> = (props) => {
       <div>
         <SearchUserForm
           setTerm={setTerm}
+          term={termQuery}
+          showFriend={!!friendQuery}
           toggleShowFriends={toggleShowFriends}
           dispatch={dispatch}
         />
