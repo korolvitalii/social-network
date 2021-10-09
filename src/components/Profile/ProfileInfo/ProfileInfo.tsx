@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import classes from './ProfileInfo.module.css';
 import userIcon from '../../../assets/images/User-Icon.jpg';
 
@@ -10,7 +10,8 @@ import { Dispatch } from 'redux';
 import { useSelector } from 'react-redux';
 import { getIsLoadPhoto } from '../../../redux/selectors/profile-selectors';
 import Preloader from '../../common/Preloader/Preloader';
-
+import { AppStateType } from '../../../redux/reducers/rootReducer';
+import { actions } from '../../../redux/actions/ProfileActions';
 type ProfileInfoProps = {
   profile: ProfileType | null;
   status: string;
@@ -28,10 +29,9 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
   formErrors,
   dispatch,
 }) => {
-  const [editMode, setEditMode] = useState(false);
-  const goToEditMode = () => {
-    setEditMode(!editMode);
-  };
+  const editProfileDataMode = useSelector(
+    (state: AppStateType) => state.profilePage.editProfileDataMode,
+  );
 
   const isLoadPhoto = useSelector(getIsLoadPhoto);
 
@@ -62,11 +62,10 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
           )}
         </div>
       </div>
-      {editMode ? (
+      {editProfileDataMode ? (
         <EditProfileInfoForm
           userId={profile?.userId}
-          handleButtonClick={goToEditMode}
-          editMode={editMode}
+          goToEditMode={actions.goToEditMode}
           formErrors={formErrors}
           fullName={profile?.fullName}
           aboutMe={profile?.aboutMe}
@@ -77,7 +76,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
       ) : (
         <div>
           <ProfileStatus status={status} dispatch={dispatch} />
-          <ProfileData isOwner={isOwner} goToEditMode={goToEditMode} profile={profile} />
+          <ProfileData isOwner={isOwner} goToEditMode={actions.goToEditMode} profile={profile} />
         </div>
       )}
     </div>

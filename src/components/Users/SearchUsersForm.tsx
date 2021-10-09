@@ -21,12 +21,7 @@ const SearchUserForm: React.FC<PropsType> = ({
   showFriend,
   dispatch,
 }) => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { register, handleSubmit, setValue } = useForm<Inputs>();
 
   useEffect(() => {
     if (term) {
@@ -35,10 +30,11 @@ const SearchUserForm: React.FC<PropsType> = ({
     if (showFriend) {
       setValue('showUsers', String(showFriend));
     }
-  }, []);
+  }, [term, setValue, showFriend]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data.showUsers);
+    console.log(data);
+
     if (data.showUsers === 'Only followed') {
       dispatch(toggleShowFriends(true));
     } else if (data.showUsers === 'Only unfollowed') {

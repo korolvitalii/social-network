@@ -13,6 +13,7 @@ const SET_USER_PHOTO = 'SN/PROFILEACTIONS/SET_USER_PHOTO';
 const SET_USER_INFO_FORM_ERRORS = 'SN/PROFILEACTIONS/SET_USER_INFO_FORM_ERRORS';
 const IS_LOAD_PHOTO = 'SN/PROFILEACTIONS/IS_LOAD_PHOTO';
 const TOGGLE_IS_FETCH_PROFILE = 'SN/PROFILEACTIONS/TOGGLE_IS_FETCH_PROFILE';
+const GO_TO_EDIT_MODE = 'SN/PROFILEACTIONS/GOTOEDITMODE';
 
 export const actions = {
   addNewPost: (newPost: PostType) =>
@@ -69,6 +70,13 @@ export const actions = {
       type: TOGGLE_IS_FETCH_PROFILE,
       payload: {
         isFetch,
+      },
+    } as const),
+  goToEditMode: (editMode: boolean) =>
+    ({
+      type: GO_TO_EDIT_MODE,
+      payload: {
+        editMode,
       },
     } as const),
 };

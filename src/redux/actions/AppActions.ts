@@ -1,7 +1,7 @@
-import { ThunkAction } from 'redux-thunk';
-import { AppStateType, InferActionsTypes } from '../reducers/rootReducer';
-import { getAuthUserData } from './AuthActions';
+// import { ThunkAction } from 'redux-thunk';
 import { actions as errorActions } from '../actions/ErrorsActions';
+import { InferActionsTypes } from '../reducers/rootReducer';
+import { getAuthUserData } from './AuthActions';
 
 const INITIALIZED_SUCCESS = 'SN/APPACTIONS/INITIALIZED_SUCCESS';
 
@@ -32,4 +32,4 @@ export const initializeApp = () => (dispatch: any) => {
 };
 
 export type ActionsType = InferActionsTypes<typeof actions & typeof errorActions>;
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>;
+// type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>;

@@ -7,8 +7,7 @@ import classes from './EditProfileInfoForm.module.css';
 import { useDispatch } from 'react-redux';
 
 type PropsType = {
-  handleButtonClick: (editMode: boolean) => void;
-  editMode: boolean;
+  goToEditMode: (editMode: boolean) => void;
   userId?: number | null;
   formErrors: Array<string> | null;
   fullName?: string | null;
@@ -29,8 +28,7 @@ type FormValuesType = {
 
 const EditProfileInfoForm: React.FC<PropsType> = ({
   userId,
-  handleButtonClick,
-  editMode,
+  goToEditMode,
   formErrors,
   fullName,
   aboutMe,
@@ -64,7 +62,7 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
   const onSubmit: SubmitHandler<ProfileType> = (data) => {
     const updateData = { data: { userId: userId }, ...data };
     dispatch(undateUserProfileInfo(updateData));
-    handleButtonClick(editMode);
+    dispatch(goToEditMode(false));
   };
 
   return (

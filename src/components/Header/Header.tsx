@@ -19,17 +19,7 @@ const Header: React.FC<PropsType> = ({ isAuth }) => {
   return (
     <header className={classes.header}>
       <img className={classes.appLogo} src={logo} alt='' onClick={handleClick} />
-      <div>
-        {!isAuth ? (
-          <NavLink to='/login'>
-            <div className={classes.login}>
-              <button type='button'>Login</button>
-            </div>
-          </NavLink>
-        ) : (
-          <Logout />
-        )}
-      </div>
+      <div>{isAuth && <Logout />}</div>
     </header>
   );
 };

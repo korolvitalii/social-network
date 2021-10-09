@@ -1,9 +1,8 @@
 .nav {
-  grid-area: nav;
   color: #008060;
   font-size: 24px;
   padding: 20px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 150px;
   height: 280px;
 }

@@ -4,11 +4,13 @@
 }
 
 .profileInfo {
-  /* padding-left: -200px; */
   display: flex;
-  align-items: flex-end;
-  margin-left: -150px;
-  border: 1px solid black;
+  flex-direction: row;
+  padding-left: 20px;
+  margin-top: 20px;
+  display: flex;
+  align-items: flex-start;
+  /* border: 1px solid black; */
 }
 
 .description {
@@ -20,6 +22,7 @@
 .avatarPhoto {
   width: 200px;
   height: 200px;
+  margin-bottom: 20px;
 }
 
 .profileDescription {

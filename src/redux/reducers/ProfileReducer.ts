@@ -9,6 +9,7 @@ const SET_USER_PHOTO = 'SN/PROFILEACTIONS/SET_USER_PHOTO';
 const SET_USER_INFO_FORM_ERRORS = 'SN/PROFILEACTIONS/SET_USER_INFO_FORM_ERRORS';
 const IS_LOAD_PHOTO = 'SN/PROFILEACTIONS/IS_LOAD_PHOTO';
 const TOGGLE_IS_FETCH_PROFILE = 'SN/PROFILEACTIONS/TOGGLE_IS_FETCH_PROFILE';
+const GO_TO_EDIT_MODE = 'SN/PROFILEACTIONS/GOTOEDITMODE';
 
 const initialState = {
   posts: [
@@ -23,6 +24,7 @@ const initialState = {
   userInfoFormErrors: [] as Array<string>,
   isLoadPhoto: true as boolean,
   isFetchProfile: true as boolean,
+  editProfileDataMode: false as boolean,
 };
 
 export type InitialStateType = typeof initialState;
@@ -57,6 +59,9 @@ export const ProfileReducer = (state = initialState, action: ActionsType): Initi
     }
     case TOGGLE_IS_FETCH_PROFILE: {
       return { ...state, isLoadPhoto: action.payload.isFetch };
+    }
+    case GO_TO_EDIT_MODE: {
+      return { ...state, editProfileDataMode: action.payload.editMode };
     }
     default:
       return state;

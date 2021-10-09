@@ -1,9 +1,8 @@
 import { ResultCodeForCaptchaEnum, ResultCodesEnum } from '../../api/api';
 import { authApi, securityApi } from '../../api/auth-api';
-import { LoginDataType } from '../../types/types';
-import { BaseThunkType, InferActionsTypes } from '../reducers/rootReducer';
-import { actions as errorActions } from '../actions/ErrorsActions';
 import { arrayMessagesToStringMessage } from '../../helpers/helpers';
+import { actions as errorActions } from '../actions/ErrorsActions';
+import { BaseThunkType, InferActionsTypes } from '../reducers/rootReducer';
 
 const SET_USER_DATA = 'SN/AUTHACTIONS/SET_USER_DATA';
 const SET_AUTH_ERRORS = 'SN/AUTHACTIONS/SET_AUTH_ERRORS';
@@ -55,7 +54,7 @@ export const getAuthUserData = (): ThunkType => async (dispatch) => {
 };
 
 export const loginAction =
-  (loginData: LoginDataType): ThunkType =>
+  (loginData: any): ThunkType =>
   async (dispatch) => {
     try {
       const response = await authApi.login(loginData);

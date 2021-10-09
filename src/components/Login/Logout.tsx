@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { logoutAction } from '../../redux/actions/AuthActions';
@@ -12,9 +13,9 @@ const Logout: React.FC = () => {
 
   return (
     <div className={classes.logout}>
-      <button type='button' onClick={handleClick}>
+      <Button variant='outlined' onClick={handleClick}>
         Logout
-      </button>
+      </Button>
     </div>
   );
 };

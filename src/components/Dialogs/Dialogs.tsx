@@ -1,28 +1,36 @@
-import React from 'react';
-import Dialog from './Dialog';
-import classes from './Dialogs.module.css';
+import { Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from '../../redux/actions/MessagesActions';
+import { AppStateType } from '../../redux/reducers/rootReducer';
+import { MessageType } from '../../types/types';
 import Message from './Message/Message';
 import MessageForm from './Message/MessageForm';
-import { DialogType, MessageType } from '../../types/types';
+import { uniqueId } from 'lodash';
 
-type PropsType = {
-  dialogs: Array<DialogType>;
-  messages: Array<MessageType>;
-};
-
-const Dialogs: React.FC<PropsType> = (props) => {
-  const { dialogs, messages } = props;
-  const dialogsElements = dialogs.map(({ name, id }) => <Dialog name={name} id={id} key={id} />);
-  const messageElements = messages.map(({ text, id }) => <Message text={text} key={id} />);
+const Dialogs: React.FC = (props) => {
+  const wsChannel = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx');
+  const dispatch = useDispatch();
+  const messages = useSelector((state: AppStateType) => state.messagesPage.messages);
+  useEffect(() => {
+    wsChannel.addEventListener('message', (e) => {
+      dispatch(actions.fetchMessages(JSON.parse(e.data)));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
-      <div className={classes.dialogs}>
-        <div className={classes.dialogsItems}>{dialogsElements}</div>
-        <div className={classes.messages}>{messageElements}</div>
+      <Typography variant='h3' component='span'>
+        Chat
+      </Typography>
+      <div>
+        {messages.map((message: MessageType) => (
+          <Message {...message} key={uniqueId()} />
+        ))}
       </div>
       <div>
-        <MessageForm />
+        <MessageForm wsChannel={wsChannel} />
       </div>
     </div>
   );

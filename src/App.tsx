@@ -23,6 +23,7 @@ const ContainerApp: React.FC = (props) => {
 
   useEffect(() => {
     dispatch(initializeApp());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!initialized) {
@@ -37,9 +38,9 @@ const ContainerApp: React.FC = (props) => {
   return (
     <div className='app-wrapper'>
       <HeaderContainer />
-      <Navbar />
-      <SitebarContainer />
       <div className='app-wrapper-content'>
+        <Navbar />
+        <SitebarContainer />
         <Switch>
           <Route path='/' exact render={() => <Redirect to={'/profile'} />}></Route>
           <Route path='/dialogs/' render={() => <SuspendedDialogs />} />

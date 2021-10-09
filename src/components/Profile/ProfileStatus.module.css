@@ -1,6 +1,6 @@
 .spanProfileStatus {
   display: flex;
-  /* flex-direction: row; */
   align-items: flex-start;
-  color: brown;
+  color: rgb(0, 67, 191);
+  margin-left: 10px;
 }

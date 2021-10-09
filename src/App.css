@@ -1,15 +1,10 @@
 .app-wrapper {
-  display: grid;
-  width: 1150px;
-  grid-template-areas:
-    'header header'
-    'nav content';
-  grid-template-columns: 4fr 8fr;
-  grid-template-rows: 60px 1fr;
-  /* /* grid-gap: 10px; */
+  display: flex;
+  flex-direction: column;
 }
 
 .app-wrapper-content {
-  grid-area: content;
+  display: flex;
+  /* flex-direction: row; */
   color: #5cb0d4;
 }

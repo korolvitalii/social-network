@@ -5,8 +5,10 @@ export type PostType = {
 };
 
 export type MessageType = {
-  id: string;
-  text: string;
+  message: string;
+  photo: string;
+  userId: number;
+  userName: string;
 };
 
 export type DialogType = {

@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useHistory } from 'react-router-dom';
-import {
-  BooleanParam,
-  NumberParam,
-  StringParam,
-  useQueryParams,
-  withDefault,
-} from 'use-query-params';
+import { NavLink } from 'react-router-dom';
+import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
 import userIcon from '../../assets/images/User-Icon.jpg';
 import { actions as errorActions } from '../../redux/actions/ErrorsActions';
 import { actions, followThunk, getUsers, unfollowThunk } from '../../redux/actions/UsersActions';
@@ -46,22 +40,47 @@ const Users: React.FC<PropsType> = (props) => {
 
   const { term: termQuery, friend: friendQuery, currentPage: currentPageQuery } = query;
   const [currentPageHook, setCurrentPage] = useState(currentPageQuery);
-  console.log(currentPageHook);
-  useEffect(() => {
-    dispatch(getUsers(currentPageHook, pageSize, term, showFriends));
-  }, [currentPageHook, pageSize, term, showFriends]);
 
   useEffect(() => {
-    if (termQuery) {
-      term = termQuery;
+    if (String(showFriends) !== friendQuery && friendQuery) {
+      dispatch(toggleShowFriends(friendQuery));
+      setQuery({ friend: String(friendQuery) });
     }
-    if (friendQuery) {
-      showFriends = friendQuery;
+    if (String(showFriends) === '') {
+      dispatch(toggleShowFriends(false));
+      setQuery({ friend: 'false' });
     }
-    if (currentPageQuery) {
-      setCurrentPage(currentPageQuery);
+    if (String(showFriends) !== friendQuery && showFriends) {
+      dispatch(toggleShowFriends(showFriends));
+      setQuery({ friend: String(showFriends) });
     }
-  }, [termQuery, friendQuery, currentPageQuery]);
+
+    if (term !== termQuery && term) {
+      dispatch(setTerm(term));
+      setQuery({ term: term });
+    }
+
+    if (term !== termQuery && termQuery) {
+      dispatch(setTerm(termQuery as any));
+      setQuery({ term: termQuery });
+    }
+
+    if (termQuery && term === '') {
+      dispatch(setTerm(''));
+      setQuery({ term: '' });
+    }
+    if (currentPageHook && currentPageHook !== currentPageQuery) {
+      const decrementCurrentPage = currentPageHook + 1;
+      setCurrentPage(decrementCurrentPage);
+      setQuery({ currentPage: decrementCurrentPage });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showFriends, friendQuery, term, termQuery, currentPageHook, currentPageQuery]);
+
+  useEffect(() => {
+    dispatch(getUsers(currentPageHook, pageSize, term, showFriends));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPageHook, pageSize, term, showFriends]);
 
   const onChangePageClick = ({ selected }: any) => {
     const incSelected = selected + 1;
@@ -154,7 +173,7 @@ const Users: React.FC<PropsType> = (props) => {
       <div>
         <SearchUserForm
           setTerm={setTerm}
-          term={termQuery}
+          term={term}
           showFriend={!!friendQuery}
           toggleShowFriends={toggleShowFriends}
           dispatch={dispatch}

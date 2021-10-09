@@ -1,12 +1,15 @@
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 import { ContactsType, ProfileType } from '../../../types/types';
 import ContactItem from './ContactItem';
 import classes from './ProfileInfo.module.css';
+import EditIcon from '@mui/icons-material/Edit';
+import { Typography } from '@mui/material';
 
 type ProfileDataProps = {
   isOwner?: string;
   profile: ProfileType | null;
-  goToEditMode: () => void;
+  goToEditMode: (editMode: boolean) => void;
 };
 
 const ProfileData: React.FunctionComponent<ProfileDataProps> = ({
@@ -14,6 +17,7 @@ const ProfileData: React.FunctionComponent<ProfileDataProps> = ({
   goToEditMode,
   isOwner,
 }) => {
+  const dispatch = useDispatch();
   return (
     <div className={classes.profileDescription}>
       <h2> Fullname: {profile?.fullName}</h2>
@@ -43,9 +47,10 @@ const ProfileData: React.FunctionComponent<ProfileDataProps> = ({
         </div>
       </div>
       {!isOwner && (
-        <button type='button' onClick={goToEditMode}>
-          Edit
-        </button>
+        <div>
+          <EditIcon onClick={() => dispatch(goToEditMode(true))} />
+          <Typography component={'span'}>Edit profile data</Typography>
+        </div>
       )}
     </div>
   );
