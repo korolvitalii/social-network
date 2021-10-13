@@ -1,7 +1,7 @@
 import usersRaw from './UsersRaw.json';
 import { actions } from '../redux/actions/UsersActions';
 import { UserType } from '../types/types';
-import { InitialStateType, UsersReducer } from '../redux/reducers/UsersReducers';
+import { InitialStateType, UsersReducer } from '../redux/reducers/UsersReducer';
 
 let state: InitialStateType = {
   users: [],
@@ -11,6 +11,10 @@ let state: InitialStateType = {
   isFetch: true,
   isFollowingProgress: false,
   networkErrors: '',
+  filters: {
+    term: '' as string,
+    showFriends: false as boolean | string,
+  },
 };
 
 beforeEach(() => {
@@ -65,6 +69,10 @@ beforeEach(() => {
     isFetch: false,
     isFollowingProgress: false,
     networkErrors: '',
+    filters: {
+      term: '' as string,
+      showFriends: false as boolean | string,
+    },
   };
 });
 

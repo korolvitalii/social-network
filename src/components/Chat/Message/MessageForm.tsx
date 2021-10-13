@@ -3,9 +3,10 @@ import Button from '@mui/material/Button';
 import { OutlinedInputProps } from '@mui/material/OutlinedInput';
 import { alpha, styled } from '@mui/material/styles';
 import TextField, { TextFieldProps } from '@mui/material/TextField';
-import React, { ChangeEvent, ChangeEventHandler, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { sendMessage } from '../../../redux/actions/ChatActions';
 import classes from './MessageForm.module.css';
 
 const RedditTextField = styled((props: TextFieldProps) => (
@@ -15,6 +16,9 @@ const RedditTextField = styled((props: TextFieldProps) => (
     border: '1px solid #e2e2e1',
     overflow: 'hidden',
     borderRadius: 4,
+    width: 500,
+    height: 100,
+    marginBottom: 20,
     backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
     transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
     '&:hover': {
@@ -32,18 +36,16 @@ type FormValues = {
   messageText: string;
 };
 
-type PropsTypes = {
-  wsChannel: WebSocket;
-};
-
-const MessageForm: React.FC<PropsTypes> = ({ wsChannel }) => {
+const MessageForm: React.FC = () => {
   const { control, handleSubmit } = useForm();
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [message, setMessage] = useState('');
 
   const onSubmit: SubmitHandler<FormValues> = () => {
-    wsChannel.send(message);
+    // debugger;
+    dispatch(sendMessage(message));
+    setMessage('');
   };
 
   const inputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -61,7 +63,6 @@ const MessageForm: React.FC<PropsTypes> = ({ wsChannel }) => {
             label='Write your message'
             id='reddit-input'
             variant='filled'
-            style={{ marginTop: 11 }}
             onChange={inputChange}
             value={message}
           />

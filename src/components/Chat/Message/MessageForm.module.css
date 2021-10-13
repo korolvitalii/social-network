@@ -1,0 +1,9 @@
+.form {
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.textarea {
+  width: 300px;
+  height: 100px;
+}

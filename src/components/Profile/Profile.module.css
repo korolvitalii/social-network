@@ -1,5 +1,8 @@
 .profileContainer {
   display: flex;
-  justify-content: flex-end;
   flex-direction: column;
+}
+
+.myPosts {
+  margin-left: auto;
 }

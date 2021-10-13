@@ -13,28 +13,18 @@ const Navbar: React.FC<PropsType> = (props) => {
         </NavLink>
       </div>
       <div className={classes.item}>
+        <NavLink to='/developers' activeClassName={classes.activeLink}>
+          Developers
+        </NavLink>
+      </div>
+      <div className={classes.item}>
+        <NavLink to='/chat' activeClassName={classes.activeLink}>
+          Chat
+        </NavLink>
+      </div>
+      <div className={classes.item}>
         <NavLink to='/dialogs' activeClassName={classes.activeLink}>
-          Messages
-        </NavLink>
-      </div>
-      <div className={classes.item}>
-        <NavLink to='/users' activeClassName={classes.activeLink}>
-          Users
-        </NavLink>
-      </div>
-      <div className={classes.item}>
-        <NavLink to='/news' activeClassName={classes.activeLink}>
-          News
-        </NavLink>
-      </div>
-      <div className={classes.item}>
-        <NavLink to='/music' activeClassName={classes.activeLink}>
-          Music
-        </NavLink>
-      </div>
-      <div className={classes.item}>
-        <NavLink to='/setting' activeClassName={classes.activeLink}>
-          Settings
+          Dialogs
         </NavLink>
       </div>
     </nav>

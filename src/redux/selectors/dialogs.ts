@@ -5,5 +5,5 @@ import { AppStateType } from '../reducers/rootReducer';
 // };
 
 export const getMessages = (state: AppStateType) => {
-  return state.messagesPage.messages;
+  return state.chat.messages;
 };

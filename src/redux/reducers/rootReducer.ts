@@ -1,19 +1,19 @@
 import { Action, combineReducers } from 'redux';
 import { ProfileReducer } from './ProfileReducer';
-import { MessagesReducer } from './MessagesReducer';
-import { UsersReducer } from './UsersReducers';
+import { UsersReducer } from './UsersReducer';
 import { AuthReducer } from './AuthReducer';
-import { AppReducer } from './AppReducers';
+import { AppReducer } from './AppReducer';
 import { ThunkAction } from 'redux-thunk';
 import { ErrorsReducer } from './ErrorsReducer';
+import { ChatReducer } from './ChatReducer';
 
 const rootReducer = combineReducers({
   profilePage: ProfileReducer,
-  messagesPage: MessagesReducer,
   usersPage: UsersReducer,
   auth: AuthReducer,
   app: AppReducer,
   errors: ErrorsReducer,
+  chat: ChatReducer,
 });
 
 type RootReducerType = typeof rootReducer; // (globalstate: AppStateType) => AppStateType

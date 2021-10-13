@@ -1,0 +1,8 @@
+.chatPageContainer {
+  display: flex;
+  flex-direction: column;
+
+  /* align-items: flex-end; */
+
+  /* border: 1px solid black; */
+}

@@ -147,7 +147,7 @@ const Users: React.FC<PropsType> = (props) => {
   });
 
   return (
-    <>
+    <div>
       <div>
         <ReactPaginate
           disableInitialCallback={true}
@@ -181,7 +181,7 @@ const Users: React.FC<PropsType> = (props) => {
       </div>
       <ShowErrorModal errors={errors} resetError={resetError} />
       <div>{usersElements}</div>
-    </>
+    </div>
   );
 };
 

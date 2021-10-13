@@ -5,17 +5,17 @@ import { QueryParamProvider } from 'use-query-params';
 import './App.css';
 import Preloader from './components/common/Preloader/Preloader';
 import HeaderContainer from './components/Header/HeaderContainer';
-import Login from './components/Login/Login';
+import Login from './pages/Login';
 import Navbar from './components/Navbar/Navbar';
-import ProfileContainer from './components/Profile/ProfileContainer';
+import ProfileContainer from './pages/Profile';
 import SitebarContainer from './components/Sitebar/SitebarContainer';
 import { withSuspense } from './hoc/withSuspense';
 import { initializeApp } from './redux/actions/AppActions';
 import { AppStateType } from './redux/reducers/rootReducer';
 import store from './redux/store';
 
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-const UsersPage = React.lazy(() => import('./components/Users/UsersContainer'));
+const ChatPage = React.lazy(() => import('./pages/Chat'));
+const UsersPage = React.lazy(() => import('./pages/Developers'));
 
 const ContainerApp: React.FC = (props) => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const ContainerApp: React.FC = (props) => {
   }
 
   const SuspendedProfile = withSuspense(ProfileContainer);
-  const SuspendedDialogs = withSuspense(DialogsContainer);
+  const SuspendedChat = withSuspense(ChatPage);
   const SuspendedUserPage = withSuspense(UsersPage);
   const SuspendedLoginPage = withSuspense(Login);
 
@@ -39,13 +39,15 @@ const ContainerApp: React.FC = (props) => {
     <div className='app-wrapper'>
       <HeaderContainer />
       <div className='app-wrapper-content'>
-        <Navbar />
-        <SitebarContainer />
+        <div className='navWithSitebarContainer'>
+          <Navbar />
+          <SitebarContainer />
+        </div>
         <Switch>
           <Route path='/' exact render={() => <Redirect to={'/profile'} />}></Route>
-          <Route path='/dialogs/' render={() => <SuspendedDialogs />} />
+          <Route path='/chat' render={() => <SuspendedChat />} />
           <Route path='/profile' render={() => <SuspendedProfile />} />
-          <Route path='/users' render={() => <SuspendedUserPage />} />
+          <Route path='/developers' render={() => <SuspendedUserPage />} />
           <Route path='/login' render={() => <SuspendedLoginPage />} />
         </Switch>
       </div>
