@@ -13,6 +13,7 @@ import { withSuspense } from './hoc/withSuspense';
 import { initializeApp } from './redux/actions/AppActions';
 import { AppStateType } from './redux/reducers/rootReducer';
 import store from './redux/store';
+import Dialogs from './pages/Dialogs';
 
 const ChatPage = React.lazy(() => import('./pages/Chat'));
 const UsersPage = React.lazy(() => import('./pages/Developers'));
@@ -34,6 +35,7 @@ const ContainerApp: React.FC = (props) => {
   const SuspendedChat = withSuspense(ChatPage);
   const SuspendedUserPage = withSuspense(UsersPage);
   const SuspendedLoginPage = withSuspense(Login);
+  const SuspendedDialogsPage = withSuspense(Dialogs);
 
   return (
     <div className='app-wrapper'>
@@ -49,6 +51,7 @@ const ContainerApp: React.FC = (props) => {
           <Route path='/profile' render={() => <SuspendedProfile />} />
           <Route path='/developers' render={() => <SuspendedUserPage />} />
           <Route path='/login' render={() => <SuspendedLoginPage />} />
+          <Route path='/dialogs' render={() => <SuspendedDialogsPage />} />
         </Switch>
       </div>
     </div>

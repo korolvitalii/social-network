@@ -6,6 +6,7 @@ import { AppReducer } from './AppReducer';
 import { ThunkAction } from 'redux-thunk';
 import { ErrorsReducer } from './ErrorsReducer';
 import { ChatReducer } from './ChatReducer';
+import { dialogsReducer } from './DialogsReducer';
 
 const rootReducer = combineReducers({
   profilePage: ProfileReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   app: AppReducer,
   errors: ErrorsReducer,
   chat: ChatReducer,
+  dialogs: dialogsReducer,
 });
 
 type RootReducerType = typeof rootReducer; // (globalstate: AppStateType) => AppStateType
