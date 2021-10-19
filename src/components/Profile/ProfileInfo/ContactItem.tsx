@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import React from 'react';
 
 type ContactsPropsType = {
@@ -7,7 +8,12 @@ type ContactsPropsType = {
 const ContactItem: React.FC<ContactsPropsType> = ({ contactTitle, contactValue }) => {
   return (
     <div>
-      <b>{contactTitle}</b>: {contactValue}
+      <Typography variant='body2' gutterBottom component='span'>
+        {contactTitle}: {contactValue}
+      </Typography>
+      {/* <Typography variant='body2' gutterBottom component='span'>
+        {contactValue}
+      </Typography> */}
     </div>
   );
 };

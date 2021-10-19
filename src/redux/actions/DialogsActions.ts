@@ -5,6 +5,7 @@ import { actions as errorActions } from './ErrorsActions';
 
 const SET_ALL_DIALOGS = 'SN/DIALOGS/SET_ALL_DIALOGS';
 const SET_MESSAGE = 'SN/DIALOGS/SET_MESSAGE';
+const SET_USER_MESSAGES = 'SN/DIALOGS/SET_USER_MESSAGES';
 
 const actions = {
   setAllDialogs: (dialogs: any) =>
@@ -12,6 +13,13 @@ const actions = {
       type: SET_ALL_DIALOGS,
       payload: {
         dialogs,
+      },
+    } as const),
+  setUserMessages: (messages: any) =>
+    ({
+      type: SET_USER_MESSAGES,
+      payload: {
+        messages,
       },
     } as const),
   setMessage: (message: string) =>
@@ -33,6 +41,20 @@ export const getAllDialogs = (): ThunkType => async (dispatch) => {
     console.error('some error');
   }
 };
+
+export const getListOfMessages =
+  (id: number): ThunkType =>
+  async (dispatch) => {
+    try {
+      const response = await dialogsApi.getListOfMessage(id, 1, 10);
+      if (response) {
+        dispatch(actions.setUserMessages(response));
+      }
+    } catch {
+      console.error('some error');
+    }
+  };
+
 export const sendMessage =
   (userId: number, message: any): ThunkType =>
   async (dispatch) => {

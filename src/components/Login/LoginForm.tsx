@@ -97,7 +97,12 @@ const LoginForm: React.FC<PropsType> = ({ authErrors, captcha, dispatch }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs'>
+      <Container
+        component='main'
+        maxWidth='xs'
+        sx={{
+          marginLeft: '200px',
+        }}>
         <CssBaseline />
         <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
           <Box

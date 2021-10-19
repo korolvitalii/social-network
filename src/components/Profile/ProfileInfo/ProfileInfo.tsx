@@ -14,21 +14,13 @@ import { AppStateType } from '../../../redux/reducers/rootReducer';
 import { actions } from '../../../redux/actions/ProfileActions';
 type ProfileInfoProps = {
   profile: ProfileType | null;
-  status: string;
   savePhoto: (e: ChangeEvent<HTMLInputElement>) => void;
   isOwner?: string;
   formErrors: Array<string>;
   dispatch: Dispatch;
 };
 
-const ProfileInfo: React.FC<ProfileInfoProps> = ({
-  profile,
-  status,
-  savePhoto,
-  isOwner,
-  formErrors,
-  dispatch,
-}) => {
+const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile, savePhoto, isOwner, formErrors }) => {
   const editProfileDataMode = useSelector(
     (state: AppStateType) => state.profilePage.editProfileDataMode,
   );
@@ -75,7 +67,6 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
         />
       ) : (
         <div>
-          <ProfileStatus status={status} dispatch={dispatch} />
           <ProfileData isOwner={isOwner} goToEditMode={actions.goToEditMode} profile={profile} />
         </div>
       )}

@@ -4,7 +4,10 @@ import { ContactsType, ProfileType } from '../../../types/types';
 import ContactItem from './ContactItem';
 import classes from './ProfileInfo.module.css';
 import EditIcon from '@mui/icons-material/Edit';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
+import ProfileStatus from '../ProfileStatus';
 
 type ProfileDataProps = {
   isOwner?: string;
@@ -20,38 +23,59 @@ const ProfileData: React.FunctionComponent<ProfileDataProps> = ({
   const dispatch = useDispatch();
   return (
     <div className={classes.profileDescription}>
-      <h2> Fullname: {profile?.fullName}</h2>
-      <h3>About me: {profile?.aboutMe}</h3>
+      <Typography variant='h4' gutterBottom component='div' sx={{ color: 'black' }}>
+        {profile?.fullName}
+      </Typography>
+      <ProfileStatus dispatch={dispatch} />
+      <Typography variant='h6' gutterBottom component='div'>
+        About me:
+        <Typography variant='body2' gutterBottom sx={{ color: '' }}>
+          {profile?.aboutMe}
+        </Typography>
+      </Typography>
+
       <div>
-        Looking for job:
-        {profile?.lookingForAJob ? 'Yes' : 'No'}
+        <Typography variant='h6' gutterBottom component='div'>
+          Contacts:
+        </Typography>
+        {profile &&
+          Object.keys(profile.contacts).map((key) => {
+            return (
+              <ContactItem
+                key={key}
+                contactTitle={key}
+                contactValue={profile.contacts[key as keyof ContactsType]}
+              />
+            );
+          })}
+      </div>
+
+      <div>
+        <Typography variant='h6' gutterBottom component='span'>
+          Looking for job:
+          {profile?.lookingForAJob ? (
+            <CheckCircleOutlineIcon sx={{ fontSize: 25 }} />
+          ) : (
+            <DoNotDisturbIcon />
+          )}
+        </Typography>
       </div>
       {profile?.lookingForAJob && (
         <div>
-          <b>My professional skills</b>: {profile.lookingForAJobDescription}
+          <Typography variant='h6' gutterBottom component='span'>
+            Skills:
+          </Typography>
+          <Typography variant='body2' gutterBottom sx={{ color: '' }}>
+            {profile.lookingForAJobDescription}
+          </Typography>
         </div>
       )}
-      <div>
-        <h3>Contacts</h3>
-        <div>
-          {profile &&
-            Object.keys(profile.contacts).map((key) => {
-              return (
-                <ContactItem
-                  key={key}
-                  contactTitle={key}
-                  contactValue={profile.contacts[key as keyof ContactsType]}
-                />
-              );
-            })}
-        </div>
-      </div>
-      {!isOwner && (
-        <div>
+      {/* {!isOwner && (
+        <Box sx={{ marginLeft: 50 }}>
           <EditIcon onClick={() => dispatch(goToEditMode(true))} />
-          <Typography component={'span'}>Edit profile data</Typography>
-        </div>
-      )}
+          <Typography component={'span'}>Edit</Typography>
+        </Box>
+      )} */}
     </div>
   );
 };

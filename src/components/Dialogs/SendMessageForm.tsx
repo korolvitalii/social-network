@@ -6,8 +6,8 @@ import TextField, { TextFieldProps } from '@mui/material/TextField';
 import React, { ChangeEvent, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { sendMessage } from '../../../redux/actions/ChatActions';
-import classes from './MessageForm.module.css';
+import { sendMessage } from '../../redux/actions/DialogsActions';
+import classes from './SendMessageForm.module.css';
 
 const RedditTextField = styled((props: TextFieldProps) => (
   <TextField InputProps={{ disableUnderline: true } as Partial<OutlinedInputProps>} {...props} />
@@ -36,14 +36,19 @@ type FormValues = {
   messageText: string;
 };
 
-const MessageForm: React.FC = () => {
+type PropsType = {
+  currentUserId: number;
+};
+
+const SendMessageForm: React.FC<PropsType> = ({ currentUserId }) => {
   const { control, handleSubmit } = useForm();
 
   const dispatch = useDispatch();
   const [message, setMessage] = useState('');
 
   const onSubmit: SubmitHandler<FormValues> = () => {
-    dispatch(sendMessage(message));
+    const messageObj = { body: message };
+    dispatch(sendMessage(currentUserId, messageObj));
     setMessage('');
   };
 
@@ -74,4 +79,4 @@ const MessageForm: React.FC = () => {
   );
 };
 
-export default MessageForm;
+export default SendMessageForm;

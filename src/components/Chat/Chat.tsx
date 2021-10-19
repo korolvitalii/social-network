@@ -1,14 +1,13 @@
 import { List, Paper, Typography } from '@mui/material';
 import { uniqueId } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../redux/actions/ChatActions';
+import { useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/reducers/rootReducer';
 import { MessageType } from '../../types/types';
 import Message from './Message/Message';
 
 const Dialogs: React.FC = (props) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const messages = useSelector((state: AppStateType) => state.chat.messages);
   const messagesAnchorRef = useRef<HTMLDivElement>(null);
   const [isAutoScroll, setIsAutoScroll] = useState(true);

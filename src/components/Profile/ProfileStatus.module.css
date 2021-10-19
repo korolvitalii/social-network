@@ -1,6 +1,6 @@
 .spanProfileStatus {
   display: flex;
   align-items: flex-start;
-  color: rgb(0, 67, 191);
-  margin-left: 10px;
+  color: gray;
+  padding-bottom: 20px;
 }

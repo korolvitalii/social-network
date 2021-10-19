@@ -4,7 +4,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { getIsFetch } from '../redux/selectors/user-selectors';
 import Preloader from '../components/common/Preloader/Preloader';
-import Users from '../components/Developers/Users';
+import Users from '../components/Developers/Developers';
 
 const UsersPage: React.FC = () => {
   const isFetch = useSelector(getIsFetch);

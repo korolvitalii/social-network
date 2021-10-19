@@ -9,7 +9,7 @@ export const dialogsApi = {
     return instance.put(`/dialogs/${userId}`).then((res) => res.data);
   },
   getListOfMessage(userId: number, page: number, count: number) {
-    return instance.get(`dialogs/${userId}/messages)`).then((res) => res.data);
+    return instance.get(`dialogs/${userId}/messages`).then((res) => res.data);
   },
   sendMessage(userId: number, message: any) {
     return instance.post(`dialogs/${userId}/messages`, message).then((res) => res.data);

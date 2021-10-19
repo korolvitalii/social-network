@@ -43,9 +43,11 @@ export const getAuthUserData = (): ThunkType => async (dispatch) => {
     const { email, id, login } = response.data;
     if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(actions.setUserData(id, email, login, true));
-    } else {
-      dispatch(errorActions.setError(arrayMessagesToStringMessage(response.messages)));
     }
+    // else {
+    // debugger;
+    // dispatch(errorActions.setError(arrayMessagesToStringMessage(response.messages)));
+    // }
   } catch (err: unknown) {
     if (err instanceof Error) {
       dispatch(errorActions.setError(err.message));

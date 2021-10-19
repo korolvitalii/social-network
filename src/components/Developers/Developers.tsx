@@ -17,12 +17,11 @@ import {
 } from '../../redux/selectors/user-selectors';
 import { UserType } from '../../types/types';
 import ShowErrorModal from '../common/ShowErrorModal';
-import SearchUserForm from './SearchUsersForm';
-import classes from './Users.module.css';
+import SearchUserForm from './SearchForm';
+import classes from './Developers.module.css';
+import { Box, Button, Typography } from '@mui/material';
 
-type PropsType = {};
-
-const Users: React.FC<PropsType> = (props) => {
+const Users: React.FC = () => {
   const dispatch = useDispatch();
   const users = useSelector(getUsersFromState);
   const pageSize = useSelector(getPageSize);
@@ -111,38 +110,51 @@ const Users: React.FC<PropsType> = (props) => {
     const path = `/profile/${id}`;
 
     return (
-      <div key={id} className={classes.userContainer}>
-        <div className={classes.photoAndButton}>
-          <div>
+      <Box
+        key={id}
+        sx={{ display: 'flex', justifyContent: 'flex-start', padding: '20px', marginLeft: '20px' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: 800,
+            }}>
             <NavLink to={path}>
               <img className={classes.userPhoto} src={small ? small : userIcon} alt='' />
             </NavLink>
-          </div>
-          <div>
             {followed ? (
-              <button
-                disabled={isFollowingProgress}
-                onClick={() => {
-                  unfollow(id);
-                }}>
-                UNFOLLOW
-              </button>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Button variant='outlined' sx={{ marginBottom: '10px', width: '100px' }}>
+                  Message
+                </Button>
+                <Button
+                  variant='outlined'
+                  disabled={isFollowingProgress}
+                  sx={{ width: '100px' }}
+                  onClick={() => {
+                    unfollow(id);
+                  }}>
+                  UNFOLLOW
+                </Button>
+              </Box>
             ) : (
-              <button
+              <Button
+                variant='outlined'
                 disabled={isFollowingProgress}
+                sx={{ height: '40px', width: '100px' }}
                 onClick={() => {
                   follow(id);
                 }}>
                 FOLLOW
-              </button>
+              </Button>
             )}
-          </div>
-        </div>
-        <div className={classes.userInfo}>
-          <div>{name}</div>
-          <div>{status}</div>
-        </div>
-      </div>
+          </Box>
+          <Typography variant='h6' gutterBottom component='div'>
+            {name}
+          </Typography>
+        </Box>
+      </Box>
     );
   });
 

@@ -1,8 +1,3 @@
-.homelogo {
-  width: 940px;
-  height: 260px;
-}
-
 .profileInfo {
   display: flex;
   flex-direction: row;
@@ -10,13 +5,12 @@
   margin-top: 20px;
   display: flex;
   align-items: flex-start;
-  /* border: 1px solid black; */
 }
 
 .description {
   display: flex;
   flex-direction: row;
-  padding: 10px;
+  /* padding: 10px; */
 }
 
 .avatarPhoto {
@@ -26,11 +20,13 @@
 }
 
 .profileDescription {
-  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding: 20px 20px 20px 20px;
+  margin-top: 40px;
   height: 400px;
+  width: 500px;
 }
 .profileDescription h1 {
   justify-content: left;

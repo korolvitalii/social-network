@@ -24,7 +24,6 @@ type PropsType = {};
 const Profile: React.FC<PropsType> = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(getCurrentUser);
-  const status = useSelector(getStatus);
   const authUserID = useSelector(getAuthUserId);
   const errors = useSelector(getErrors);
   const { userInfoFormErrors } = useSelector((state: AppStateType) => state.profilePage);
@@ -49,13 +48,12 @@ const Profile: React.FC<PropsType> = (props) => {
       <ShowErrorModal errors={errors} resetError={resetError} />
       <ProfileInfo
         profile={currentUser}
-        status={status}
         savePhoto={savePhoto}
         isOwner={match?.params.id}
         formErrors={userInfoFormErrors}
         dispatch={dispatch}
       />
-      <MyPostsContainer />
+      {/* <MyPostsContainer /> */}
     </div>
   );
 };
