@@ -6,6 +6,7 @@ import { actions as errorActions } from './ErrorsActions';
 const SET_ALL_DIALOGS = 'SN/DIALOGS/SET_ALL_DIALOGS';
 const SET_MESSAGE = 'SN/DIALOGS/SET_MESSAGE';
 const SET_USER_MESSAGES = 'SN/DIALOGS/SET_USER_MESSAGES';
+const START_CHATTING = 'SN/DIALOGS/START_CHATTING';
 
 const actions = {
   setAllDialogs: (dialogs: any) =>
@@ -27,6 +28,13 @@ const actions = {
       type: SET_MESSAGE,
       payload: {
         message,
+      },
+    } as const),
+  startChatting: (id: number) =>
+    ({
+      type: START_CHATTING,
+      payload: {
+        id,
       },
     } as const),
 };
@@ -61,9 +69,7 @@ export const sendMessage =
     try {
       const response = await dialogsApi.sendMessage(userId, message);
       if (response.resultCode === ResultCodesEnum.Success) {
-        debugger;
         const newResponse = await getAllDialogs();
-
         dispatch(actions.setAllDialogs(newResponse));
       }
     } catch {
@@ -71,5 +77,14 @@ export const sendMessage =
     }
   };
 
+export const startChattingThunk =
+  (userId: number): ThunkType =>
+  async (dispatch) => {
+    try {
+      await dialogsApi.startChatting(userId);
+    } catch {
+      console.log('error');
+    }
+  };
 export type ActionsType = InferActionsTypes<typeof actions & typeof errorActions>;
 type ThunkType = BaseThunkType<ActionsType>;

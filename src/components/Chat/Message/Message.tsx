@@ -13,19 +13,28 @@ const Message: React.FC<PropsType> = ({ message, photo, userName }) => {
   return (
     <div>
       <Box>
-        <div>
-          <Box sx={{ display: 'flex', flexDirection: 'row', p: 1, bgcolor: 'background.paper' }}>
-            <Avatar alt={userName} src={photo} />
-            <Typography variant='subtitle1' component='span'>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            p: 1,
+            bgcolor: 'background.paper',
+          }}>
+          <Avatar alt={userName} src={photo} />
+          <Box sx={{ marginLeft: '5px' }}>
+            <Typography
+              variant='subtitle2'
+              gutterBottom
+              component='div'
+              sx={{ fontWeight: 'bold' }}>
               {userName}
             </Typography>
-          </Box>
-          <Box sx={{ display: 'flex' }}>
-            <Typography variant='subtitle2' color='black' gutterBottom component='span'>
+            <Typography variant='body2' gutterBottom>
               {message}
             </Typography>
           </Box>
-        </div>
+        </Box>
       </Box>
     </div>
   );

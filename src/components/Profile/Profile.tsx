@@ -4,14 +4,9 @@ import { useRouteMatch } from 'react-router-dom';
 import { actions as errorsActions } from '../../redux/actions/ErrorsActions';
 import { getUserProfile, getUserStatus, uploadUserPhoto } from '../../redux/actions/ProfileActions';
 import { AppStateType } from '../../redux/reducers/rootReducer';
-import {
-  getAuthUserId,
-  getCurrentUser,
-  getErrors,
-  getStatus,
-} from '../../redux/selectors/profile-selectors';
+import { getAuthUserId, getCurrentUser, getErrors } from '../../redux/selectors/profile-selectors';
 import ShowErrorModal from '../common/ShowErrorModal';
-import MyPostsContainer from './MyPosts/MyPostsContainer';
+// import MyPostsContainer from './MyPosts/MyPostsContainer';
 import classes from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 

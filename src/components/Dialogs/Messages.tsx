@@ -1,4 +1,4 @@
-import { createTheme, List, Paper, styled } from '@mui/material';
+import { List, Paper } from '@mui/material';
 import { uniqueId } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,7 @@ export const Messages: React.FC<PropsType> = React.memo(({ currentUserId }) => {
   const messages = useSelector((state: AppStateType) => state.dialogs.userMessages);
   useEffect(() => {
     dispatch(getListOfMessages(currentUserId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUserId]);
   const messagesAnchorRef = useRef<HTMLDivElement>(null);
   const [isAutoScroll, setIsAutoScroll] = useState(true);
@@ -32,6 +33,7 @@ export const Messages: React.FC<PropsType> = React.memo(({ currentUserId }) => {
     if (isAutoScroll) {
       messagesAnchorRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   return (

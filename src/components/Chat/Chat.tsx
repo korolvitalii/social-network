@@ -6,7 +6,7 @@ import { AppStateType } from '../../redux/reducers/rootReducer';
 import { MessageType } from '../../types/types';
 import Message from './Message/Message';
 
-const Dialogs: React.FC = (props) => {
+const Dialogs: React.FC = () => {
   // const dispatch = useDispatch();
   const messages = useSelector((state: AppStateType) => state.chat.messages);
   const messagesAnchorRef = useRef<HTMLDivElement>(null);
@@ -24,6 +24,7 @@ const Dialogs: React.FC = (props) => {
     if (isAutoScroll) {
       messagesAnchorRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   return (

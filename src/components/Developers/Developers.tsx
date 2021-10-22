@@ -1,9 +1,11 @@
+import { Box, Button, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
 import userIcon from '../../assets/images/User-Icon.jpg';
+import { startChattingThunk } from '../../redux/actions/DialogsActions';
 import { actions as errorActions } from '../../redux/actions/ErrorsActions';
 import { actions, followThunk, getUsers, unfollowThunk } from '../../redux/actions/UsersActions';
 import { getErrors } from '../../redux/selectors/profile-selectors';
@@ -17,9 +19,8 @@ import {
 } from '../../redux/selectors/user-selectors';
 import { UserType } from '../../types/types';
 import ShowErrorModal from '../common/ShowErrorModal';
-import SearchUserForm from './SearchForm';
 import classes from './Developers.module.css';
-import { Box, Button, Typography } from '@mui/material';
+import SearchUserForm from './SearchForm';
 
 const Users: React.FC = () => {
   const dispatch = useDispatch();
@@ -41,9 +42,10 @@ const Users: React.FC = () => {
   const [currentPageHook, setCurrentPage] = useState(currentPageQuery);
 
   useEffect(() => {
+    debugger;
     if (String(showFriends) !== friendQuery && friendQuery) {
-      dispatch(toggleShowFriends(friendQuery));
-      setQuery({ friend: String(friendQuery) });
+      dispatch(toggleShowFriends(showFriends));
+      setQuery({ friend: String(showFriends) });
     }
     if (String(showFriends) === '') {
       dispatch(toggleShowFriends(false));
@@ -98,12 +100,15 @@ const Users: React.FC = () => {
   const setTerm = (term: string) => dispatch(actions.setTerm(term));
   const resetError = () => dispatch(errorActions.resetError());
 
+  const handleStartChatting = (id: number) => (e: React.MouseEvent<HTMLElement>) => {
+    dispatch(startChattingThunk(id));
+  };
+
   const usersElements = users.map((user: UserType) => {
     const {
       id,
       name,
       followed,
-      status,
       photos: { small },
     } = user;
 
@@ -125,7 +130,10 @@ const Users: React.FC = () => {
             </NavLink>
             {followed ? (
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Button variant='outlined' sx={{ marginBottom: '10px', width: '100px' }}>
+                <Button
+                  variant='outlined'
+                  sx={{ marginBottom: '10px', width: '100px' }}
+                  onClick={handleStartChatting(id)}>
                   Message
                 </Button>
                 <Button

@@ -9,6 +9,7 @@ import {
 import Dialogs from '../components/Chat/Chat';
 import classes from './ChatPage.module.css';
 import MessageForm from '../components/Chat/Message/MessageForm';
+import { Box } from '@mui/system';
 
 const ChatPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -19,13 +20,16 @@ const ChatPage: React.FC = () => {
       dispatch(stopMessagesListening());
       dispatch(actions.clearMessageInStore());
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className={classes.chatPageContainer}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
       <Dialogs />
-      <MessageForm />
-    </div>
+      <Box sx={{ marginRight: 'auto' }}>
+        <MessageForm />
+      </Box>
+    </Box>
   );
 };
 

@@ -1,13 +1,13 @@
 import { Avatar, Typography } from '@mui/material';
+import { uniqueId } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllDialogs, sendMessage } from '../../redux/actions/DialogsActions';
+import { getAllDialogs } from '../../redux/actions/DialogsActions';
 import { AppStateType } from '../../redux/reducers/rootReducer';
 import { DialogType } from '../../types/types';
-import { Messages } from './Messages';
 import classes from './Dialogs.module.css';
+import { Messages } from './Messages';
 import SendMessageForm from './SendMessageForm';
-import { uniqueId } from 'lodash';
 
 type PropsTypes = {
   dialogs: DialogType[];
@@ -18,12 +18,11 @@ const Dialogs: React.FunctionComponent<PropsTypes> = ({ dialogs }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllDialogs());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [showMessage, setShowMessages] = useState(false);
   const currentDialogs = useSelector((state: AppStateType) => state.dialogs.dialogs);
-  console.log(currentDialogs);
 
-  console.log('Dialogs >>>>>>');
   const handleClick = (id: number) => (e: any) => {
     setCurrentUserId(id);
     setShowMessages(true);

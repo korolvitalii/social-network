@@ -1,11 +1,4 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  TextField,
-} from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
@@ -29,7 +22,7 @@ const SearchUserForm: React.FC<PropsType> = ({
   showFriend,
   dispatch,
 }) => {
-  const { register, handleSubmit, setValue, control } = useForm<Inputs>();
+  const { handleSubmit, setValue, control } = useForm<Inputs>();
 
   useEffect(() => {
     if (term) {
@@ -51,48 +44,34 @@ const SearchUserForm: React.FC<PropsType> = ({
     }
     dispatch(setTerm(data.searchUser));
   };
-  const [show, setShow] = React.useState('All');
-
-  const handleChange = (event: SelectChangeEvent) => {
-    debugger;
-    setShow(event.target.value as string);
-  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {/* <input {...register('searchUser')} placeholder='Search' /> */}
-      <Controller
-        name='searchUser'
-        control={control}
-        render={({ field }) => <TextField {...field} label='Search field' type='search' />}
-      />
-      <Controller
-        name='showUsers'
-        control={control}
-        render={({ field }) => (
-          <>
-            <InputLabel id='demo-simple-select-label'>Show users</InputLabel>
-            <Select
-              {...field}
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              value={show}
-              onChange={handleChange}>
-              <MenuItem value='All'>All</MenuItem>
-              <MenuItem value='Only followed'>Only followed</MenuItem>
-              <MenuItem value='Only unfollowed'>Only unfollowed</MenuItem>
-            </Select>
-          </>
-        )}
-      />
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Controller
+          name='searchUser'
+          control={control}
+          render={({ field }) => <TextField {...field} label='Search field' type='search' />}
+        />
 
-      {/* <div>
-        <select {...register('showUsers')}>
-          <option value='All'>All</option>
-          <option value='Only followed'>Only followed</option>
-          <option value='Only unfollowed'>Only unfollowed</option>
-        </select>
-      </div> */}
-      <input type='submit' />
+        <FormControl sx={{ width: 150 }} variant='outlined'>
+          <InputLabel htmlFor='Show developers'>Show developers</InputLabel>
+          <Controller
+            name='showUsers'
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Select value={value} onChange={onChange} label='Show developers'>
+                <MenuItem value='All'>All</MenuItem>
+                <MenuItem value='Only followed'>Only followed</MenuItem>
+                <MenuItem value='Only unfollowed'>Only unfollowed</MenuItem>
+              </Select>
+            )}
+            defaultValue='All'
+          />
+        </FormControl>
+      </Box>
+      <Button type='submit' variant='outlined' sx={{ marginTop: '10px' }}>
+        Submit
+      </Button>
     </form>
   );
 };

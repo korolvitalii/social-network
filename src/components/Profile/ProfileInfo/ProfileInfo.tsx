@@ -1,17 +1,18 @@
+import { Button, styled } from '@mui/material';
+import { blue, purple } from '@mui/material/colors';
 import React, { ChangeEvent } from 'react';
-import classes from './ProfileInfo.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
 import userIcon from '../../../assets/images/User-Icon.jpg';
-
-import ProfileStatus from '../ProfileStatus';
+import { actions } from '../../../redux/actions/ProfileActions';
+import { AppStateType } from '../../../redux/reducers/rootReducer';
+import { getIsLoadPhoto } from '../../../redux/selectors/profile-selectors';
 import { ProfileType } from '../../../types/types';
+import Preloader from '../../common/Preloader/Preloader';
 import EditProfileInfoForm from './EditProfileInfoForm';
 import ProfileData from './ProfileData';
-import { Dispatch } from 'redux';
-import { useSelector } from 'react-redux';
-import { getIsLoadPhoto } from '../../../redux/selectors/profile-selectors';
-import Preloader from '../../common/Preloader/Preloader';
-import { AppStateType } from '../../../redux/reducers/rootReducer';
-import { actions } from '../../../redux/actions/ProfileActions';
+import classes from './ProfileInfo.module.css';
+
 type ProfileInfoProps = {
   profile: ProfileType | null;
   savePhoto: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -27,6 +28,17 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile, savePhoto, isOwner, 
 
   const isLoadPhoto = useSelector(getIsLoadPhoto);
 
+  const EditDataButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(blue[300]),
+    '&:hover': {
+      backgroundColor: blue[100],
+    },
+  }));
+  const dispatch = useDispatch();
+  const handleEditProfileData = () => {
+    // setAnchorEl(null);
+    dispatch(actions.goToEditMode(true));
+  };
   return (
     <div className={classes.profileInfo}>
       <div className={classes.description}>
@@ -41,16 +53,9 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile, savePhoto, isOwner, 
             />
           )}
           {!isOwner && (
-            <div>
-              <input
-                type='file'
-                name='file'
-                id='file'
-                className={classes.inputfile}
-                onChange={savePhoto}
-              />
-              <label htmlFor='file'>Upload photo</label>
-            </div>
+            <EditDataButton onClick={handleEditProfileData} variant='outlined'>
+              Edit
+            </EditDataButton>
           )}
         </div>
       </div>

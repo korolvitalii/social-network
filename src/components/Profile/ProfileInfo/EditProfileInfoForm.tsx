@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { ContactsType, ProfileType } from '../../../types/types';
-import { undateUserProfileInfo } from '../../../redux/actions/ProfileActions';
+import { undateUserProfileInfo, uploadUserPhoto } from '../../../redux/actions/ProfileActions';
 import { prepareErrors } from '../../../helpers/helpers';
 import classes from './EditProfileInfoForm.module.css';
 import { useDispatch } from 'react-redux';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Box } from '@mui/material';
 
 type PropsType = {
   goToEditMode: (editMode: boolean) => void;
@@ -73,115 +73,128 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
     console.log(errors);
   };
 
+  const savePhoto = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      dispatch(uploadUserPhoto(e.target.files[0]));
+    }
+  };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={classes.formChildren}>
-        <Controller
-          name='fullName'
-          control={control}
-          defaultValue={fullName || undefined}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextField
-              id='outlined-basic'
-              label='Fullname'
-              variant='outlined'
-              {...field}
-              error={!!errors.fullName}
-            />
+    <Box sx={{ marginLeft: '10px' }}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={classes.formChildren}>
+          <Controller
+            name='fullName'
+            control={control}
+            defaultValue={fullName || undefined}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                id='outlined-basic'
+                label='Fullname'
+                variant='outlined'
+                {...field}
+                error={!!errors.fullName}
+              />
+            )}
+          />
+        </div>
+        <Box sx={{ marginBottom: '10px' }}>
+          <input
+            style={{ display: 'none' }}
+            id='contained-button-file'
+            type='file'
+            onChange={savePhoto}
+          />
+          <label htmlFor='contained-button-file'>
+            <Button variant='outlined'>Upload photo</Button>
+          </label>
+        </Box>
+        <div>
+          {errors.fullName?.type === 'server' && (
+            <span className={classes.errors}>{errors.fullName.message}</span>
           )}
-        />
-      </div>
-      <div>
-        {errors.fullName?.type === 'server' && (
-          <span className={classes.errors}>{errors.fullName.message}</span>
-        )}
-        {errors.fullName && <span className={classes.errors}>This field is required</span>}
-      </div>
-      <div className={classes.formChildren}>
-        <b>Looking for a job:</b>
-        <input
-          type='checkbox'
-          {...register('lookingForAJob')}
-          defaultChecked={lookingForAJob || undefined}
-        />
-      </div>
-      <div>
-        {errors.lookingForAJob && (
-          <span className={classes.errors}>{errors.lookingForAJob.message}</span>
-        )}
-      </div>
-      <div className={classes.formChildren}>
-        <Controller
-          name='lookingForAJobDescription'
-          control={control}
-          defaultValue={lookingForAJobDescription || undefined}
-          render={({ field }) => (
-            <TextField
-              id='outlined-basic'
-              label='lookingForAJobDescription'
-              variant='outlined'
-              {...field}
-            />
+          {errors.fullName && <span className={classes.errors}>This field is required</span>}
+        </div>
+        <div className={classes.formChildren}>
+          <b>Looking for a job:</b>
+          <input
+            type='checkbox'
+            {...register('lookingForAJob')}
+            defaultChecked={lookingForAJob || undefined}
+          />
+        </div>
+        <div>
+          {errors.lookingForAJob && (
+            <span className={classes.errors}>{errors.lookingForAJob.message}</span>
           )}
-        />
-      </div>
-      <div>
-        {errors.lookingForAJobDescription && (
-          <span className={classes.errors}>This field is required</span>
-        )}
-        {errors.lookingForAJobDescription?.type === 'server' && (
-          <span className={classes.errors}>{errors.lookingForAJobDescription.message}</span>
-        )}
-      </div>
-      <div className={classes.formChildren}>
-        <Controller
-          name='aboutMe'
-          control={control}
-          defaultValue={aboutMe || undefined}
-          render={({ field }) => (
-            <TextField
-              inputRef={ref}
-              {...inputProps}
-              id='outlined-basic'
-              label='About me'
-              variant='outlined'
-              {...field}
-              error={!!errors.aboutMe}
-            />
+        </div>
+        <div className={classes.formChildren}>
+          <Controller
+            name='lookingForAJobDescription'
+            control={control}
+            defaultValue={lookingForAJobDescription || undefined}
+            render={({ field }) => (
+              <TextField id='outlined-basic' label='Skills' variant='outlined' {...field} />
+            )}
+          />
+        </div>
+        <div>
+          {errors.lookingForAJobDescription && (
+            <span className={classes.errors}>This field is required</span>
           )}
-        />
-      </div>
-      <div>
-        {errors.aboutMe && <span className={classes.errors}>This field is required</span>}
-        {errors.aboutMe && <p>{errors.aboutMe.message}</p>}
-      </div>
-      <div>
-        {contacts &&
-          Object.keys(contacts).map((key) => {
-            console.log(errors[key as keyof FormValuesType]);
-            return (
-              <div key={key} className={classes.formChildren}>
-                <Controller
-                  name={`contacts.${key as keyof ContactsType}`}
-                  control={control}
-                  defaultValue={contacts[key as keyof ContactsType]}
-                  render={({ field }) => (
-                    <TextField id='outlined-basic' label={key} variant='outlined' {...field} />
-                  )}
-                />
+          {errors.lookingForAJobDescription?.type === 'server' && (
+            <span className={classes.errors}>{errors.lookingForAJobDescription.message}</span>
+          )}
+        </div>
+        <div className={classes.formChildren}>
+          <Controller
+            name='aboutMe'
+            control={control}
+            defaultValue={aboutMe || undefined}
+            render={({ field }) => (
+              <TextField
+                inputRef={ref}
+                {...inputProps}
+                id='outlined-basic'
+                label='About me'
+                variant='outlined'
+                {...field}
+                error={!!errors.aboutMe}
+              />
+            )}
+          />
+        </div>
+        <div>
+          {errors.aboutMe && <span className={classes.errors}>This field is required</span>}
+          {errors.aboutMe && <p>{errors.aboutMe.message}</p>}
+        </div>
+        <div>
+          {contacts &&
+            Object.keys(contacts).map((key) => {
+              console.log(errors[key as keyof FormValuesType]);
+              return (
+                <div key={key} className={classes.formChildren}>
+                  <Controller
+                    name={`contacts.${key as keyof ContactsType}`}
+                    control={control}
+                    defaultValue={contacts[key as keyof ContactsType]}
+                    render={({ field }) => (
+                      <TextField id='outlined-basic' label={key} variant='outlined' {...field} />
+                    )}
+                  />
 
-                {errors[key as keyof FormValuesType] && (
-                  <>{<p>{errors[key as keyof FormValuesType]}</p>}</>
-                )}
-              </div>
-            );
-          })}
-      </div>
-      <Button variant='contained' type='submit' className={classes.formSubmit}>
-        Save
-      </Button>
-    </form>
+                  {errors[key as keyof FormValuesType] && (
+                    <>{<p>{errors[key as keyof FormValuesType]}</p>}</>
+                  )}
+                </div>
+              );
+            })}
+        </div>
+        <Button type='submit' variant='outlined' sx={{ marginTop: '10px' }}>
+          Save
+        </Button>
+      </form>
+    </Box>
   );
 };
 
