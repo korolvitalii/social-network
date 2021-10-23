@@ -1,4 +1,4 @@
-import { List, Paper, Typography } from '@mui/material';
+import { Box, List, Paper, Typography } from '@mui/material';
 import { uniqueId } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -7,7 +7,6 @@ import { MessageType } from '../../types/types';
 import Message from './Message/Message';
 
 const Dialogs: React.FC = () => {
-  // const dispatch = useDispatch();
   const messages = useSelector((state: AppStateType) => state.chat.messages);
   const messagesAnchorRef = useRef<HTMLDivElement>(null);
   const [isAutoScroll, setIsAutoScroll] = useState(true);
@@ -28,20 +27,23 @@ const Dialogs: React.FC = () => {
   }, [messages]);
 
   return (
-    <div>
+    <Box sx={{ marginLeft: '48px' }}>
       <Typography variant='h3' component='span'>
         Chat
       </Typography>
-      <div>
+      <Box>
         <Paper style={{ maxHeight: 400, width: 900, overflow: 'auto' }}>
           <List>
-            {messages &&
-              messages.map((message: MessageType) => <Message {...message} key={uniqueId()} />)}
+            {messages ? (
+              messages.map((message: MessageType) => <Message {...message} key={uniqueId()} />)
+            ) : (
+              <Typography>Chat is empty</Typography>
+            )}
             <div ref={messagesAnchorRef} onScroll={scrollHandler}></div>
           </List>
         </Paper>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

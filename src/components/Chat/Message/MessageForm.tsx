@@ -30,25 +30,33 @@ const MessageForm = () => {
   return (
     <Box sx={{ width: '600px' }}>
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name='messageText'
-          control={control}
-          render={({ field }) => (
-            <TextField
-              id='outlined-multiline-static'
-              label='Write message'
-              multiline
-              rows={4}
-              fullWidth
-              size='medium'
-              sx={{ marginBottom: '10px' }}
-              onChange={inputChange}
-            />
-          )}
-        />
-        <Button variant='contained' type='submit' endIcon={<SendIcon />}>
-          Send
-        </Button>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'start',
+            // marginLeft: '-50px ',
+          }}>
+          <Controller
+            name='messageText'
+            control={control}
+            render={({ field }) => (
+              <TextField
+                id='outlined-multiline-static'
+                label='Write message'
+                multiline
+                rows={4}
+                fullWidth
+                size='medium'
+                sx={{ marginBottom: '10px' }}
+                onChange={inputChange}
+              />
+            )}
+          />
+          <Button variant='contained' type='submit' endIcon={<SendIcon />} sx={{ width: '120px' }}>
+            Send
+          </Button>
+        </Box>
       </form>
     </Box>
   );

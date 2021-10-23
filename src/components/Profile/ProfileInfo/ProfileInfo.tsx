@@ -1,5 +1,5 @@
 import { Button, styled } from '@mui/material';
-import { blue, purple } from '@mui/material/colors';
+import { blue } from '@mui/material/colors';
 import React, { ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';

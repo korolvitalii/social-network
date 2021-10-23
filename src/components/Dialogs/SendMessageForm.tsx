@@ -1,4 +1,5 @@
 import SendIcon from '@mui/icons-material/Send';
+import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import React, { ChangeEvent, useState } from 'react';
@@ -32,26 +33,36 @@ const SendMessageForm: React.FC<PropsType> = ({ currentUserId }) => {
   };
 
   return (
-    <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-      <Controller
-        name='messageText'
-        control={control}
-        render={({ field }) => (
-          <TextField
-            id='outlined-multiline-static'
-            label='Multiline'
-            multiline
-            rows={4}
-            fullWidth
-            size='medium'
-            onChange={inputChange}
+    <Box sx={{ width: '600px' }}>
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'start',
+            marginLeft: '-50px ',
+          }}>
+          <Controller
+            name='messageText'
+            control={control}
+            render={({ field }) => (
+              <TextField
+                id='outlined-multiline-static'
+                label='Write message'
+                multiline
+                rows={4}
+                size='medium'
+                onChange={inputChange}
+                sx={{ marginBottom: '10px' }}
+              />
+            )}
           />
-        )}
-      />
-      <Button variant='contained' type='submit' endIcon={<SendIcon />}>
-        Send
-      </Button>
-    </form>
+          <Button variant='contained' type='submit' endIcon={<SendIcon />} sx={{ width: '120px' }}>
+            Send
+          </Button>
+        </Box>
+      </form>
+    </Box>
   );
 };
 

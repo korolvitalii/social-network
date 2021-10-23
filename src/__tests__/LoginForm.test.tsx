@@ -24,7 +24,6 @@ describe('<ProfileStatus/>', () => {
   test('after click should display a blank login form, with remember me checked ', () => {
     const { getByTestId } = render(<LoginForm captcha={null} dispatch={undefined} />);
     const checkbox = getByTestId('login_form_checkbox');
-    console.log(checkbox.click());
     checkbox.click();
     // expect(checkbox.checked).toBeTruthy();
   });

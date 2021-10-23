@@ -1,5 +1,5 @@
-import { List, Paper } from '@mui/material';
-import { uniqueId } from 'lodash';
+import { Box, List, Paper, Typography } from '@mui/material';
+import { isEmpty, uniqueId } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getListOfMessages } from '../../redux/actions/DialogsActions';
@@ -11,9 +11,10 @@ type PropsType = {
 };
 
 export const Messages: React.FC<PropsType> = React.memo(({ currentUserId }) => {
-  console.log('>>>>>>Messages');
+  // console.log('>>>>>>Messages');
   const dispatch = useDispatch();
   const messages = useSelector((state: AppStateType) => state.dialogs.userMessages);
+  debugger;
   useEffect(() => {
     dispatch(getListOfMessages(currentUserId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,20 +38,23 @@ export const Messages: React.FC<PropsType> = React.memo(({ currentUserId }) => {
   }, [messages]);
 
   return (
-    <div>
+    <Box>
       <Paper style={{ maxHeight: 300, width: 700, overflow: 'auto' }}>
         <List>
-          {messages &&
+          {messages && !isEmpty(messages.items) ? (
             Object.keys(messages.items).map((key) => (
               <Message
                 userName={messages.items[key].senderName}
                 message={messages.items[key].body}
                 key={uniqueId()}
               />
-            ))}
-          <div ref={messagesAnchorRef} onScroll={scrollHandler}></div>
+            ))
+          ) : (
+            <Typography>Chat is empty</Typography>
+          )}
+          <Box component='div' ref={messagesAnchorRef} onScroll={scrollHandler}></Box>
         </List>
       </Paper>
-    </div>
+    </Box>
   );
 });

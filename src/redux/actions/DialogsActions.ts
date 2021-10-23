@@ -8,7 +8,7 @@ const SET_MESSAGE = 'SN/DIALOGS/SET_MESSAGE';
 const SET_USER_MESSAGES = 'SN/DIALOGS/SET_USER_MESSAGES';
 const START_CHATTING = 'SN/DIALOGS/START_CHATTING';
 
-const actions = {
+export const actions = {
   setAllDialogs: (dialogs: any) =>
     ({
       type: SET_ALL_DIALOGS,

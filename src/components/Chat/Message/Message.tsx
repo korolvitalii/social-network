@@ -1,6 +1,7 @@
 import { Avatar, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 type PropsType = {
   message: string;
@@ -9,7 +10,12 @@ type PropsType = {
   userName: string;
 };
 
-const Message: React.FC<PropsType> = ({ message, photo, userName }) => {
+const Message: React.FC<PropsType> = ({ message, photo, userName, userId }) => {
+  const onRedirectUserPage = () => {
+    console.log('click');
+  };
+  const path = `/profile/${userId}`;
+
   return (
     <div>
       <Box>
@@ -20,8 +26,11 @@ const Message: React.FC<PropsType> = ({ message, photo, userName }) => {
             alignItems: 'center',
             p: 1,
             bgcolor: 'background.paper',
-          }}>
-          <Avatar alt={userName} src={photo} />
+          }}
+          onClick={onRedirectUserPage}>
+          <NavLink to={path}>
+            <Avatar alt={userName} src={photo} />
+          </NavLink>
           <Box sx={{ marginLeft: '5px' }}>
             <Typography
               variant='subtitle2'

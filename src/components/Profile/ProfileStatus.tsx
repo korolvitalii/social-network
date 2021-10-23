@@ -1,15 +1,12 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateUserStatus } from '../../redux/actions/ProfileActions';
 import { getStatus } from '../../redux/selectors/profile-selectors';
 import classes from './ProfileStatus.module.css';
 
-type PropsType = {
-  dispatch: any;
-};
-
-const ProfileStatus: React.FC<PropsType> = ({ dispatch }) => {
+const ProfileStatus: React.FC = () => {
+  const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
   const status = useSelector(getStatus);
   const [localStatus, setLocalStatus] = useState(status);

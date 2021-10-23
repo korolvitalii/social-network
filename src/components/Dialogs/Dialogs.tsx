@@ -29,9 +29,6 @@ const Dialogs: React.FunctionComponent<PropsTypes> = ({ dialogs }) => {
   };
   return (
     <div>
-      <Typography variant='h3' component='span'>
-        Dialogs
-      </Typography>
       <div className={classes.dialogsContainer}>
         <div>
           <Typography variant='h6' component='span'>

@@ -7,7 +7,6 @@ import {
   stopMessagesListening,
 } from '../redux/actions/ChatActions';
 import Dialogs from '../components/Chat/Chat';
-import classes from './ChatPage.module.css';
 import MessageForm from '../components/Chat/Message/MessageForm';
 import { Box } from '@mui/system';
 

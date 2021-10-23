@@ -2,7 +2,6 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
 import { Box, Divider, Typography } from '@mui/material';
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
 import { ContactsType, ProfileType } from '../../../types/types';
 import ProfileStatus from '../ProfileStatus';
 import ContactItem from './ContactItem';
@@ -14,7 +13,6 @@ type ProfileDataProps = {
 };
 
 const ProfileData: React.FunctionComponent<ProfileDataProps> = ({ profile }) => {
-  const dispatch = useDispatch();
   return (
     <Box
       sx={{
@@ -29,7 +27,7 @@ const ProfileData: React.FunctionComponent<ProfileDataProps> = ({ profile }) => 
       <Typography variant='h4' gutterBottom component='span' sx={{ color: 'black' }}>
         {profile?.fullName}
       </Typography>
-      <ProfileStatus dispatch={dispatch} />
+      <ProfileStatus />
       <Divider variant='fullWidth' sx={{ marginBottom: '20px' }} />
       <Box component='div' sx={{ display: 'flex', flexDirection: 'row', marginBottom: '20px' }}>
         <Typography noWrap={true} sx={{ width: '250px', marginRight: '50px' }}>

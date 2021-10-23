@@ -1,16 +1,12 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
-import userIcon from '../../assets/images/User-Icon.jpg';
-import { startChattingThunk } from '../../redux/actions/DialogsActions';
 import { actions as errorActions } from '../../redux/actions/ErrorsActions';
-import { actions, followThunk, getUsers, unfollowThunk } from '../../redux/actions/UsersActions';
+import { actions, getUsers } from '../../redux/actions/UsersActions';
 import { getErrors } from '../../redux/selectors/profile-selectors';
 import {
-  getIsFollowingProgress,
   getPagesCount,
   getPageSize,
   getShowFriends,
@@ -19,15 +15,15 @@ import {
 } from '../../redux/selectors/user-selectors';
 import { UserType } from '../../types/types';
 import ShowErrorModal from '../common/ShowErrorModal';
+import Developer from './Developer';
 import classes from './Developers.module.css';
 import SearchUserForm from './SearchForm';
 
-const Users: React.FC = () => {
+const Developers: React.FC = () => {
   const dispatch = useDispatch();
   const users = useSelector(getUsersFromState);
   const pageSize = useSelector(getPageSize);
   const pagesCount = useSelector(getPagesCount);
-  const isFollowingProgress = useSelector(getIsFollowingProgress);
   const errors = useSelector(getErrors);
   let term = useSelector(getTerm);
   let showFriends = useSelector(getShowFriends);
@@ -89,86 +85,13 @@ const Users: React.FC = () => {
     dispatch(getUsers(incSelected, pageSize, term, showFriends));
   };
 
-  const follow = (id: number) => {
-    dispatch(followThunk(id));
-  };
-  const unfollow = (id: number) => {
-    dispatch(unfollowThunk(id));
-  };
-
   const toggleShowFriends = (flag: boolean | string) => dispatch(actions.toggleShowFriends(flag));
   const setTerm = (term: string) => dispatch(actions.setTerm(term));
   const resetError = () => dispatch(errorActions.resetError());
 
-  const handleStartChatting = (id: number) => (e: React.MouseEvent<HTMLElement>) => {
-    dispatch(startChattingThunk(id));
-  };
-
-  const usersElements = users.map((user: UserType) => {
-    const {
-      id,
-      name,
-      followed,
-      photos: { small },
-    } = user;
-
-    const path = `/profile/${id}`;
-
-    return (
-      <Box
-        key={id}
-        sx={{ display: 'flex', justifyContent: 'flex-start', padding: '20px', marginLeft: '20px' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: 800,
-            }}>
-            <NavLink to={path}>
-              <img className={classes.userPhoto} src={small ? small : userIcon} alt='' />
-            </NavLink>
-            {followed ? (
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Button
-                  variant='outlined'
-                  sx={{ marginBottom: '10px', width: '100px' }}
-                  onClick={handleStartChatting(id)}>
-                  Message
-                </Button>
-                <Button
-                  variant='outlined'
-                  disabled={isFollowingProgress}
-                  sx={{ width: '100px' }}
-                  onClick={() => {
-                    unfollow(id);
-                  }}>
-                  UNFOLLOW
-                </Button>
-              </Box>
-            ) : (
-              <Button
-                variant='outlined'
-                disabled={isFollowingProgress}
-                sx={{ height: '40px', width: '100px' }}
-                onClick={() => {
-                  follow(id);
-                }}>
-                FOLLOW
-              </Button>
-            )}
-          </Box>
-          <Typography variant='h6' gutterBottom component='div'>
-            {name}
-          </Typography>
-        </Box>
-      </Box>
-    );
-  });
-
   return (
-    <div>
-      <div>
+    <Box>
+      <Box>
         <ReactPaginate
           disableInitialCallback={true}
           initialPage={currentPageHook as number | undefined}
@@ -189,8 +112,8 @@ const Users: React.FC = () => {
           previousLabel={<>&laquo;</>}
           nextLabel={<>&raquo;</>}
         />
-      </div>
-      <div>
+      </Box>
+      <Box>
         <SearchUserForm
           setTerm={setTerm}
           term={term}
@@ -198,11 +121,15 @@ const Users: React.FC = () => {
           toggleShowFriends={toggleShowFriends}
           dispatch={dispatch}
         />
-      </div>
+      </Box>
       <ShowErrorModal errors={errors} resetError={resetError} />
-      <div>{usersElements}</div>
-    </div>
+      <Box>
+        {users.map((user: UserType) => (
+          <Developer {...user} />
+        ))}
+      </Box>
+    </Box>
   );
 };
 
-export default Users;
+export default Developers;
