@@ -6,6 +6,8 @@ export const instance = axios.create({
   headers: { 'API-KEY': '2a2cd6c3-7d75-445b-87fa-e960094105e7' },
 });
 
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 export type ResponseType<D = {}, RC = ResultCodesEnum> = {
   data: D;
   messages: Array<string>;
