@@ -1,4 +1,4 @@
-import { Avatar, Typography } from '@mui/material';
+import { Avatar, Box, List, Paper, Typography } from '@mui/material';
 import { uniqueId } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,20 +28,30 @@ const Dialogs: React.FunctionComponent<PropsTypes> = ({ dialogs }) => {
     setShowMessages(true);
   };
   return (
-    <div>
-      <div className={classes.dialogsContainer}>
+    <Box>
+      <Box sx={{ display: 'flex', flexDirection: 'row', margin: '30px 0 0 0' }}>
         <div>
           <Typography variant='h6' component='span'>
             Dialogs
           </Typography>
-          {Object.keys(currentDialogs).map((key) => (
-            <div key={uniqueId()} className={classes.userDialog}>
-              <Avatar alt={currentDialogs[key].userName} src={currentDialogs[key].photos.large} />
-              <Typography onClick={handleClick(currentDialogs[key].id)}>
-                {currentDialogs[key].userName}
-              </Typography>
-            </div>
-          ))}
+
+          <Box>
+            <Paper style={{ maxHeight: 400, width: 250, overflow: 'auto' }}>
+              <List>
+                {Object.keys(currentDialogs).map((key) => (
+                  <div key={uniqueId()} className={classes.userDialog}>
+                    <Avatar
+                      alt={currentDialogs[key].userName}
+                      src={currentDialogs[key].photos.large}
+                    />
+                    <Typography onClick={handleClick(currentDialogs[key].id)}>
+                      {currentDialogs[key].userName}
+                    </Typography>
+                  </div>
+                ))}
+              </List>
+            </Paper>
+          </Box>
         </div>
         {showMessage && (
           <div className={classes.messagesContainer}>
@@ -52,8 +62,8 @@ const Dialogs: React.FunctionComponent<PropsTypes> = ({ dialogs }) => {
             <SendMessageForm currentUserId={currentUserId} />
           </div>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

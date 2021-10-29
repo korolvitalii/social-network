@@ -53,6 +53,7 @@ const SendMessageForm: React.FC<PropsType> = ({ currentUserId }) => {
                 rows={4}
                 size='medium'
                 onChange={inputChange}
+                value={message}
                 sx={{ marginBottom: '10px' }}
               />
             )}

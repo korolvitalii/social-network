@@ -9,3 +9,9 @@
 - Jest
 - Axios
 - CSS-modules
+
+### [Try the service](https://social-network-eta.vercel.app/)
+
+Login for test app:
+Email: free@samuraijs.com
+Password: free

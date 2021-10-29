@@ -11,16 +11,22 @@ type PropsType = {
 };
 
 export const Messages: React.FC<PropsType> = React.memo(({ currentUserId }) => {
-  // console.log('>>>>>>Messages');
   const dispatch = useDispatch();
+  const [isAutoScroll, setIsAutoScroll] = useState(true);
   const messages = useSelector((state: AppStateType) => state.dialogs.userMessages);
-  debugger;
+  const messagesAnchorRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     dispatch(getListOfMessages(currentUserId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUserId]);
-  const messagesAnchorRef = useRef<HTMLDivElement>(null);
-  const [isAutoScroll, setIsAutoScroll] = useState(true);
+  }, [currentUserId, dispatch]);
+
+  useEffect(() => {
+    if (isAutoScroll) {
+      messagesAnchorRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages]);
 
   const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
     const element = e.currentTarget;
@@ -30,16 +36,10 @@ export const Messages: React.FC<PropsType> = React.memo(({ currentUserId }) => {
       isAutoScroll && setIsAutoScroll(false);
     }
   };
-  useEffect(() => {
-    if (isAutoScroll) {
-      messagesAnchorRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages]);
 
   return (
     <Box>
-      <Paper style={{ maxHeight: 300, width: 700, overflow: 'auto' }}>
+      <Paper style={{ maxHeight: 300, width: 600, overflow: 'auto' }}>
         <List>
           {messages && !isEmpty(messages.items) ? (
             Object.keys(messages.items).map((key) => (

@@ -35,7 +35,6 @@ const MessageForm = () => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'start',
-            // marginLeft: '-50px ',
           }}>
           <Controller
             name='messageText'
@@ -50,6 +49,7 @@ const MessageForm = () => {
                 size='medium'
                 sx={{ marginBottom: '10px' }}
                 onChange={inputChange}
+                value={message}
               />
             )}
           />
