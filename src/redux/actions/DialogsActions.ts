@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { ResultCodesEnum } from '../../api/api';
 import { dialogsApi } from '../../api/dialogs-api';
 import { BaseThunkType, InferActionsTypes } from '../reducers/rootReducer';
@@ -7,6 +8,7 @@ const SET_ALL_DIALOGS = 'SN/DIALOGS/SET_ALL_DIALOGS';
 const SET_MESSAGE = 'SN/DIALOGS/SET_MESSAGE';
 const SET_USER_MESSAGES = 'SN/DIALOGS/SET_USER_MESSAGES';
 const START_CHATTING = 'SN/DIALOGS/START_CHATTING';
+const UPDATE_DIALOG_MESSAGES = 'SN/DIALOGS/UPDATE_DIALOG_MESSAGES';
 
 export const actions = {
   setAllDialogs: (dialogs: any) =>
@@ -35,6 +37,13 @@ export const actions = {
       type: START_CHATTING,
       payload: {
         id,
+      },
+    } as const),
+  updateDialogMessages: (isUpdate: boolean) =>
+    ({
+      type: UPDATE_DIALOG_MESSAGES,
+      payload: {
+        isUpdate,
       },
     } as const),
 };

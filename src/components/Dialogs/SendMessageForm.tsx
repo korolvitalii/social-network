@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import React, { ChangeEvent, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { sendMessage } from '../../redux/actions/DialogsActions';
+import { actions, sendMessage } from '../../redux/actions/DialogsActions';
 import classes from './SendMessageForm.module.css';
 
 type FormValues = {
@@ -25,10 +25,12 @@ const SendMessageForm: React.FC<PropsType> = ({ currentUserId }) => {
   const onSubmit: SubmitHandler<FormValues> = () => {
     const messageObj = { body: message };
     dispatch(sendMessage(currentUserId, messageObj));
+    dispatch(actions.updateDialogMessages(false));
     setMessage('');
   };
 
   const inputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    dispatch(actions.updateDialogMessages(true));
     setMessage(event.currentTarget.value);
   };
 

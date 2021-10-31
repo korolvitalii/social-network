@@ -1,14 +1,15 @@
-import React, { ChangeEvent, useState } from 'react';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { updateUserStatus } from '../../redux/actions/ProfileActions';
-import { getStatus } from '../../redux/selectors/profile-selectors';
 import classes from './ProfileStatus.module.css';
 
-const ProfileStatus: React.FC = () => {
+type PropsType = {
+  status: string;
+};
+
+const ProfileStatus: React.FC<PropsType> = ({ status }) => {
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
-  const status = useSelector(getStatus);
   const [localStatus, setLocalStatus] = useState(status);
   useEffect(() => {
     setLocalStatus(status);
@@ -29,7 +30,10 @@ const ProfileStatus: React.FC = () => {
   return (
     <>
       {!editMode && (
-        <span className={classes.spanProfileStatus} onDoubleClick={activateEditMode}>
+        <span
+          className={classes.spanProfileStatus}
+          data-testid='profile-status-span'
+          onDoubleClick={activateEditMode}>
           {status}
         </span>
       )}
@@ -38,6 +42,7 @@ const ProfileStatus: React.FC = () => {
         <input
           onChange={onChangeStatus}
           onBlur={deactivateEditMode}
+          data-testid='profile-status-input'
           autoFocus={true}
           value={localStatus}
           type='text'

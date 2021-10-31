@@ -34,7 +34,6 @@ const Dialogs: React.FunctionComponent<PropsTypes> = ({ dialogs }) => {
           <Typography variant='h6' component='span'>
             Dialogs
           </Typography>
-
           <Box>
             <Paper style={{ maxHeight: 400, width: 250, overflow: 'auto' }}>
               <List>

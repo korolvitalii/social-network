@@ -1,7 +1,5 @@
 import { authApi } from '../api/auth-api';
-import { arrayMessagesToStringMessage } from '../helpers/helpers';
 import { actions, getAuthUserData, loginAction } from '../redux/actions/AuthActions';
-import { actions as errorActions } from '../redux/actions/ErrorsActions';
 
 jest.mock('../api/auth-api');
 const authAPIMock = authApi as jest.Mocked<typeof authApi>;
@@ -55,29 +53,17 @@ test('success get auth user data', async () => {
   );
 });
 
-// test('check error get auth user data', async () => {
-//   authAPIMock.authMe.mockReturnValue(Promise.resolve(authResponseWithError));
-//   const thunk = getAuthUserData();
+test('success login', async () => {
+  authAPIMock.login.mockReturnValue(Promise.resolve(loginResponse));
+  const thunk = loginAction({
+    email: 'blabla@mail',
+    password: 'some password',
+    rememberMe: false,
+    captcha: undefined,
+  });
 
-//   await thunk(dispatchMock, getStateMock, {});
-//   expect(dispatchMock).toBeCalledTimes(2);
-//   expect(dispatchMock).toHaveBeenNthCalledWith(
-//     1,
-//     errorActions.setError(arrayMessagesToStringMessage(authResponseWithError.messages)),
-//   );
-// });
-
-// test('success login', async () => {
-//   authAPIMock.login.mockReturnValue(Promise.resolve(loginResponse));
-//   const thunk = loginAction({
-//     email: 'blabla@mail',
-//     password: 'some password',
-//     rememberMe: false,
-//     captcha: undefined,
-//   });
-
-//   await thunk(dispatchMock, getStateMock, {});
-//   expect(dispatchMock).toBeCalledTimes(2);
-//   expect(dispatchMock).toHaveBeenNthCalledWith(1, actions.authErrors([]));
-//   // expect(dispatchMock).toHaveBeenNthCalledWith(2, getAuthUserData());
-// });
+  await thunk(dispatchMock, getStateMock, {});
+  expect(dispatchMock).toBeCalledTimes(2);
+  expect(dispatchMock).toHaveBeenNthCalledWith(1, actions.authErrors([]));
+  // expect(dispatchMock).toHaveBeenNthCalledWith(2, getAuthUserData()); ????
+});

@@ -21,7 +21,7 @@ type ProfileInfoProps = {
   dispatch: Dispatch;
 };
 
-const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile, savePhoto, isOwner, formErrors }) => {
+const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile, isOwner, formErrors }) => {
   const editProfileDataMode = useSelector(
     (state: AppStateType) => state.profilePage.editProfileDataMode,
   );
@@ -36,9 +36,9 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile, savePhoto, isOwner, 
   }));
   const dispatch = useDispatch();
   const handleEditProfileData = () => {
-    // setAnchorEl(null);
     dispatch(actions.goToEditMode(true));
   };
+
   return (
     <div className={classes.profileInfo}>
       <div className={classes.description}>

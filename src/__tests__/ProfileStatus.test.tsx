@@ -1,43 +1,40 @@
+import { render as rtlRender, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import ProfileStatus from '../components/Profile/ProfileStatus';
-import TestRenderer, { create } from 'react-test-renderer';
+import { initialState, ProfileReducer } from '../redux/reducers/ProfileReducer';
+import '@testing-library/jest-dom/extend-expect';
+
+const render = (
+  ui: JSX.Element,
+  {
+    initialState: InitialStateType = initialState,
+    store = createStore(ProfileReducer, initialState),
+    ...renderOptions
+  } = {},
+) => {
+  const Wrapper = ({ children }: any) => <Provider store={store}>{children}</Provider>;
+
+  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+};
 
 describe('<ProfileStatus/>', () => {
-  test('', () => {
-    expect(true).toBe(true);
+  test('after creation <span> should be displayed', () => {
+    render(<ProfileStatus status={'new text'} />);
+    expect(screen.getByTestId('profile-status-span')).toBeTruthy();
   });
 
-  // test('it shows the expected text when clicked (testing the wrong way!)', () => {
-  //   const testRenderer = TestRenderer.create(<ProfileStatus />);
-  //   const testInstance = testRenderer.root;
-  //   expect(testInstance.findByType(ProfileStatus).props.status).toBe('New Status Text');
-  // });
+  test('after double click should be displayed input', () => {
+    render(<ProfileStatus status={'new text'} />);
+    userEvent.dblClick(screen.getByTestId('profile-status-span'));
+    expect(screen.getByTestId('profile-status-input')).toBeTruthy();
+  });
 
-  // test('after creation <span> should be displayed', () => {
-  //   const component = create(<ProfileStatus />);
-  //   const root = component.root;
-  //   const span = root.findByType('span');
-  //   expect(span).not.toBeNull();
-  // });
-  // test('after double click displayed input', () => {
-  //   const { act } = TestRenderer;
-  //   const component = create(<ProfileStatus />);
-  //   const root = component.root;
-  //   const span = root.findByType('span');
-  //   act(() => span.props.onDoubleClick());
-  //   console.log(span.props);
-  //   // act(() =>span.props.onDoubleClick() )
-  //   const input = root.findByType('input');
-  //   expect(input.props.value).toBe('New Status Text');
-  // });
-  // test("after double click don't displayed span", () => {
-  //   const { act } = TestRenderer;
-  //   const component = create(<ProfileStatus />);
-  //   const root = component.root;
-  //   const span = root.findByType('span');
-  //   act(() => span.props.onDoubleClick());
-  //   const spanAfterDoubleClick = () => {
-  //     root.findByType('span');
-  //   };
-  //   expect(spanAfterDoubleClick).toThrowError();
-  // });
+  test('after double click text should be correct', () => {
+    render(<ProfileStatus status={'new text'} />);
+    userEvent.dblClick(screen.getByTestId('profile-status-span'));
+    const input = screen.getByTestId('profile-status-input') as HTMLInputElement;
+    expect(input.value).toEqual('new text');
+  });
 });

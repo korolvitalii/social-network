@@ -14,12 +14,17 @@ export const Messages: React.FC<PropsType> = React.memo(({ currentUserId }) => {
   const dispatch = useDispatch();
   const [isAutoScroll, setIsAutoScroll] = useState(true);
   const messages = useSelector((state: AppStateType) => state.dialogs.userMessages);
+  const updateDialogMessages = useSelector((state: AppStateType) => state.dialogs.isUpdate);
   const messagesAnchorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     dispatch(getListOfMessages(currentUserId));
+    const interval = setInterval(() => {
+      dispatch(getListOfMessages(currentUserId));
+    }, 10000);
+    return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUserId, dispatch]);
+  }, [currentUserId, updateDialogMessages]);
 
   useEffect(() => {
     if (isAutoScroll) {

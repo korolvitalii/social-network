@@ -2,17 +2,22 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
 import { Box, Divider, Typography } from '@mui/material';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
+import { AppStateType } from '../../../redux/reducers/rootReducer';
+import { getStatus } from '../../../redux/selectors/profile-selectors';
 import { ContactsType, ProfileType } from '../../../types/types';
 import ProfileStatus from '../ProfileStatus';
 import ContactItem from './ContactItem';
 
-type ProfileDataProps = {
+type PropsType = {
   isOwner?: string;
   profile: ProfileType | null;
   goToEditMode: (editMode: boolean) => void;
 };
 
-const ProfileData: React.FunctionComponent<ProfileDataProps> = ({ profile }) => {
+const ProfileData: React.FC<PropsType> = ({ profile }) => {
+  const status = useSelector(getStatus);
+
   return (
     <Box
       sx={{
@@ -27,13 +32,13 @@ const ProfileData: React.FunctionComponent<ProfileDataProps> = ({ profile }) => 
       <Typography variant='h4' gutterBottom component='span' sx={{ color: 'black' }}>
         {profile?.fullName}
       </Typography>
-      <ProfileStatus />
+      <ProfileStatus status={status} />
       <Divider variant='fullWidth' sx={{ marginBottom: '20px' }} />
       <Box component='div' sx={{ display: 'flex', flexDirection: 'row', marginBottom: '20px' }}>
-        <Typography noWrap={true} sx={{ width: '250px', marginRight: '50px' }}>
-          About me:
+        <Typography gutterBottom component='span'>
+          About:
         </Typography>
-        <Typography variant='body2' component='div' sx={{ color: '#00b3d6' }}>
+        <Typography component='div' variant='body2' sx={{ color: '#00b3d6', marginLeft: '85px' }}>
           {profile?.aboutMe}
         </Typography>
       </Box>

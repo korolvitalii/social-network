@@ -5,7 +5,6 @@ export const dialogsApi = {
     return instance.get(`/dialogs`).then((res) => res.data);
   },
   startChatting(userId: number) {
-    debugger;
     return instance.put(`/dialogs/${userId}`).then((res) => res.data);
   },
   getListOfMessage(userId: number, page: number, count: number) {

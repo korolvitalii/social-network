@@ -23,8 +23,8 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "noEmit": true,
-    "types": ["jest"],
+    "types": ["jest", "@testing-library/jest-dom"],
     "typeRoots": ["./src/types", "node_modules/@types"]
   },
-  "include": ["src", "__tests__"]
+  "include": ["src", "__tests__", "./jest-setup.ts"]
 }

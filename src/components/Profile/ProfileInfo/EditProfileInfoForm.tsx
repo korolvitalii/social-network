@@ -1,7 +1,11 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { ContactsType, ProfileType } from '../../../types/types';
-import { undateUserProfileInfo, uploadUserPhoto } from '../../../redux/actions/ProfileActions';
+import {
+  getUserProfile,
+  undateUserProfileInfo,
+  uploadUserPhoto,
+} from '../../../redux/actions/ProfileActions';
 import { prepareErrors } from '../../../helpers/helpers';
 import classes from './EditProfileInfoForm.module.css';
 import { useDispatch } from 'react-redux';
@@ -70,7 +74,9 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
     const updateData = { data: { userId: userId }, ...data };
     dispatch(undateUserProfileInfo(updateData));
     dispatch(goToEditMode(false));
-    console.log(errors);
+    if (userId) {
+      dispatch(getUserProfile(userId));
+    }
   };
 
   const savePhoto = (e: ChangeEvent<HTMLInputElement>) => {

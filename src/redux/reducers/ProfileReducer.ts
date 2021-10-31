@@ -11,7 +11,7 @@ const IS_LOAD_PHOTO = 'SN/PROFILEACTIONS/IS_LOAD_PHOTO';
 const TOGGLE_IS_FETCH_PROFILE = 'SN/PROFILEACTIONS/TOGGLE_IS_FETCH_PROFILE';
 const GO_TO_EDIT_MODE = 'SN/PROFILEACTIONS/GOTOEDITMODE';
 
-const initialState = {
+export const initialState = {
   posts: [
     { id: 1, text: 'Hi, how are you?', likeCount: 12 },
     { id: 2, text: "It's my post!", likeCount: 10 },

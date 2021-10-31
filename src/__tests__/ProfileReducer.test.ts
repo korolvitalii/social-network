@@ -1,7 +1,6 @@
 import { actions } from '../redux/actions/ProfileActions';
-import React from 'react';
-import { PostType } from '../types/types';
 import { ProfileReducer } from '../redux/reducers/ProfileReducer';
+import { PostType } from '../types/types';
 
 const state = {
   posts: [
@@ -15,6 +14,9 @@ const state = {
   status: '',
   userInfoFormErrors: [],
   networkErrors: '',
+  isLoadPhoto: true,
+  isFetchProfile: true,
+  editProfileDataMode: false,
 };
 
 it('length of posts should be incremented', () => {

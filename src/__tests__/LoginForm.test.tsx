@@ -1,8 +1,8 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitForElement } from '@testing-library/react';
 import TestRenderer, { create } from 'react-test-renderer';
 import LoginForm from '../components/Login/LoginForm';
 
-describe('<ProfileStatus/>', () => {
+describe('LoginForm>', () => {
   test('should display a blank login form, with remember me checked', () => {
     const component = create(<LoginForm captcha={null} dispatch={undefined} />);
     const root = component.root;
@@ -21,10 +21,20 @@ describe('<ProfileStatus/>', () => {
     expect(buttons[0].props.type).toBe('submit');
   });
 
-  test('after click should display a blank login form, with remember me checked ', () => {
+  test('after render checkbox should be not checked', () => {
     const { getByTestId } = render(<LoginForm captcha={null} dispatch={undefined} />);
-    const checkbox = getByTestId('login_form_checkbox');
-    checkbox.click();
-    // expect(checkbox.checked).toBeTruthy();
+    const checkbox = getByTestId('login_form_checkbox').querySelector('input[type="checkbox"]');
+    expect(checkbox).toHaveProperty('checked', false);
+  });
+
+  test('after click checkbox should be checked', () => {
+    const { getByTestId } = render(<LoginForm captcha={null} dispatch={undefined} />);
+    const checkbox = getByTestId('login_form_checkbox').querySelector(
+      'input[type="checkbox"]',
+    ) as HTMLInputElement;
+    if (checkbox) {
+      fireEvent.click(checkbox);
+    }
+    expect(checkbox?.checked).toBe(true);
   });
 });

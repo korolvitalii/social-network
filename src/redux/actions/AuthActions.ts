@@ -1,6 +1,7 @@
 import { ResultCodeForCaptchaEnum, ResultCodesEnum } from '../../api/api';
 import { authApi, securityApi } from '../../api/auth-api';
 import { arrayMessagesToStringMessage } from '../../helpers/helpers';
+import { LoginDataType } from '../../types/types';
 import { actions as errorActions } from '../actions/ErrorsActions';
 import { BaseThunkType, InferActionsTypes } from '../reducers/rootReducer';
 
@@ -44,10 +45,6 @@ export const getAuthUserData = (): ThunkType => async (dispatch) => {
     if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(actions.setUserData(id, email, login, true));
     }
-    // else {
-    // debugger;
-    // dispatch(errorActions.setError(arrayMessagesToStringMessage(response.messages)));
-    // }
   } catch (err: unknown) {
     if (err instanceof Error) {
       dispatch(errorActions.setError(err.message));
@@ -56,7 +53,7 @@ export const getAuthUserData = (): ThunkType => async (dispatch) => {
 };
 
 export const loginAction =
-  (loginData: any): ThunkType =>
+  (loginData: LoginDataType): ThunkType =>
   async (dispatch) => {
     try {
       const response = await authApi.login(loginData);
