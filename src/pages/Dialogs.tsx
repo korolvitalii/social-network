@@ -3,11 +3,7 @@ import withAuthRedirect from '../hoc/withAuthRedirect';
 import Dialogs from '../components/Dialogs/Dialogs';
 
 const DialogsPage: React.FC = () => {
-  return (
-    <>
-      <Dialogs dialogs={[]} />
-    </>
-  );
+  return <Dialogs />;
 };
 
 const ChatPageWithRedirect = withAuthRedirect(DialogsPage);

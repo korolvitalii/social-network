@@ -1,5 +1,4 @@
 // import { ThunkAction } from 'redux-thunk';
-import { actions as errorActions } from '../actions/ErrorsActions';
 import { InferActionsTypes } from '../reducers/rootReducer';
 import { getAuthUserData } from './AuthActions';
 
@@ -19,17 +18,15 @@ export const actions = {
 //       dispatch(errorActions.setError(err.message));
 //     }
 //   }
-// };
-
-// why???
+// }; bug ---> after success login show error
 
 export const initializeApp = () => (dispatch: any) => {
-  let promise = dispatch(getAuthUserData());
+  const promise = dispatch(getAuthUserData());
 
   Promise.all([promise]).then(() => {
     dispatch(actions.initializedSuccess());
   });
 };
 
-export type ActionsType = InferActionsTypes<typeof actions & typeof errorActions>;
-// type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>;
+export type ActionsType = InferActionsTypes<typeof actions>;
+// type ThunkType = BaseThunkType<ActionsType>;

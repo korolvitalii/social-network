@@ -46,13 +46,9 @@ export const Messages: React.FC<PropsType> = React.memo(({ currentUserId }) => {
     <Box>
       <Paper style={{ maxHeight: 300, width: 600, overflow: 'auto' }}>
         <List>
-          {messages && !isEmpty(messages.items) ? (
-            Object.keys(messages.items).map((key) => (
-              <Message
-                userName={messages.items[key].senderName}
-                message={messages.items[key].body}
-                key={uniqueId()}
-              />
+          {messages && !isEmpty(messages) ? (
+            messages.map((message) => (
+              <Message userName={message.senderName} message={message.body} key={uniqueId()} />
             ))
           ) : (
             <Typography>Chat is empty</Typography>

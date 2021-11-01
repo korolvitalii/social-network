@@ -1,6 +1,7 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { useEffect } from 'react';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
 type Inputs = {
   searchUser: string;
@@ -10,20 +11,13 @@ type Inputs = {
 type PropsType = {
   setTerm: (term: string) => void;
   toggleShowFriends: (showFriends: boolean | string) => void;
-  dispatch: any;
   term?: string | null;
   showFriend?: boolean | null;
 };
 
-const SearchUserForm: React.FC<PropsType> = ({
-  setTerm,
-  toggleShowFriends,
-  term,
-  showFriend,
-  dispatch,
-}) => {
+const SearchUserForm: React.FC<PropsType> = ({ setTerm, toggleShowFriends, term, showFriend }) => {
   const { handleSubmit, setValue, control } = useForm<Inputs>();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (term) {
       setValue('searchUser', term);

@@ -1,3 +1,4 @@
+import { LoginDataType } from '../types/types';
 import { instance, ResponseType, ResultCodeForCaptchaEnum, ResultCodesEnum } from './api';
 
 export type MeDataResponse = {
@@ -21,7 +22,7 @@ export const authApi = {
   authMe() {
     return instance.get<ResponseType<MeDataResponse>>(`/auth/me`).then((res) => res.data);
   },
-  login(loginData: any) {
+  login(loginData: LoginDataType) {
     return instance
       .post<ResponseType<LoginResponseType, ResultCodeForCaptchaEnum | ResultCodesEnum>>(
         `/auth/login`,

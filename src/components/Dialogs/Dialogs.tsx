@@ -4,16 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllDialogs } from '../../redux/actions/DialogsActions';
 import { AppStateType } from '../../redux/reducers/rootReducer';
-import { DialogType } from '../../types/types';
 import classes from './Dialogs.module.css';
 import { Messages } from './Messages';
 import SendMessageForm from './SendMessageForm';
 
-type PropsTypes = {
-  dialogs: DialogType[];
-};
-
-const Dialogs: React.FunctionComponent<PropsTypes> = ({ dialogs }) => {
+const Dialogs: React.FC = () => {
   const [currentUserId, setCurrentUserId] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -22,8 +17,7 @@ const Dialogs: React.FunctionComponent<PropsTypes> = ({ dialogs }) => {
   }, []);
   const [showMessage, setShowMessages] = useState(false);
   const currentDialogs = useSelector((state: AppStateType) => state.dialogs.dialogs);
-
-  const handleClick = (id: number) => (e: any) => {
+  const handleClick = (id: number) => (e: React.MouseEvent) => {
     setCurrentUserId(id);
     setShowMessages(true);
   };
@@ -37,15 +31,10 @@ const Dialogs: React.FunctionComponent<PropsTypes> = ({ dialogs }) => {
           <Box>
             <Paper style={{ maxHeight: 400, width: 250, overflow: 'auto' }}>
               <List>
-                {Object.keys(currentDialogs).map((key) => (
+                {currentDialogs.map((dialog) => (
                   <div key={uniqueId()} className={classes.userDialog}>
-                    <Avatar
-                      alt={currentDialogs[key].userName}
-                      src={currentDialogs[key].photos.large}
-                    />
-                    <Typography onClick={handleClick(currentDialogs[key].id)}>
-                      {currentDialogs[key].userName}
-                    </Typography>
+                    <Avatar alt={dialog.userName} src={dialog.photos.large ?? undefined} />
+                    <Typography onClick={handleClick(dialog.id)}>{dialog.userName}</Typography>
                   </div>
                 ))}
               </List>

@@ -47,7 +47,6 @@ const statusChangeStatus = (dispatch: Dispatch) => {
       dispatch(actions.statusChanged(status));
     };
   }
-
   return statusChangedHandler;
 };
 

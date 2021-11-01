@@ -119,7 +119,6 @@ const Developers: React.FC = () => {
           term={term}
           showFriend={!!friendQuery}
           toggleShowFriends={toggleShowFriends}
-          dispatch={dispatch}
         />
       </Box>
       <ShowErrorModal errors={errors} resetError={resetError} />

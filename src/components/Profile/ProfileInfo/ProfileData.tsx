@@ -3,7 +3,6 @@ import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
 import { Box, Divider, Typography } from '@mui/material';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { AppStateType } from '../../../redux/reducers/rootReducer';
 import { getStatus } from '../../../redux/selectors/profile-selectors';
 import { ContactsType, ProfileType } from '../../../types/types';
 import ProfileStatus from '../ProfileStatus';

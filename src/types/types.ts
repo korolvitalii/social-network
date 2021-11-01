@@ -11,11 +11,6 @@ export type MessageType = {
   userName: string;
 };
 
-export type DialogType = {
-  id: number;
-  name: string;
-};
-
 export type ContactsType = {
   github: string;
   vk: string;
