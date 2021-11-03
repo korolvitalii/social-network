@@ -1,13 +1,6 @@
 import { actions } from '../redux/actions/DialogsActions';
 import { dialogsReducer } from '../redux/reducers/DialogsReducer';
 
-const state = {
-  dialogs: [],
-  message: null,
-  userMessages: null,
-  isUpdate: false,
-};
-
 const dialog = {
   id: 1,
   userName: 'string',
@@ -31,12 +24,18 @@ const message = {
   recipientId: 1079,
   viewed: true,
 };
+const state = {
+  dialogs: [dialog, dialog, dialog, dialog, dialog],
+  message: '',
+  userMessages: [],
+  isUpdate: false,
+};
 
 it('after set all dialogs, dialogs count shoukd correct', () => {
   const dialogs = [dialog, dialog, dialog, dialog, dialog];
   const action = actions.setAllDialogs(dialogs);
   const newState = dialogsReducer(state, action);
-  expect(Object.keys(newState.dialogs).length).toBe(5);
+  expect(Object.keys(newState.dialogs).length).toBe(10);
 });
 
 it('after set message, message should be correct', () => {
@@ -50,11 +49,4 @@ it('after set user messages, messages should be correct', () => {
   const newState = dialogsReducer(state, action);
   expect(newState.userMessages.length).toBe(3);
   expect(newState.userMessages[0].body).toBe('check rerender');
-});
-
-it('after set user messages, messages should be correct', () => {
-  const action = actions.updateDialogMessages;
-  // const newState = dialogsReducer(state, action);
-  // expect(newState.userMessages.length).toBe(3);
-  // expect(newState.userMessages[0].body).toBe('check rerender');
 });

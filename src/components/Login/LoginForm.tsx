@@ -1,24 +1,24 @@
-import React from 'react';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { loginAction } from '../../redux/actions/AuthActions';
-import classes from './LoginForm.module.css';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
   alpha,
   Avatar,
-  Checkbox,
-  InputBase,
-  styled,
-  Typography,
   Box,
   Button,
+  Checkbox,
   Container,
-  CssBaseline,
   createTheme,
+  CssBaseline,
+  InputBase,
+  styled,
   ThemeProvider,
+  Typography,
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import React, { Dispatch } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { loginAction } from '../../redux/actions/AuthActions';
+import classes from './LoginForm.module.css';
 
 type FormValues = {
   email: string;
@@ -30,7 +30,7 @@ type FormValues = {
 type PropsType = {
   authErrors?: Array<string>;
   captcha: string | null;
-  dispatch: any;
+  dispatch: Dispatch<any>;
 };
 
 const schema = yup.object().shape({

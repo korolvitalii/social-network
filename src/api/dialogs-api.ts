@@ -61,7 +61,7 @@ export const dialogsApi = {
   getListOfMessage(userId: number, page: number, count: number) {
     return instance.get<ListOfMessagesType>(`dialogs/${userId}/messages`).then((res) => res.data);
   },
-  sendMessage(userId: number, message: any) {
+  sendMessage(userId: number, message: { body: string }) {
     return instance
       .post<SendMessageType>(`dialogs/${userId}/messages`, message)
       .then((res) => res.data);

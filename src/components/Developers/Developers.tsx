@@ -58,7 +58,7 @@ const Developers: React.FC = () => {
     }
 
     if (term !== termQuery && termQuery) {
-      dispatch(setTerm(termQuery as any));
+      dispatch(setTerm(termQuery as string));
       setQuery({ term: termQuery });
     }
 
@@ -79,7 +79,7 @@ const Developers: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPageHook, pageSize, term, showFriends]);
 
-  const onChangePageClick = ({ selected }: any) => {
+  const onChangePageClick = ({ selected }: { selected: number }) => {
     const incSelected = selected + 1;
     setCurrentPage(incSelected);
     dispatch(getUsers(incSelected, pageSize, term, showFriends));
