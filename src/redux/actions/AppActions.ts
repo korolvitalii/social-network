@@ -1,4 +1,4 @@
-import { BaseThunkType, InferActionsTypes } from '../reducers/rootReducer';
+import { InferActionsTypes } from '../reducers/rootReducer';
 import { getAuthUserData } from './AuthActions';
 
 const INITIALIZED_SUCCESS = 'SN/APPACTIONS/INITIALIZED_SUCCESS';
