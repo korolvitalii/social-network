@@ -52,7 +52,6 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     padding: '10px 12px',
     margin: '2px 0',
     transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',

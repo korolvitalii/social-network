@@ -20,6 +20,7 @@ export type authResponseType = {
 
 export const authApi = {
   authMe() {
+    debugger;
     return instance.get<ResponseType<MeDataResponse>>(`/auth/me`).then((res) => res.data);
   },
   login(loginData: LoginDataType) {

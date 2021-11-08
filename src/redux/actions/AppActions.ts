@@ -7,10 +7,18 @@ export const actions = {
   initializedSuccess: () => ({ type: INITIALIZED_SUCCESS } as const),
 };
 
-export const initializeApp = (): ThunkType => async (dispatch) => {
-  await dispatch(getAuthUserData());
-  await dispatch(actions.initializedSuccess());
+// export const initializeApp = (): ThunkType => async (dispatch) => {
+//   await dispatch(getAuthUserData());
+//   await dispatch(actions.initializedSuccess());
+// };
+
+export const initializeApp = () => (dispatch: any) => {
+  let promise = dispatch(getAuthUserData());
+
+  Promise.all([promise]).then(() => {
+    dispatch(actions.initializedSuccess());
+  });
 };
 
 export type ActionsType = InferActionsTypes<typeof actions>;
-type ThunkType = BaseThunkType<ActionsType>;
+// type ThunkType = BaseThunkType<ActionsType>;
