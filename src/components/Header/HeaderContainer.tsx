@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AppStateType } from '../../redux/reducers/rootReducer';
+import { selectAuth } from '../../redux/selectors/header';
 import HeaderNav from './HeaderNav';
 
-const HeaderContainer: React.FC = () => {
-  const { auth } = useSelector((state: AppStateType) => state);
+const HeaderContainer: React.FC = (): React.ReactElement => {
+  const auth = useSelector(selectAuth);
 
   return <HeaderNav {...auth} />;
 };

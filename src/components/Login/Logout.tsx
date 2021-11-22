@@ -2,9 +2,9 @@ import { Button } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { logoutAction } from '../../redux/actions/AuthActions';
-import classes from './LoginForm.module.css';
+import { ErrorContainer } from './LoginForm styled';
 
-const Logout: React.FC = () => {
+const Logout: React.FC = (): React.ReactElement => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
@@ -12,11 +12,11 @@ const Logout: React.FC = () => {
   };
 
   return (
-    <div className={classes.logout}>
+    <ErrorContainer>
       <Button variant='outlined' onClick={handleClick}>
         Logout
       </Button>
-    </div>
+    </ErrorContainer>
   );
 };
 

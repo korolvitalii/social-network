@@ -9,7 +9,7 @@ type MapPropsType = {
 
 type DispatchPropsType = {};
 
-let mapStateToPropsForRedirect = (state: AppStateType) =>
+const mapStateToPropsForRedirect = (state: AppStateType) =>
   ({
     isAuth: state.auth.isAuth,
   } as MapPropsType);

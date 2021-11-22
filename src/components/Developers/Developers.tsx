@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,12 +13,12 @@ import {
   getUsersFromState,
 } from '../../redux/selectors/user-selectors';
 import { UserType } from '../../types/types';
-import ShowErrorModal from '../common/ShowErrorModal';
+import ShowErrorModal from '../common/ErrorModal';
 import Developer from './Developer';
-import classes from './Developers.module.css';
 import SearchUserForm from './SearchForm';
+import classes from './Developers.module.css';
 
-const Developers: React.FC = () => {
+const Developers: React.FC = (): React.ReactElement => {
   const dispatch = useDispatch();
   const users = useSelector(getUsersFromState);
   const pageSize = useSelector(getPageSize);
@@ -38,7 +37,6 @@ const Developers: React.FC = () => {
   const [currentPageHook, setCurrentPage] = useState(currentPageQuery);
 
   useEffect(() => {
-    debugger;
     if (String(showFriends) !== friendQuery && friendQuery) {
       dispatch(toggleShowFriends(showFriends));
       setQuery({ friend: String(showFriends) });
@@ -79,7 +77,7 @@ const Developers: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPageHook, pageSize, term, showFriends]);
 
-  const onChangePageClick = ({ selected }: { selected: number }) => {
+  const onChangePageClick = ({ selected }: { selected: number }): void => {
     const incSelected = selected + 1;
     setCurrentPage(incSelected);
     dispatch(getUsers(incSelected, pageSize, term, showFriends));
@@ -90,8 +88,8 @@ const Developers: React.FC = () => {
   const resetError = () => dispatch(errorActions.resetError());
 
   return (
-    <Box>
-      <Box>
+    <div>
+      <div>
         <ReactPaginate
           disableInitialCallback={true}
           initialPage={currentPageHook as number | undefined}
@@ -112,22 +110,22 @@ const Developers: React.FC = () => {
           previousLabel={<>&laquo;</>}
           nextLabel={<>&raquo;</>}
         />
-      </Box>
-      <Box>
+      </div>
+      <div>
         <SearchUserForm
           setTerm={setTerm}
           term={term}
           showFriend={!!friendQuery}
           toggleShowFriends={toggleShowFriends}
         />
-      </Box>
+      </div>
       <ShowErrorModal errors={errors} resetError={resetError} />
-      <Box>
+      <div>
         {users.map((user: UserType) => (
           <Developer {...user} />
         ))}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 

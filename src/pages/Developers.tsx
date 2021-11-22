@@ -1,25 +1,24 @@
 import { Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { getIsFetch } from '../redux/selectors/user-selectors';
 import Preloader from '../components/common/Preloader/Preloader';
 import Users from '../components/Developers/Developers';
 
-const UsersPage: React.FC = () => {
+const UsersPage: React.FC = (): React.ReactElement => {
   const isFetch = useSelector(getIsFetch);
 
   return (
     <div>
       {isFetch && <Preloader />}
-      <Box>
+      <div>
         <Typography variant='h3' component='span'>
           Developers
         </Typography>
-      </Box>
-      <Box>
+      </div>
+      <div>
         <Users />
-      </Box>
+      </div>
     </div>
   );
 };

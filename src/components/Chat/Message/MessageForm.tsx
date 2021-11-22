@@ -1,41 +1,35 @@
 import SendIcon from '@mui/icons-material/Send';
-import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import React, { ChangeEvent, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from '../../../redux/actions/ChatActions';
-import classes from './MessageForm.module.css';
+import { FormBody, MessageFormWrapper, Form } from './MessageForm styled';
 
 type FormValues = {
   messageText: string;
 };
 
-const MessageForm = () => {
+const MessageForm: React.FC = (): React.ReactElement => {
   const { control, handleSubmit } = useForm();
 
   const dispatch = useDispatch();
   const [message, setMessage] = useState('');
 
-  const onSubmit: SubmitHandler<FormValues> = () => {
+  const onSubmit: SubmitHandler<FormValues> = (): void => {
     dispatch(sendMessage(message));
     setMessage('');
   };
 
-  const inputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const inputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     setMessage(event.currentTarget.value);
   };
 
   return (
-    <Box sx={{ width: '600px' }}>
-      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'start',
-          }}>
+    <MessageFormWrapper>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <FormBody>
           <Controller
             name='messageText'
             control={control}
@@ -56,9 +50,9 @@ const MessageForm = () => {
           <Button variant='contained' type='submit' endIcon={<SendIcon />} sx={{ width: '120px' }}>
             Send
           </Button>
-        </Box>
-      </form>
-    </Box>
+        </FormBody>
+      </Form>
+    </MessageFormWrapper>
   );
 };
 

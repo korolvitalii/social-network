@@ -4,7 +4,7 @@ import { Redirect } from 'react-router';
 import { AppStateType } from '../redux/reducers/rootReducer';
 import LoginForm from '../components/Login/LoginForm';
 
-const Login: React.FC = () => {
+const Login: React.FC = (): React.ReactElement => {
   const { isAuth, authErrors, captcha } = useSelector((state: AppStateType) => state.auth);
   const dispatch = useDispatch();
   return (

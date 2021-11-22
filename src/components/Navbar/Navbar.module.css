@@ -1,16 +1,3 @@
-.nav {
-  font-size: 24px;
-  padding: 20px;
-  /* border: 1px solid black; */
-  width: 150px;
-  height: 280px;
-}
-
-.item a {
-  color: #5cb0d4;
-  text-decoration: none;
-}
-
 .item a.activeLink {
   color: #044837;
 }

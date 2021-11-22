@@ -6,7 +6,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { actions, sendMessage } from '../../redux/actions/DialogsActions';
-import classes from './SendMessageForm.module.css';
+import { SendMessageFormWrapper, FormContainer, Form, SendButton } from './SendMessageForm.styled';
 
 type FormValues = {
   messageText: string;
@@ -16,7 +16,7 @@ type PropsType = {
   currentUserId: number;
 };
 
-const SendMessageForm: React.FC<PropsType> = ({ currentUserId }) => {
+const SendMessageForm: React.FC<PropsType> = ({ currentUserId }): React.ReactElement => {
   const { control, handleSubmit } = useForm();
 
   const dispatch = useDispatch();
@@ -35,15 +35,9 @@ const SendMessageForm: React.FC<PropsType> = ({ currentUserId }) => {
   };
 
   return (
-    <Box sx={{ width: '600px' }}>
-      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'start',
-            marginLeft: '-50px ',
-          }}>
+    <SendMessageFormWrapper>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <FormContainer>
           <Controller
             name='messageText'
             control={control}
@@ -60,12 +54,12 @@ const SendMessageForm: React.FC<PropsType> = ({ currentUserId }) => {
               />
             )}
           />
-          <Button variant='contained' type='submit' endIcon={<SendIcon />} sx={{ width: '120px' }}>
+          <SendButton variant='contained' type='submit' endIcon={<SendIcon />}>
             Send
-          </Button>
-        </Box>
-      </form>
-    </Box>
+          </SendButton>
+        </FormContainer>
+      </Form>
+    </SendMessageFormWrapper>
   );
 };
 

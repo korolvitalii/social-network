@@ -1,9 +1,10 @@
 import React from 'react';
-import { NavLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import logo from '../../assets/images/app-logo.png';
-import classes from './Header.module.css';
 
 import Logout from '../Login/Logout';
+import { Logo } from './Header styled';
+import HeaderContainer from './HeaderContainer';
 
 type PropsType = {
   id: number | null;
@@ -12,15 +13,15 @@ type PropsType = {
   isAuth: boolean | null;
 };
 
-const Header: React.FC<PropsType> = ({ isAuth }) => {
+const Header: React.FC<PropsType> = ({ isAuth }): React.ReactElement => {
   const handleClick = () => {
     return <Redirect to='/profile' />;
   };
   return (
-    <header className={classes.header}>
-      <img className={classes.appLogo} src={logo} alt='' onClick={handleClick} />
+    <HeaderContainer>
+      <Logo src={logo} alt='' onClick={handleClick} />
       <div>{isAuth && <Logout />}</div>
-    </header>
+    </HeaderContainer>
   );
 };
 

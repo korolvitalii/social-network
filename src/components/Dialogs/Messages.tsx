@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getListOfMessages } from '../../redux/actions/DialogsActions';
 import { AppStateType } from '../../redux/reducers/rootReducer';
 import Message from './Message';
+import { MessagesContainer } from './Messages styled';
 
 type PropsType = {
   currentUserId: number;
@@ -43,8 +44,8 @@ export const Messages: React.FC<PropsType> = React.memo(({ currentUserId }) => {
   };
 
   return (
-    <Box>
-      <Paper style={{ maxHeight: 300, width: 600, overflow: 'auto' }}>
+    <div>
+      <MessagesContainer>
         <List>
           {messages && !isEmpty(messages) ? (
             messages.map((message) => (
@@ -55,7 +56,7 @@ export const Messages: React.FC<PropsType> = React.memo(({ currentUserId }) => {
           )}
           <Box component='div' ref={messagesAnchorRef} onScroll={scrollHandler}></Box>
         </List>
-      </Paper>
-    </Box>
+      </MessagesContainer>
+    </div>
   );
 });

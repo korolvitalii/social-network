@@ -1,9 +1,4 @@
 import { AppStateType } from '../reducers/rootReducer';
 
-// export const getDialogs = (state: AppStateType) => {
-//   return state.messagesPage.dialogs;
-// };
-
-export const getMessages = (state: AppStateType) => {
-  return state.chat.messages;
-};
+export const selectMessages = (state: AppStateType) => state.chat.messages;
+export const selectDialog = (state: AppStateType) => state.dialogs.dialogs;

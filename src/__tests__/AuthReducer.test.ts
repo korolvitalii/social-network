@@ -1,6 +1,5 @@
 import { actions } from '../redux/actions/AuthActions';
 import { AuthReducer } from '../redux/reducers/AuthReducer';
-import { PostType } from '../types/types';
 
 const state = {
   id: null,

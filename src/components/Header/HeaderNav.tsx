@@ -20,7 +20,7 @@ type PropsType = {
   isAuth: boolean | null;
 };
 
-const HeaderNav: React.FC<PropsType> = ({ isAuth, login }) => {
+const HeaderNav: React.FC<PropsType> = ({ isAuth, login }): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const dispatch = useDispatch();
 

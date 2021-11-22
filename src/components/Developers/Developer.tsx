@@ -1,5 +1,4 @@
-import { Avatar, Button, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import userIcon from '../../assets/images/User-Icon.jpg';
@@ -7,6 +6,16 @@ import { startChattingThunk } from '../../redux/actions/DialogsActions';
 import { followThunk, unfollowThunk } from '../../redux/actions/UsersActions';
 import { getIsFollowingProgress } from '../../redux/selectors/user-selectors';
 import { PhotosType } from '../../types/types';
+import {
+  DeveloperBody,
+  DeveloperMainContainer,
+  DeveloperWrapper,
+  FollowButton,
+  FollowedContainer,
+  MessageButton,
+  UnfollowButton,
+  UserAvatar
+} from './Developer styled';
 
 type PropsType = {
   id: number;
@@ -15,7 +24,7 @@ type PropsType = {
   photos: PhotosType;
 };
 
-const Developer: React.FC<PropsType> = (props) => {
+const Developer: React.FC<PropsType> = (props): React.ReactElement => {
   const {
     id,
     name,
@@ -28,10 +37,10 @@ const Developer: React.FC<PropsType> = (props) => {
 
   const path = `/profile/${id}`;
 
-  const follow = (id: number) => {
+  const follow = (id: number): void => {
     dispatch(followThunk(id));
   };
-  const unfollow = (id: number) => {
+  const unfollow = (id: number): void => {
     dispatch(unfollowThunk(id));
   };
 
@@ -40,54 +49,42 @@ const Developer: React.FC<PropsType> = (props) => {
   };
 
   return (
-    <Box
-      key={id}
-      sx={{ display: 'flex', justifyContent: 'flex-start', padding: '20px', marginLeft: '20px' }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: 800,
-          }}>
+    <DeveloperWrapper key={id}>
+      <DeveloperMainContainer>
+        <DeveloperBody>
           <NavLink to={path}>
-            <Avatar alt={name} src={small ? small : userIcon} sx={{ width: 80, height: 80 }} />
+            <UserAvatar alt={name} src={small ? small : userIcon} />
           </NavLink>
           {followed ? (
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Button
-                variant='outlined'
-                sx={{ marginBottom: '10px', width: '100px' }}
-                onClick={handleStartChatting(id)}>
+            <FollowedContainer>
+              <MessageButton variant='outlined' onClick={handleStartChatting(id)}>
                 Message
-              </Button>
-              <Button
+              </MessageButton>
+              <UnfollowButton
                 variant='outlined'
                 disabled={isFollowingProgress}
-                sx={{ width: '100px' }}
                 onClick={() => {
                   unfollow(id);
                 }}>
                 UNFOLLOW
-              </Button>
-            </Box>
+              </UnfollowButton>
+            </FollowedContainer>
           ) : (
-            <Button
+            <FollowButton
               variant='outlined'
               disabled={isFollowingProgress}
-              sx={{ height: '40px', width: '100px' }}
               onClick={() => {
                 follow(id);
               }}>
               FOLLOW
-            </Button>
+            </FollowButton>
           )}
-        </Box>
+        </DeveloperBody>
         <Typography variant='h6' gutterBottom component='div'>
           {name}
         </Typography>
-      </Box>
-    </Box>
+      </DeveloperMainContainer>
+    </DeveloperWrapper>
   );
 };
 

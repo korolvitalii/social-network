@@ -5,7 +5,7 @@ import { getIsFetchProfile } from '../redux/selectors/profile-selectors';
 import Preloader from '../components/common/Preloader/Preloader';
 import Profile from '../components/Profile/Profile';
 
-const ProfilePage: React.FC = (props) => {
+const ProfilePage: React.FC = (): React.ReactElement => {
   const isFetchProfile = useSelector(getIsFetchProfile);
   return (
     <>

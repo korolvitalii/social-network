@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function withSuspense<WCP>(WrappedComponent: React.ComponentType<WCP>) {
+function WithSuspense<WCP>(WrappedComponent: React.ComponentType<WCP>) {
   return (props: WCP) => {
     return (
       <React.Suspense fallback={<div>loading...</div>}>
@@ -9,3 +9,5 @@ export function withSuspense<WCP>(WrappedComponent: React.ComponentType<WCP>) {
     );
   };
 }
+
+export default WithSuspense;

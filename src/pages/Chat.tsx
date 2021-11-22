@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import Dialogs from '../components/Chat/Chat';
+import MessageForm from '../components/Chat/Message/MessageForm';
 import withAuthRedirect from '../hoc/withAuthRedirect';
 import {
   actions,
   startMessageListening,
   stopMessagesListening,
 } from '../redux/actions/ChatActions';
-import Dialogs from '../components/Chat/Chat';
-import MessageForm from '../components/Chat/Message/MessageForm';
-import { Box } from '@mui/system';
+import { ChatPageWrapper, MessageFormWrapper } from './Chat styled';
 
-const ChatPage: React.FC = () => {
+const ChatPage: React.FC = (): React.ReactElement => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,16 +19,15 @@ const ChatPage: React.FC = () => {
       dispatch(stopMessagesListening());
       dispatch(actions.clearMessageInStore());
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
+    <ChatPageWrapper>
       <Dialogs />
-      <Box sx={{ marginRight: 'auto' }}>
+      <MessageFormWrapper>
         <MessageForm />
-      </Box>
-    </Box>
+      </MessageFormWrapper>
+    </ChatPageWrapper>
   );
 };
 
