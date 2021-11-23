@@ -1,13 +1,13 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUserStatus } from '../../redux/actions/ProfileActions';
-import classes from './ProfileStatus.module.css';
+import { ProfileStatusDescription } from './Profile.styled';
 
 type PropsType = {
   status: string;
 };
 
-const ProfileStatus: React.FC<PropsType> = ({ status }) => {
+const ProfileStatus: React.FC<PropsType> = ({ status }): React.ReactElement => {
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
   const [localStatus, setLocalStatus] = useState(status);
@@ -30,12 +30,11 @@ const ProfileStatus: React.FC<PropsType> = ({ status }) => {
   return (
     <>
       {!editMode && (
-        <span
-          className={classes.spanProfileStatus}
+        <ProfileStatusDescription
           data-testid='profile-status-span'
           onDoubleClick={activateEditMode}>
           {status}
-        </span>
+        </ProfileStatusDescription>
       )}
 
       {editMode && (

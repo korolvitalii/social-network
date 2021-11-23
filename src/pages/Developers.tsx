@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getIsFetch } from '../redux/selectors/user-selectors';
+import { selectIsFetch } from '../redux/selectors/user-selectors';
 import Preloader from '../components/common/Preloader/Preloader';
 import Users from '../components/Developers/Developers';
 
 const UsersPage: React.FC = (): React.ReactElement => {
-  const isFetch = useSelector(getIsFetch);
+  const isFetch = useSelector(selectIsFetch);
 
   return (
     <div>

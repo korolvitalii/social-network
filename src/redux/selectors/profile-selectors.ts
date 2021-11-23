@@ -1,33 +1,36 @@
 import { AppStateType } from '../reducers/rootReducer';
 
-export const getCurrentUser = (state: AppStateType) => {
+export const selectCurrentUser = (state: AppStateType) => {
   return state.profilePage.profile;
 };
 
-export const getAuthUserId = (state: AppStateType) => {
+export const selectAuthUserId = (state: AppStateType) => {
   return state.auth.id;
 };
 
-export const getStatus = (state: AppStateType) => {
+export const selectStatus = (state: AppStateType) => {
   return state.profilePage.status;
 };
 
-export const getPosts = (state: AppStateType) => {
+export const selectPosts = (state: AppStateType) => {
   return state.profilePage.posts;
 };
 
-export const getFormErrors = (state: AppStateType) => {
+export const selectFormErrors = (state: AppStateType) => {
   return state.profilePage.userInfoFormErrors;
 };
 
-export const getErrors = (state: AppStateType) => {
+export const selectErrors = (state: AppStateType) => {
   return state.errors.errors;
 };
 
-export const getIsFetchProfile = (state: AppStateType) => {
+export const selectIsFetchProfile = (state: AppStateType) => {
   return state.profilePage.isFetchProfile;
 };
 
-export const getIsLoadPhoto = (state: AppStateType) => {
+export const selectIsLoadPhoto = (state: AppStateType) => {
   return state.profilePage.isLoadPhoto;
 };
+
+export const selectEditProfileDataMode = (state: AppStateType) =>
+  state.profilePage.editProfileDataMode;

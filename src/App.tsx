@@ -2,7 +2,6 @@ import React from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import { QueryParamProvider } from 'use-query-params';
-import './App.css';
 import Preloader from './components/common/Preloader/Preloader';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './pages/Login';
@@ -13,6 +12,7 @@ import { initializeApp } from './redux/actions/AppActions';
 import { AppStateType } from './redux/reducers/rootReducer';
 import store from './redux/store';
 import Dialogs from './pages/Dialogs';
+import { AppWrapper, AppWrapperContent } from './App styled';
 
 const ChatPage = React.lazy(() => import('./pages/Chat'));
 const UsersPage = React.lazy(() => import('./pages/Developers'));
@@ -36,9 +36,9 @@ const ContainerApp: React.FC = (): React.ReactElement => {
   const SuspendedDialogsPage = WithSuspense(Dialogs);
 
   return (
-    <div className='app-wrapper'>
+    <AppWrapper>
       <HeaderContainer />
-      <div className='app-wrapper-content'>
+      <AppWrapperContent>
         <div className='navWithSitebarContainer'>
           <Navbar />
         </div>
@@ -50,8 +50,8 @@ const ContainerApp: React.FC = (): React.ReactElement => {
           <Route path='/login' render={() => <SuspendedLoginPage />} />
           <Route path='/dialogs' render={() => <SuspendedDialogsPage />} />
         </Switch>
-      </div>
-    </div>
+      </AppWrapperContent>
+    </AppWrapper>
   );
 };
 

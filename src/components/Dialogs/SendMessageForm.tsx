@@ -1,12 +1,10 @@
 import SendIcon from '@mui/icons-material/Send';
-import { Box } from '@mui/material';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import React, { ChangeEvent, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { actions, sendMessage } from '../../redux/actions/DialogsActions';
-import { SendMessageFormWrapper, FormContainer, Form, SendButton } from './SendMessageForm.styled';
+import { Form, FormContainer, SendButton, SendMessageFormWrapper } from './SendMessageForm.styled';
 
 type FormValues = {
   messageText: string;

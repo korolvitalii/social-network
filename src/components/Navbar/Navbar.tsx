@@ -1,32 +1,31 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from './Navbar.module.css';
-import { Nav, NavItem } from './Navbar.styled';
 
 const Navbar: React.FC = (): React.ReactElement => {
   return (
-    <Nav>
-      <NavItem>
+    <nav className={classes.nav}>
+      <div className={classes.item}>
         <NavLink to='/profile' activeClassName={classes.activeLink}>
           Profile
         </NavLink>
-      </NavItem>{' '}
-      <NavItem>
+      </div>
+      <div className={classes.item}>
         <NavLink to='/developers' activeClassName={classes.activeLink}>
           Developers
         </NavLink>
-      </NavItem>{' '}
-      <NavItem>
+      </div>
+      <div className={classes.item}>
         <NavLink to='/chat' activeClassName={classes.activeLink}>
           Chat
         </NavLink>
-      </NavItem>{' '}
-      <NavItem>
+      </div>
+      <div className={classes.item}>
         <NavLink to='/dialogs' activeClassName={classes.activeLink}>
           Dialogs
         </NavLink>
-      </NavItem>{' '}
-    </Nav>
+      </div>
+    </nav>
   );
 };
 

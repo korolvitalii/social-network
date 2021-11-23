@@ -4,23 +4,24 @@ import { useRouteMatch } from 'react-router-dom';
 import { actions as errorsActions } from '../../redux/actions/ErrorsActions';
 import { getUserProfile, getUserStatus, uploadUserPhoto } from '../../redux/actions/ProfileActions';
 import { AppStateType } from '../../redux/reducers/rootReducer';
-import { getAuthUserId, getCurrentUser, getErrors } from '../../redux/selectors/profile-selectors';
+import {
+  selectAuthUserId,
+  selectCurrentUser,
+  selectErrors,
+} from '../../redux/selectors/profile-selectors';
 import ShowErrorModal from '../common/ErrorModal';
-// import MyPostsContainer from './MyPosts/MyPostsContainer';
-import classes from './Profile.module.css';
+import { ProfileContainer } from './Profile.styled';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 type MatchParams = {
   id: string;
 };
 
-type PropsType = {};
-
-const Profile: React.FC<PropsType> = (props) => {
+const Profile: React.FC = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(getCurrentUser);
-  const authUserID = useSelector(getAuthUserId);
-  const errors = useSelector(getErrors);
+  const currentUser = useSelector(selectCurrentUser);
+  const authUserID = useSelector(selectAuthUserId);
+  const errors = useSelector(selectErrors);
   const { userInfoFormErrors } = useSelector((state: AppStateType) => state.profilePage);
   const match = useRouteMatch<MatchParams>('/profile/:id/');
   const userId = match?.params.id ? Number(match.params.id) : authUserID;
@@ -39,7 +40,7 @@ const Profile: React.FC<PropsType> = (props) => {
   };
 
   return (
-    <div className={classes.profileContainer}>
+    <ProfileContainer>
       <ShowErrorModal errors={errors} resetError={resetError} />
       <ProfileInfo
         profile={currentUser}
@@ -48,8 +49,7 @@ const Profile: React.FC<PropsType> = (props) => {
         formErrors={userInfoFormErrors}
         dispatch={dispatch}
       />
-      {/* <MyPostsContainer /> */}
-    </div>
+    </ProfileContainer>
   );
 };
 

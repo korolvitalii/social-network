@@ -1,15 +1,19 @@
+import { Button, TextField } from '@mui/material';
 import React, { ChangeEvent, useEffect } from 'react';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { ContactsType, ProfileType } from '../../../types/types';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { prepareErrors } from '../../../helpers/helpers';
 import {
   getUserProfile,
   undateUserProfileInfo,
-  uploadUserPhoto,
+  uploadUserPhoto
 } from '../../../redux/actions/ProfileActions';
-import { prepareErrors } from '../../../helpers/helpers';
-import classes from './EditProfileInfoForm.module.css';
-import { useDispatch } from 'react-redux';
-import { Button, TextField, Box } from '@mui/material';
+import { ContactsType, ProfileType } from '../../../types/types';
+import {
+  EditProfileWrapper,
+  FormItems, SaveButton, SavePhotoBlock,
+  ShowErrorText
+} from './EditProfileInfoForm.styled';
 
 type PropsType = {
   goToEditMode: (editMode: boolean) => void;
@@ -40,7 +44,7 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
   contacts,
   lookingForAJob,
   lookingForAJobDescription,
-}) => {
+}): React.ReactElement => {
   const {
     register,
     handleSubmit,
@@ -84,10 +88,11 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
       dispatch(uploadUserPhoto(e.target.files[0]));
     }
   };
+
   return (
-    <Box sx={{ marginLeft: '10px' }}>
+    <EditProfileWrapper>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={classes.formChildren}>
+        <FormItems>
           <Controller
             name='fullName'
             control={control}
@@ -103,8 +108,8 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
               />
             )}
           />
-        </div>
-        <Box sx={{ marginBottom: '10px' }}>
+        </FormItems>
+        <SavePhotoBlock>
           <input
             style={{ display: 'none' }}
             id='contained-button-file'
@@ -114,27 +119,25 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
           <label htmlFor='contained-button-file'>
             <Button variant='outlined'>Upload photo</Button>
           </label>
-        </Box>
+        </SavePhotoBlock>
         <div>
           {errors.fullName?.type === 'server' && (
-            <span className={classes.errors}>{errors.fullName.message}</span>
+            <ShowErrorText>{errors.fullName.message}</ShowErrorText>
           )}
-          {errors.fullName && <span className={classes.errors}>This field is required</span>}
+          {errors.fullName && <ShowErrorText>This field is required</ShowErrorText>}
         </div>
-        <div className={classes.formChildren}>
+        <FormItems>
           <b>Looking for a job:</b>
           <input
             type='checkbox'
             {...register('lookingForAJob')}
             defaultChecked={lookingForAJob || undefined}
           />
-        </div>
+        </FormItems>
         <div>
-          {errors.lookingForAJob && (
-            <span className={classes.errors}>{errors.lookingForAJob.message}</span>
-          )}
+          {errors.lookingForAJob && <ShowErrorText>{errors.lookingForAJob.message}</ShowErrorText>}
         </div>
-        <div className={classes.formChildren}>
+        <FormItems>
           <Controller
             name='lookingForAJobDescription'
             control={control}
@@ -143,16 +146,16 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
               <TextField id='outlined-basic' label='Skills' variant='outlined' {...field} />
             )}
           />
-        </div>
+        </FormItems>
         <div>
           {errors.lookingForAJobDescription && (
-            <span className={classes.errors}>This field is required</span>
+            <ShowErrorText>This field is required</ShowErrorText>
           )}
           {errors.lookingForAJobDescription?.type === 'server' && (
-            <span className={classes.errors}>{errors.lookingForAJobDescription.message}</span>
+            <ShowErrorText>{errors.lookingForAJobDescription.message}</ShowErrorText>
           )}
         </div>
-        <div className={classes.formChildren}>
+        <FormItems>
           <Controller
             name='aboutMe'
             control={control}
@@ -169,9 +172,9 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
               />
             )}
           />
-        </div>
+        </FormItems>
         <div>
-          {errors.aboutMe && <span className={classes.errors}>This field is required</span>}
+          {errors.aboutMe && <ShowErrorText>This field is required</ShowErrorText>}
           {errors.aboutMe && <p>{errors.aboutMe.message}</p>}
         </div>
         <div>
@@ -179,7 +182,7 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
             Object.keys(contacts).map((key) => {
               console.log(errors[key as keyof FormValuesType]);
               return (
-                <div key={key} className={classes.formChildren}>
+                <FormItems key={key}>
                   <Controller
                     name={`contacts.${key as keyof ContactsType}`}
                     control={control}
@@ -192,15 +195,15 @@ const EditProfileInfoForm: React.FC<PropsType> = ({
                   {errors[key as keyof FormValuesType] && (
                     <>{<p>{errors[key as keyof FormValuesType]}</p>}</>
                   )}
-                </div>
+                </FormItems>
               );
             })}
         </div>
-        <Button type='submit' variant='outlined' sx={{ marginTop: '10px' }}>
+        <SaveButton type='submit' variant='outlined'>
           Save
-        </Button>
+        </SaveButton>
       </form>
-    </Box>
+    </EditProfileWrapper>
   );
 };
 

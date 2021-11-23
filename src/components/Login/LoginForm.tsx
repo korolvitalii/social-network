@@ -1,8 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
-  Avatar,
-  Box,
   Button,
   Checkbox,
   Container,
@@ -17,10 +15,10 @@ import * as yup from 'yup';
 import { loginAction } from '../../redux/actions/AuthActions';
 import {
   BootstrapInput,
-  LockIconContainer,
-  FormContainer,
-  ErrorMessage,
   ErrorContainer,
+  ErrorMessage,
+  FormContainer,
+  LockIconContainer,
 } from './LoginForm styled';
 
 type FormValues = {

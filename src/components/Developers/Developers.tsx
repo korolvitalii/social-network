@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
 import { actions as errorActions } from '../../redux/actions/ErrorsActions';
 import { actions, getUsers } from '../../redux/actions/UsersActions';
-import { getErrors } from '../../redux/selectors/profile-selectors';
+import { selectErrors } from '../../redux/selectors/profile-selectors';
 import {
-  getPagesCount,
-  getPageSize,
-  getShowFriends,
-  getTerm,
-  getUsersFromState,
+  selectPagesCount,
+  selectPageSize,
+  selectShowFriends,
+  selectTerm,
+  selectUsersFromState,
 } from '../../redux/selectors/user-selectors';
 import { UserType } from '../../types/types';
 import ShowErrorModal from '../common/ErrorModal';
@@ -20,12 +20,12 @@ import classes from './Developers.module.css';
 
 const Developers: React.FC = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const users = useSelector(getUsersFromState);
-  const pageSize = useSelector(getPageSize);
-  const pagesCount = useSelector(getPagesCount);
-  const errors = useSelector(getErrors);
-  let term = useSelector(getTerm);
-  let showFriends = useSelector(getShowFriends);
+  const users = useSelector(selectUsersFromState);
+  const pageSize = useSelector(selectPageSize);
+  const pagesCount = useSelector(selectPagesCount);
+  const errors = useSelector(selectErrors);
+  let term = useSelector(selectTerm);
+  let showFriends = useSelector(selectShowFriends);
 
   const [query, setQuery] = useQueryParams({
     term: StringParam,

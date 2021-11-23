@@ -1,17 +1,23 @@
-import { Button, styled } from '@mui/material';
-import { blue } from '@mui/material/colors';
 import React, { ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import userIcon from '../../../assets/images/User-Icon.jpg';
 import { actions } from '../../../redux/actions/ProfileActions';
-import { AppStateType } from '../../../redux/reducers/rootReducer';
-import { getIsLoadPhoto } from '../../../redux/selectors/profile-selectors';
+import {
+  selectIsLoadPhoto,
+  selectEditProfileDataMode,
+} from '../../../redux/selectors/profile-selectors';
 import { ProfileType } from '../../../types/types';
 import Preloader from '../../common/Preloader/Preloader';
+import {
+  DecriptionBody,
+  DescriptionContainer,
+  EditDataButton,
+  ProfileInfoWrapper,
+  ProfilePhoto,
+} from '../Profile.styled';
 import EditProfileInfoForm from './EditProfileInfoForm';
 import ProfileData from './ProfileData';
-import classes from './ProfileInfo.module.css';
 
 type ProfileInfoProps = {
   profile: ProfileType | null;
@@ -21,35 +27,29 @@ type ProfileInfoProps = {
   dispatch: Dispatch;
 };
 
-const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile, isOwner, formErrors }) => {
-  const editProfileDataMode = useSelector(
-    (state: AppStateType) => state.profilePage.editProfileDataMode,
-  );
+const ProfileInfo: React.FC<ProfileInfoProps> = ({
+  profile,
+  isOwner,
+  formErrors,
+}): React.ReactElement => {
+  const editProfileDataMode = useSelector(selectEditProfileDataMode);
+  const isLoadPhoto = useSelector(selectIsLoadPhoto);
 
-  const isLoadPhoto = useSelector(getIsLoadPhoto);
-
-  const EditDataButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(blue[300]),
-    '&:hover': {
-      backgroundColor: blue[100],
-    },
-  }));
   const dispatch = useDispatch();
   const handleEditProfileData = () => {
     dispatch(actions.goToEditMode(true));
   };
 
   return (
-    <div className={classes.profileInfo}>
-      <div className={classes.description}>
-        <div className={classes.photoWithButton}>
+    <ProfileInfoWrapper>
+      <DescriptionContainer>
+        <DecriptionBody>
           {!isLoadPhoto ? (
             <Preloader />
           ) : (
-            <img
-              className={classes.avatarPhoto}
+            <ProfilePhoto
               src={profile?.photos?.large ? profile.photos.large : userIcon}
-              alt=''
+              alt='User profile photo'
             />
           )}
           {!isOwner && (
@@ -57,8 +57,8 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile, isOwner, formErrors 
               Edit
             </EditDataButton>
           )}
-        </div>
-      </div>
+        </DecriptionBody>
+      </DescriptionContainer>
       {editProfileDataMode ? (
         <EditProfileInfoForm
           userId={profile?.userId}
@@ -75,7 +75,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile, isOwner, formErrors 
           <ProfileData isOwner={isOwner} goToEditMode={actions.goToEditMode} profile={profile} />
         </div>
       )}
-    </div>
+    </ProfileInfoWrapper>
   );
 };
 

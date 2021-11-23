@@ -1,4 +1,4 @@
-import { Box, List, Paper, Typography } from '@mui/material';
+import { Box, List, Typography } from '@mui/material';
 import { isEmpty, uniqueId } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

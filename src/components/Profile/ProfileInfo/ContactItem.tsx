@@ -1,20 +1,19 @@
-import { Box, Typography } from '@mui/material';
 import React from 'react';
+import { ContactItemWrapper, ContactTitle, ContactBody } from './ContactItem styled';
 
 type ContactsPropsType = {
   contactTitle: string;
   contactValue: string;
 };
-const ContactItem: React.FC<ContactsPropsType> = ({ contactTitle, contactValue }) => {
+const ContactItem: React.FC<ContactsPropsType> = ({
+  contactTitle,
+  contactValue,
+}): React.ReactElement => {
   return (
-    <Box component='div' sx={{ display: 'flex', flexDirection: 'row' }}>
-      <Typography noWrap={true} variant='subtitle2' sx={{ width: '100px', marginRight: '30px' }}>
-        {contactTitle}:
-      </Typography>
-      <Typography variant='body2' gutterBottom component='span' sx={{ color: '#00b3d6' }}>
-        {contactValue}
-      </Typography>
-    </Box>
+    <ContactItemWrapper>
+      <ContactTitle>{contactTitle}:</ContactTitle>
+      <ContactBody>{contactValue}</ContactBody>
+    </ContactItemWrapper>
   );
 };
 

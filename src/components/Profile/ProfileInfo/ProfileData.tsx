@@ -1,10 +1,17 @@
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
-import { Box, Divider, Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { getStatus } from '../../../redux/selectors/profile-selectors';
+import { selectStatus } from '../../../redux/selectors/profile-selectors';
 import { ContactsType, ProfileType } from '../../../types/types';
+import {
+  CheckIcon,
+  ContactsBlock,
+  DontDisturbIcon,
+  LookingForAJobDescription,
+  ProfileDataDescriptionItem,
+  ProfileDataWrapper,
+  TypographyAboutMe,
+} from '../Profile.styled';
 import ProfileStatus from '../ProfileStatus';
 import ContactItem from './ContactItem';
 
@@ -14,58 +21,43 @@ type PropsType = {
   goToEditMode: (editMode: boolean) => void;
 };
 
-const ProfileData: React.FC<PropsType> = ({ profile }) => {
-  const status = useSelector(getStatus);
+const ProfileData: React.FC<PropsType> = ({ profile }): React.ReactElement => {
+  const status = useSelector(selectStatus);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        padding: '20px 20px 20px 20px',
-        marginTop: '60px',
-        height: '400px',
-        width: '600px',
-      }}>
+    <ProfileDataWrapper>
       <Typography variant='h4' gutterBottom component='span' sx={{ color: 'black' }}>
         {profile?.fullName}
       </Typography>
       <ProfileStatus status={status} />
       <Divider variant='fullWidth' sx={{ marginBottom: '20px' }} />
-      <Box component='div' sx={{ display: 'flex', flexDirection: 'row', marginBottom: '20px' }}>
+      <ProfileDataDescriptionItem>
         <Typography gutterBottom component='span'>
           About:
         </Typography>
-        <Typography component='div' variant='body2' sx={{ color: '#00b3d6', marginLeft: '85px' }}>
-          {profile?.aboutMe}
-        </Typography>
-      </Box>
+        <TypographyAboutMe variant='body2'>{profile?.aboutMe}</TypographyAboutMe>
+      </ProfileDataDescriptionItem>
 
-      <Box component='div' sx={{ display: 'flex', flexDirection: 'row', marginBottom: '20px' }}>
+      <ProfileDataDescriptionItem>
         <Typography gutterBottom component='span'>
           Looking for job:
         </Typography>
         <Typography component='div'>
-          {profile?.lookingForAJob ? (
-            <CheckCircleOutlineIcon sx={{ fontSize: 22, marginLeft: '15px', color: '#00b3d6' }} />
-          ) : (
-            <DoNotDisturbIcon sx={{ fontSize: 22, marginLeft: '10px', color: '#00b3d6' }} />
-          )}
+          {profile?.lookingForAJob ? <CheckIcon /> : <DontDisturbIcon />}
         </Typography>
-      </Box>
+      </ProfileDataDescriptionItem>
       {profile?.lookingForAJob && (
-        <Box component='div' sx={{ display: 'flex', flexDirection: 'row', marginBottom: '20px' }}>
+        <ProfileDataDescriptionItem>
           <Typography gutterBottom component='span'>
             Skills:
           </Typography>
-          <Typography variant='body2' gutterBottom sx={{ marginLeft: '85px', color: '#00b3d6' }}>
+          <LookingForAJobDescription variant='body2' gutterBottom>
             {profile.lookingForAJobDescription}
-          </Typography>
-        </Box>
+          </LookingForAJobDescription>
+        </ProfileDataDescriptionItem>
       )}
 
-      <Box sx={{ marginBottom: '20px' }}>
+      <ContactsBlock>
         <Typography component='div' gutterBottom>
           Contacts:
         </Typography>
@@ -79,8 +71,8 @@ const ProfileData: React.FC<PropsType> = ({ profile }) => {
               />
             );
           })}
-      </Box>
-    </Box>
+      </ContactsBlock>
+    </ProfileDataWrapper>
   );
 };
 

@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import userIcon from '../../assets/images/User-Icon.jpg';
 import { startChattingThunk } from '../../redux/actions/DialogsActions';
 import { followThunk, unfollowThunk } from '../../redux/actions/UsersActions';
-import { getIsFollowingProgress } from '../../redux/selectors/user-selectors';
+import { selectIsFollowingProgress } from '../../redux/selectors/user-selectors';
 import { PhotosType } from '../../types/types';
 import {
   DeveloperBody,
@@ -14,7 +14,7 @@ import {
   FollowedContainer,
   MessageButton,
   UnfollowButton,
-  UserAvatar
+  UserAvatar,
 } from './Developer styled';
 
 type PropsType = {
@@ -33,7 +33,7 @@ const Developer: React.FC<PropsType> = (props): React.ReactElement => {
   } = props;
 
   const dispatch = useDispatch();
-  const isFollowingProgress = useSelector(getIsFollowingProgress);
+  const isFollowingProgress = useSelector(selectIsFollowingProgress);
 
   const path = `/profile/${id}`;
 
