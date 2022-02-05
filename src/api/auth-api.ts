@@ -19,24 +19,25 @@ export type authResponseType = {
 };
 
 export const authApi = {
-  authMe() {
-    return instance.get<ResponseType<MeDataResponse>>(`/auth/me`).then((res) => res.data);
+  async authMe() {
+    const res = await instance.get<ResponseType<MeDataResponse>>(`/auth/me`);
+    return res.data;
   },
-  login(loginData: LoginDataType) {
-    return instance
-      .post<ResponseType<LoginResponseType, ResultCodeForCaptchaEnum | ResultCodesEnum>>(
-        `/auth/login`,
-        loginData,
-      )
-      .then((res) => res.data);
+  async login(loginData: LoginDataType) {
+    const res = await instance.post<
+      ResponseType<LoginResponseType, ResultCodeForCaptchaEnum | ResultCodesEnum>
+    >(`/auth/login`, loginData);
+    return res.data;
   },
-  logout() {
-    return instance.delete(`/auth/login`).then((res) => res.data);
+  async logout() {
+    const res = await instance.delete(`/auth/login`);
+    return res.data;
   },
 };
 
 export const securityApi = {
-  getCaptchaUrl() {
-    return instance.get('/security/get-captcha-url').then((res) => res.data);
+  async getCaptchaUrl() {
+    const res = await instance.get('/security/get-captcha-url');
+    return res.data;
   },
 };

@@ -52,33 +52,39 @@ export type SendMessageType = {
 };
 
 export const dialogsApi = {
-  getAllDialogs() {
-    return instance.get<DialogType[]>(`/dialogs`).then((res) => res.data);
+  async getAllDialogs() {
+    const res = await instance.get<DialogType[]>(`/dialogs`);
+    return res.data;
   },
-  startChatting(userId: number) {
-    return instance.put(`/dialogs/${userId}`).then((res) => res.data);
+  async startChatting(userId: number) {
+    const res = await instance.put(`/dialogs/${userId}`);
+    return res.data;
   },
-  getListOfMessage(userId: number, page: number, count: number) {
-    return instance.get<ListOfMessagesType>(`dialogs/${userId}/messages`).then((res) => res.data);
+  async getListOfMessage(userId: number, page: number, count: number) {
+    const res = await instance.get<ListOfMessagesType>(`dialogs/${userId}/messages`);
+    return res.data;
   },
-  sendMessage(userId: number, message: { body: string }) {
-    return instance
-      .post<SendMessageType>(`dialogs/${userId}/messages`, message)
-      .then((res) => res.data);
+  async sendMessage(userId: number, message: { body: string }) {
+    const res = await instance.post<SendMessageType>(`dialogs/${userId}/messages`, message);
+    return res.data;
   },
-  isMessageViewed(messageId: number) {
-    return instance.get(`dialogs/messages/${messageId}/viewed`).then((res) => res.data);
+  async isMessageViewed(messageId: number) {
+    const res = await instance.get(`dialogs/messages/${messageId}/viewed`);
+    return res.data;
   },
-  transferMessageToSpam(messageId: number) {
-    return instance.post(`dialogs/messages/${messageId}/spam`).then((res) => res.data);
+  async transferMessageToSpam(messageId: number) {
+    const res = await instance.post(`dialogs/messages/${messageId}/spam`);
+    return res.data;
   },
-  deleteMessage(messageId: number) {
-    return instance.delete(`dialogs/messages/${messageId}`).then((res) => res.data);
+  async deleteMessage(messageId: number) {
+    const res = await instance.delete(`dialogs/messages/${messageId}`);
+    return res.data;
   },
   restoreMessageFromDeletedAndSpam(messageId: number) {
     instance.put(`dialogs/messages/${messageId}/restore`).then((res) => res.data);
   },
-  returnMessagesNewestThanDate(userId: number, date: number) {
-    return instance.get(`dialogs/${userId}/messages/new?newerThen=${date}`).then((res) => res.data);
+  async returnMessagesNewestThanDate(userId: number, date: number) {
+    const res = await instance.get(`dialogs/${userId}/messages/new?newerThen=${date}`);
+    return res.data;
   },
 };

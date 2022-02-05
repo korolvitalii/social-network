@@ -6,16 +6,19 @@ type UpdateUserPhotoData = {
 };
 
 export const profileApi = {
-  getUserProfile(userId: number) {
-    return instance.get<ProfileType>(`/profile/${userId}`).then((res) => res.data);
+  async getUserProfile(userId: number) {
+    const res = await instance.get<ProfileType>(`/profile/${userId}`);
+    return res.data;
   },
-  getUserStatus(userId: number) {
-    return instance.get<string>(`/profile/status/${userId}`).then((res) => res.data);
+  async getUserStatus(userId: number) {
+    const res = await instance.get<string>(`/profile/status/${userId}`);
+    return res.data;
   },
-  updateUserStatus(status: string) {
-    return instance.put(`/profile/status`, { status: status }).then((res) => res.data);
+  async updateUserStatus(status: string) {
+    const res = await instance.put(`/profile/status`, { status: status });
+    return res.data;
   },
-  updateUserPhoto(photo: File) {
+  async updateUserPhoto(photo: File) {
     const formData = new FormData();
     formData.append('image', photo);
     const config = {
@@ -23,11 +26,15 @@ export const profileApi = {
         'content-type': 'multipart/form-data',
       },
     };
-    return instance
-      .put<ResponseType<UpdateUserPhotoData>>(`/profile/photo`, formData, config)
-      .then((res) => res.data);
+    const res = await instance.put<ResponseType<UpdateUserPhotoData>>(
+      `/profile/photo`,
+      formData,
+      config,
+    );
+    return res.data;
   },
-  updateProfile(profile: ProfileType) {
-    return instance.put(`/profile`, profile).then((res) => res.data);
+  async updateProfile(profile: ProfileType) {
+    const res = await instance.put(`/profile`, profile);
+    return res.data;
   },
 };

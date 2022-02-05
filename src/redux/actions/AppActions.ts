@@ -7,11 +7,6 @@ export const actions = {
   initializedSuccess: () => ({ type: INITIALIZED_SUCCESS } as const),
 };
 
-// export const initializeApp = (): ThunkType => async (dispatch) => {
-//   await dispatch(getAuthUserData());
-//   await dispatch(actions.initializedSuccess());
-// };
-
 export const initializeApp = () => (dispatch: any) => {
   let promise = dispatch(getAuthUserData());
 

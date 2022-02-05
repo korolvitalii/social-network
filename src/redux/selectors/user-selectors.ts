@@ -1,27 +1,19 @@
 import { AppStateType } from '../reducers/rootReducer';
 
-export const selectUsersFromState = (state: AppStateType) => state.usersPage.users;
+export const selectUsersData = (state: AppStateType) => state.usersPage;
 
-export const selectPageSize = (state: AppStateType) => {
-  return state.usersPage.pageSize;
-};
+export const selectUsers = (state: AppStateType) => selectUsersData(state).users;
 
-export const selectIsFollowingProgress = (state: AppStateType) => {
-  return state.usersPage.isFollowingProgress;
-};
+export const selectPageSize = (state: AppStateType) => selectUsersData(state).pageSize;
 
-export const selectPagesCount = (state: AppStateType) => {
-  return state.usersPage.pagesCount;
-};
+export const selectIsFollowingProgress = (state: AppStateType) =>
+  selectUsersData(state).isFollowingProgress;
 
-export const selectIsFetch = (state: AppStateType) => {
-  return state.usersPage.isFetch;
-};
+export const selectPagesCount = (state: AppStateType) => selectUsersData(state).pagesCount;
 
-export const selectTerm = (state: AppStateType) => {
-  return state.usersPage.filters.term;
-};
+export const selectIsFetch = (state: AppStateType) => selectUsersData(state).isFetch;
 
-export const selectShowFriends = (state: AppStateType) => {
-  return state.usersPage.filters.showFriends;
-};
+export const selectTerm = (state: AppStateType) => selectUsersData(state).filters.term;
+
+export const selectShowFriends = (state: AppStateType) =>
+  selectUsersData(state).filters.showFriends;

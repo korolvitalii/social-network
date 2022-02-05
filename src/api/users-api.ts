@@ -8,22 +8,23 @@ export type GetUsersData = {
 };
 
 export const apiUsers = {
-  getUsers(
+  async getUsers(
     currentPage = 1 as number | null | undefined,
     pageSize = ResultCodeForCaptchaEnum.CaptchaIsRequired,
     term = '',
     friend: boolean | string,
   ) {
-    return instance
-      .get<GetUsersData>(
-        `users?page=${currentPage}&count=${pageSize}&term=${term}&friend=${friend}`,
-      )
-      .then((res) => res.data);
+    const res = await instance.get<GetUsersData>(
+      `users?page=${currentPage}&count=${pageSize}&term=${term}&friend=${friend}`,
+    );
+    return res.data;
   },
-  follow(id: number) {
-    return instance.post<ResponseType>(`/follow/${id}`).then((res) => res.data);
+  async follow(id: number) {
+    const res = await instance.post<ResponseType>(`/follow/${id}`);
+    return res.data;
   },
-  unfollow(id: number) {
-    return instance.delete<ResponseType>(`/follow/${id}`).then((res) => res.data);
+  async unfollow(id: number) {
+    const res = await instance.delete<ResponseType>(`/follow/${id}`);
+    return res.data;
   },
 };

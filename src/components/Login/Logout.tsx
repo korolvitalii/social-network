@@ -1,22 +1,20 @@
-import { Button } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Button } from '@mui/material';
 import { logoutAction } from '../../redux/actions/AuthActions';
-import { ErrorContainer } from './LoginForm styled';
 
-const Logout: React.FC = (): React.ReactElement => {
+const Logout: React.FC = () => {
   const dispatch = useDispatch();
-
   const handleClick = () => {
     dispatch(logoutAction());
   };
 
   return (
-    <ErrorContainer>
+    <div>
       <Button variant='outlined' onClick={handleClick}>
         Logout
       </Button>
-    </ErrorContainer>
+    </div>
   );
 };
 
