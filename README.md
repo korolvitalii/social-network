@@ -8,7 +8,6 @@
 - React-hook-form / Yup
 - Jest
 - Axios
-- CSS-modules
 
 #### [Try the service](https://social-network-eta.vercel.app/)
 

@@ -4,6 +4,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Button, Checkbox, Typography, Avatar, Stack } from '@mui/material';
+import Paper from '@mui/material/Paper';
 
 import { loginAction } from '../../redux/actions/AuthActions';
 import { Wrapper, Input } from './styles';
@@ -58,6 +59,11 @@ const LoginForm: React.FC<LoginFormPropsInteface> = ({ authErrors, captcha }) =>
           <Typography component='h1' variant='h5'>
             Sign in
           </Typography>
+          <Paper elevation={4} className='email-password-paper'>
+            <div>Try service:</div>
+            <div>Email: free@samuraijs.com</div>
+            <div>Password: free</div>
+          </Paper>
           <Controller
             render={({ field }) => <Input {...field} placeholder='Email address' />}
             name='email'

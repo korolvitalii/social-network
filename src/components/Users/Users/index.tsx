@@ -34,7 +34,6 @@ const Developers: React.FC = () => {
   });
 
   const { term: termQuery, friend: friendQuery, currentPage: currentPageQuery } = query;
-  console.log(currentPageQuery, `currentPageQuery`);
   const [currentPageHook, setCurrentPage] = useState(currentPageQuery);
 
   useEffect(() => {
@@ -78,7 +77,6 @@ const Developers: React.FC = () => {
   }, [currentPageHook, pageSize, term, showFriends]);
 
   const onChangePageClick = ({ selected }: { selected: number }): void => {
-    console.log(selected + 1);
     const incSelected = selected + 1;
     setCurrentPage(incSelected);
     dispatch(getUsers(incSelected, pageSize, term, showFriends));

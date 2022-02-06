@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { Wrapper } from './styles';
+import { Wrapper, WrapperError } from './styles';
 
 interface ErrorModalPropsInterface {
   errors: string;
@@ -24,7 +24,7 @@ const ErrorModal: React.FC<ErrorModalPropsInterface> = ({ errors, resetError }) 
   }, [errors]);
 
   return (
-    <div>
+    <WrapperError>
       <Modal
         open={open}
         onClose={handleClose}
@@ -39,7 +39,7 @@ const ErrorModal: React.FC<ErrorModalPropsInterface> = ({ errors, resetError }) 
           </Typography>
         </Wrapper>
       </Modal>
-    </div>
+    </WrapperError>
   );
 };
 

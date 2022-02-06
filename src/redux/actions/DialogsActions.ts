@@ -90,7 +90,7 @@ export const startChattingThunk =
     try {
       await dialogsApi.startChatting(userId);
     } catch {
-      console.log('error');
+      console.error('error');
     }
   };
 export type ActionsType = InferActionsTypes<typeof actions>;

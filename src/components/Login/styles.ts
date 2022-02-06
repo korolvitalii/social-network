@@ -7,6 +7,15 @@ export const Wrapper = styled.div`
   .text-color-red {
     color: red;
   }
+  .email-password-paper {
+    /* position: absolute; */
+    /* top: 20%; */
+    /* left: 20%; */
+    width: 200px;
+    min-height: 50px;
+    padding: 5px;
+    /* background: black; */
+  }
 `;
 
 export const Input = styled.input`

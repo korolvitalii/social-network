@@ -21,7 +21,6 @@ const SearchUserForm: React.FC<SearchUserFormInterface> = ({
   term,
   showFriend,
 }) => {
-  console.log(term);
   const { handleSubmit, setValue, control } = useForm<InputValuesInterface>();
   const dispatch = useDispatch();
   useEffect(() => {
