@@ -10,8 +10,10 @@
 - Axios
 - CSS-modules
 
-### [Try the service](https://social-network-eta.vercel.app/)
+#### [Try the service](https://social-network-eta.vercel.app/)
 
-Login for test app:
-Email: free@samuraijs.com
-Password: free
+#### You could try service with login test data.
+
+##### Email: free@samuraijs.com
+
+##### Password: free
