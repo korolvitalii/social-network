@@ -8,13 +8,9 @@ export const Wrapper = styled.div`
     color: red;
   }
   .email-password-paper {
-    /* position: absolute; */
-    /* top: 20%; */
-    /* left: 20%; */
-    width: 200px;
+    width: 250px;
     min-height: 50px;
     padding: 5px;
-    /* background: black; */
   }
 `;
 

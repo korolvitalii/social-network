@@ -3,7 +3,7 @@ import axios from 'axios';
 export const instance = axios.create({
   withCredentials: true,
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-  headers: { 'API-KEY': 'e17d4f1f-f379-4efd-80e1-41f3eb605af5' },
+  headers: { 'API-KEY': '62fcc7db-5e7c-4b01-b514-584dfad4c09b' },
 });
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';

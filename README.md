@@ -9,10 +9,4 @@
 - Jest
 - Axios
 
-#### [Try the service](https://social-network-eta.vercel.app/)
-
-#### You could try service with login test data.
-
-##### Email: free@samuraijs.com
-
-##### Password: free
+### If you want to test the app, you should download the repository, install the dependencies, and try logging in. Test email and login on login page.

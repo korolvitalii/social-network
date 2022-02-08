@@ -61,7 +61,7 @@ const LoginForm: React.FC<LoginFormPropsInteface> = ({ authErrors, captcha }) =>
           </Typography>
           <Paper elevation={4} className='email-password-paper'>
             <div>Try service:</div>
-            <div>Email: free@samuraijs.com</div>
+            <div>Email: korolvitalii.test@gmail.com</div>
             <div>Password: free</div>
           </Paper>
           <Controller
